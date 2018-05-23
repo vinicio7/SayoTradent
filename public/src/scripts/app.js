@@ -98,7 +98,13 @@
 			{
 				name: "ngMap",
 				files: ["scripts/lazyload/ng-map.min.js"]
+			},
+			{
+				// usuarios
+					name: "app.service.usuarios",
+					files: ["scripts/lazyload/services/usuarios.js"]
 			}
+			// fin usuarios
 			]
 		})
 	}])
@@ -351,7 +357,111 @@
 			}
 		});
 
-		
+
+		// registro
+		$routeProvider.when("/registro", {
+			templateUrl: "views/registro/registro.html",
+			// controller: "ContactosController",
+			resolve: {
+				 deps: ["$ocLazyLoad", function(a) {
+                    return a.load({
+                        // name: 'app.registro',
+                        // files: ['scripts/lazyload/controllers/registro.js']
+                    })
+                }]
+			}
+		});
+		// fin
+
+		// administracion
+		$routeProvider.when("/administracion", {
+			templateUrl: "views/administracion/administracion.html",
+			// controller: "ContactosController",
+			resolve: {
+				 deps: ["$ocLazyLoad", function(a) {
+                    return a.load({
+                        // name: 'app.registro',
+                        // files: ['scripts/lazyload/controllers/registro.js']
+                    })
+                }]
+			}
+		});
+		// fin
+
+		// bodegas
+		$routeProvider.when("/bodega", {
+			templateUrl: "views/bodega/bodega.html",
+			// controller: "ContactosController",
+			resolve: {
+				 deps: ["$ocLazyLoad", function(a) {
+                    return a.load({
+                        // name: 'app.registro',
+                        // files: ['scripts/lazyload/controllers/registro.js']
+                    })
+                }]
+			}
+		});
+		// fin
+
+		// compras
+		$routeProvider.when("/compras", {
+			templateUrl: "views/compras/compras.html",
+			// controller: "ContactosController",
+			resolve: {
+				 deps: ["$ocLazyLoad", function(a) {
+                    return a.load({
+                        // name: 'app.registro',
+                        // files: ['scripts/lazyload/controllers/registro.js']
+                    })
+                }]
+			}
+		});
+		// fin
+
+		// ventas
+		$routeProvider.when("/ventas", {
+			templateUrl: "views/ventas/ventas.html",
+			// controller: "ContactosController",
+			resolve: {
+				 deps: ["$ocLazyLoad", function(a) {
+                    return a.load({
+                        // name: 'app.registro',
+                        // files: ['scripts/lazyload/controllers/registro.js']
+                    })
+                }]
+			}
+		});
+		// fin
+
+		// control de calidad
+		$routeProvider.when("/control_de_calidad", {
+			templateUrl: "views/control_calidad/control_calidad.html",
+			// controller: "ContactosController",
+			resolve: {
+				 deps: ["$ocLazyLoad", function(a) {
+                    return a.load({
+                        // name: 'app.registro',
+                        // files: ['scripts/lazyload/controllers/registro.js']
+                    })
+                }]
+			}
+		});
+		// fin
+
+		// usuarios
+		$routeProvider.when("/usuarios", {
+			templateUrl: "views/usuarios/usuarios.html",
+			controller: "UsuariosController",
+			resolve: {
+				 deps: ["$ocLazyLoad", function(a) {
+                    return a.load({
+                        name: 'app.usuarios',
+                        files: ['scripts/lazyload/controllers/usuarios.js']
+                    })
+                }]
+			}
+		});
+		// fin
 
 
 	}])
