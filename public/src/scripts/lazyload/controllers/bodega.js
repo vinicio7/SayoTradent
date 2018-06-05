@@ -2,9 +2,9 @@
 {
     'use strict';
 
-    angular.module('app.usuarios', [])
+    angular.module('app.bodega', [])
 
-        .controller('UsuariosController', ['$scope', '$filter', '$http', '$modal', '$interval', function($scope, $filter, $http, $modal, $timeout)  {
+        .controller('BodegaController', ['$scope', '$filter', '$http', '$modal', '$interval', function($scope, $filter, $http, $modal, $timeout)  {
             // var user_data = localStorageService.get('user_data');
             // if (user_data.type === 'root') {
             //     $window.location.href = './#/404';
@@ -150,10 +150,8 @@
             $scope.modalCreateOpen = function() {
                 $scope.customer = {};
                 $scope.action = 'new';
-                console.log("llego a usuarios nuevos");
-
                 modal = $modal.open({
-                    templateUrl: 'views/usuarios/modal_usuarios.html',
+                    templateUrl: 'views/bodega/modal_bodega.html',
                     scope: $scope,
                     size: 'lg',
                     resolve: function() {},
@@ -166,7 +164,7 @@
                 $scope.customer = data;
 
                 modal = $modal.open({
-                    templateUrl: 'views/usuarios/modal_usuarios.html',
+                    templateUrl: 'views/bodega/modal_bodega.html',
                     scope: $scope,
                     size: 'lg',
                     resolve: function() {},
@@ -179,7 +177,7 @@
                 $scope.customer = data;
 
                 modal = $modal.open({
-                    templateUrl: 'views/usuarios/modal_usuarios.html',
+                    templateUrl: 'views/bodega/modal_bodega.html',
                     scope: $scope,
                     size: 'lg',
                     resolve: function() {},

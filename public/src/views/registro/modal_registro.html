@@ -1,0 +1,73 @@
+<div class="modal-style">
+        <div class="modal-header clearfix">
+            <h4 ng-if="action == 'new'" class="modal-title">Nuevo Pedido</h4>
+            <h4 ng-if="action == 'update'" class="modal-title">Editar Pedido</h4>
+            <h4 ng-if="action == 'delete'" class="modal-title">Eliminar Pedido</h4>
+            <span class="close ion ion-android-close" ng-click="modalClose()"></span>
+        </div>
+        <div class="modal-body">
+            <div class="row form-group" ng-if="action == 'delete'">
+                <h3>¿Está seguro de eliminar este Pedido?</h3>
+            </div>
+            <form class="form-horizontal" name="form" ng-if="action != 'delete'" action="javascript:;" novalidate>
+                <div class="row form-group">
+                    <div class="col-sm-4">
+                        <label>Cliente</label>
+                        <input type="text" class="form-control" required>
+                    </div>
+                    <div class="col-sm-4">
+                        <label>Orden</label>
+                        <input type="text" class="form-control" required>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <label>Fecha y Hora de Ingreso</label>
+                        <input type="date" class="form-control" required>
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col-sm-4">
+                        <label>PO</label>
+                        <input type="text" class="form-control" required>
+                    </div>
+                    <div class="col-sm-4">
+                        <label>Color</label>
+                        <input type="text" class="form-control" required>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <label>Precio</label>
+                        <input type="text" class="form-control" required>
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col-sm-4">
+                        <label>Lugar de entrega</label>
+                        <input type="text" class="form-control" required>
+                    </div>
+                    <div class="col-sm-4">
+                        <label>Estado</label>
+                        <input type="text" class="form-control" required>
+                    </div>
+
+                </div>
+                <br>
+                <div class="row form-group">
+                    <div class="col-sm-12 text-right">
+                        <button class="btn btn-danger" ng-click="modalClose()">Cerrar</button>
+                        <button class="btn btn-success" ng-if="action == 'new'" ng-disabled="form.$invalid" ng-click="saveData()">Registrar</button>
+                        <button class="btn btn-success" ng-if="action == 'update'" ng-disabled="form.$invalid" ng-click="saveData()">Editar</button>
+                    </div>
+                </div>
+            </form>
+            <div class="row form-group">
+                <div class="col-sm-12 text-right">
+                    <button class="btn btn-success" ng-if="action == 'delete'" ng-click="modalClose()">Cerrar</button>
+                    <button class="btn btn-danger"  ng-if="action == 'delete'" ng-click="saveData()">Eliminar</button>
+                </div>
+            </div>
+        </div>
+        
+    </div>

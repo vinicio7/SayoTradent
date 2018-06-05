@@ -2,14 +2,9 @@
 {
     'use strict';
 
-    angular.module('app.usuarios', [])
+    angular.module('app.registro', [])
 
-        .controller('UsuariosController', ['$scope', '$filter', '$http', '$modal', '$interval', function($scope, $filter, $http, $modal, $timeout)  {
-            // var user_data = localStorageService.get('user_data');
-            // if (user_data.type === 'root') {
-            //     $window.location.href = './#/404';
-            // }
-
+        .controller('RegistroController', ['$scope', '$filter', '$http', '$modal', '$interval', function($scope, $filter, $http, $modal, $timeout)  {
             // General variables
             $scope.datas = [];
             $scope.currentPageStores = [];
@@ -148,12 +143,10 @@
 
             // Functions for modals
             $scope.modalCreateOpen = function() {
-                $scope.customer = {};
                 $scope.action = 'new';
-                console.log("llego a usuarios nuevos");
 
                 modal = $modal.open({
-                    templateUrl: 'views/usuarios/modal_usuarios.html',
+                    templateUrl: 'views/registro/modal_registro.html',
                     scope: $scope,
                     size: 'lg',
                     resolve: function() {},
@@ -166,7 +159,7 @@
                 $scope.customer = data;
 
                 modal = $modal.open({
-                    templateUrl: 'views/usuarios/modal_usuarios.html',
+                    templateUrl: 'views/registro/modal_registro.html',
                     scope: $scope,
                     size: 'lg',
                     resolve: function() {},
@@ -179,7 +172,7 @@
                 $scope.customer = data;
 
                 modal = $modal.open({
-                    templateUrl: 'views/usuarios/modal_usuarios.html',
+                    templateUrl: 'views/registro/modal_registro.html',
                     scope: $scope,
                     size: 'lg',
                     resolve: function() {},
