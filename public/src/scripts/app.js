@@ -100,11 +100,9 @@
 				files: ["scripts/lazyload/ng-map.min.js"]
 			},
 			{
-				// usuarios
-					name: "app.service.usuarios",
-					files: ["scripts/lazyload/services/usuarios.js"]
-			}
-			// fin usuarios
+                    name: "app.service.usuarios",
+                    files: ["scripts/lazyload/services/usuarios.js"]
+            },
 			]
 		})
 	}])
@@ -361,12 +359,12 @@
 		// registro
 		$routeProvider.when("/registro", {
 			templateUrl: "views/registro/registro.html",
-			// controller: "ContactosController",
+			controller: "RegistroController",
 			resolve: {
 				 deps: ["$ocLazyLoad", function(a) {
                     return a.load({
-                        // name: 'app.registro',
-                        // files: ['scripts/lazyload/controllers/registro.js']
+                        name: 'app.registro',
+                        files: ['scripts/lazyload/controllers/registro.js']
                     })
                 }]
 			}
@@ -391,12 +389,12 @@
 		// bodegas
 		$routeProvider.when("/bodega", {
 			templateUrl: "views/bodega/bodega.html",
-			// controller: "ContactosController",
+			controller: "BodegaController",
 			resolve: {
 				 deps: ["$ocLazyLoad", function(a) {
                     return a.load({
-                        // name: 'app.registro',
-                        // files: ['scripts/lazyload/controllers/registro.js']
+                        name: 'app.bodega',
+                        files: ['scripts/lazyload/controllers/bodega.js']
                     })
                 }]
 			}
@@ -455,12 +453,26 @@
 			resolve: {
 				 deps: ["$ocLazyLoad", function(a) {
                     return a.load({
-                        name: 'app.usuarios',
-                        files: ['scripts/lazyload/controllers/usuarios.js']
+						name: 'app.usuarios',
+						files: ['scripts/lazyload/controllers/usuarios.js']
                     })
                 }]
 			}
 		});
+
+		// $routeProvider.when("/contactos", {
+		// 	templateUrl: "views/contactos/principal.html",
+		// 	resolve: {
+		// 		 deps: ["$ocLazyLoad", function(a) {
+        //             return a.load({
+        //                 name: 'app.contactos',
+        //                 files: ['scripts/lazyload/controllers/contactos.js']
+        //             })
+        //         }]
+		// 	}
+		// });
+
+
 		// fin
 
 

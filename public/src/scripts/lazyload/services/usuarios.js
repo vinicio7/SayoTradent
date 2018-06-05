@@ -1,11 +1,10 @@
-var  usuarios = angular.module('app.service.usuarios');
-console.log(usuarios);
-//nuevo usuario
-    usuarios.service('UsuariosService', ['$http', 'WS_URL', function($http, WS_URL)  {
+var contactos_service = angular.module('app.service.usuarios', []);
+
+contactos_service.service('UsuariosService', ['$http', 'WS_URL', function($http, WS_URL)  {
     delete $http.defaults.headers.common['X-Requested-With'];
 
     this.index = function(params){
-        return $http.get('http://localhost/SayoTradent/public/ws/usuarios');
+        return $http.get(WS_URL+'usuarios', {params:params});
     };
 
     this.store = function(params) {
@@ -20,5 +19,7 @@ console.log(usuarios);
         return $http.delete(WS_URL+'usuarios/' + id);
     };
 
-    
-}]);  
+    this.searchCustomer = function(params){
+        return $http.get(WS_URL+'usuarios/search', {params:params});
+    };
+}]);
