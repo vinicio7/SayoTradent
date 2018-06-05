@@ -1,4 +1,4 @@
-<!-- <div class="page">
+<div class="page">
         <div class="page-wrap">
             <div class="row">
                 <div class="col-md-12">
@@ -37,7 +37,7 @@
                                     </div>
                                 </th>
                                 <th>
-                                    Nombre 
+                                    No. orden 
                                     <div class="th">
                                         <i class="fa fa-caret-up icon-up"
                                             ng-click=" order('phone') "
@@ -48,7 +48,7 @@
                                     </div>
                                 </th>
                                 <th>
-                                    Usuario
+                                    Cliente
                                     <div class="th">
                                         <i class="fa fa-caret-up icon-up"
                                             ng-click=" order('phone') "
@@ -58,9 +58,19 @@
                                             ng-class="{active: row == '-phone'}"></i>
                                     </div>
                                 </th>
-
                                 <th>
-                                    Email
+                                    Estado
+                                    <div class="th">
+                                        <i class="fa fa-caret-up icon-up"
+                                            ng-click=" order('phone') "
+                                            ng-class="{active: row == 'phone'}"></i>
+                                        <i class="fa fa-caret-down icon-down"
+                                            ng-click=" order('-phone') "
+                                            ng-class="{active: row == '-phone'}"></i>
+                                    </div>
+                                </th>
+                                <th>
+                                    Fecha y hora de ingreso
                                     <div class="th">
                                         <i class="fa fa-caret-up icon-up"
                                             ng-click=" order('phone') "
@@ -71,23 +81,24 @@
                                     </div>
                                 </th>
                                  
-                                <th>Detalles</th>                  
-                                <th>Editar</th>
-                                <th>Eliminar</th>
+                                <th>Validar</th>                  
+<!--                                 <th>Editar</th>
+                                <th>Eliminar</th> -->
                             </tr>
                             </thead>
                             <tbody>
                                 <tr >
                                     <td>#</td>
-                                    <td>Mario Lopez</td>
+                                    <td>1234</td>
                                     <td>Mlopez</td>
-                                    <td>mario@gmail.com</td>                
+                                    <td>No validada</td> 
+                                    <td>10-05-2018</td>                
                                     <td>
                                         <div class="btn-group">
                                             <button type="button" class="btn btn-primary fa fa-list-ul" ng-click="modalInfoOpen(data)" md-ink-ripple></button>
                                         </div>
                                     </td>
-                                    <td>
+<!--                                     <td>
                                         <div class="btn-group">
                                             <button type="button" class="btn btn-info ion ion-edit" ng-click="modalEditOpen(data)" md-ink-ripple></button>
                                         </div>
@@ -96,7 +107,7 @@
                                         <div class="btn-group">
                                             <button type="button" class="btn btn-danger ion ion-trash-a" ng-click="modalDeleteOpen(data)" md-ink-ripple></button>
                                         </div>
-                                    </td>
+                                    </td> -->
                                 </tr>
                             </tbody>
                         </table>
@@ -120,4 +131,4 @@
             <div ng-bind-html="toast.msg"></div>
         </alert>
     </div>
-     -->
+    

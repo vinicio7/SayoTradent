@@ -27,7 +27,7 @@
                         <table class="table table-bordered table-striped">
                             <thead>
                             <tr>
-                                <th>No. de Orden
+                                <th>No.
                                     <div class="th">
                                         <i class="fa fa-caret-up icon-up"
                                            ng-click=" order('id') "
@@ -59,6 +59,17 @@
                                             ng-class="{active: row == '-phone'}"></i>
                                     </div>
                                 </th>
+                                <th>
+                                    Descripción
+                                    <div class="th">
+                                        <i class="fa fa-caret-up icon-up"
+                                            ng-click=" order('phone') "
+                                            ng-class="{active: row == 'phone'}"></i>
+                                        <i class="fa fa-caret-down icon-down"
+                                            ng-click=" order('-phone') "
+                                            ng-class="{active: row == '-phone'}"></i>
+                                    </div>
+                                </th>
 
                                 <th>
                                     Fecha y Hora de Ingreso
@@ -71,8 +82,19 @@
                                             ng-class="{active: row == '-phone'}"></i>
                                     </div>
                                 </th>
+                                <th>
+                                    Estado
+                                    <div class="th">
+                                        <i class="fa fa-caret-up icon-up"
+                                            ng-click=" order('phone') "
+                                            ng-class="{active: row == 'phone'}"></i>
+                                        <i class="fa fa-caret-down icon-down"
+                                            ng-click=" order('-phone') "
+                                            ng-class="{active: row == '-phone'}"></i>
+                                    </div>
+                                </th>
                                  
-                                <!-- <th>Detalles</th>                   -->
+                                <th>Detalles</th>                  
                                 <th>Editar</th>
                                 <th>Eliminar</th>
                             </tr>
@@ -80,14 +102,16 @@
                             <tbody>
                                 <tr >
                                     <td>1</td>
-                                    <td>1000 Conos de Hilo</td>
+                                    <td>1234</td>
                                     <td>Sayo Tradent</td>
-                                    <td>2018-06-05 09:54:04</td>                
-                                    <!-- <td>
+                                    <td>100 hilos blancos 3/4</td>  
+                                    <td>2018-06-05 09:54:04</td>  
+                                    <td>Recibido</td>                
+                                    <td>
                                         <div class="btn-group">
-                                            <button type="button" class="btn btn-primary fa fa-list-ul" ng-click="modalInfoOpen(data)" md-ink-ripple></button>
+                                            <button type="button" class="btn btn-primary fa fa-list-ul" ng-click="modalEditOpen(data)" md-ink-ripple></button>
                                         </div>
-                                    </td> -->
+                                    </td>
                                     <td>
                                         <div class="btn-group">
                                             <button type="button" class="btn btn-info ion ion-edit" ng-click="modalEditOpen(data)" md-ink-ripple></button>

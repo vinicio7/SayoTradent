@@ -174,7 +174,7 @@
                 modal = $modal.open({
                     templateUrl: 'views/registro/modal_registro.html',
                     scope: $scope,
-                    size: 'lg',
+                    size: 'md',
                     resolve: function() {},
                     windowClass: 'default'
                 });

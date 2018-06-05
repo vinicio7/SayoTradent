@@ -181,7 +181,7 @@
                 modal = $modal.open({
                     templateUrl: 'views/usuarios/modal_usuarios.html',
                     scope: $scope,
-                    size: 'lg',
+                    size: 'md',
                     resolve: function() {},
                     windowClass: 'default'
                 });

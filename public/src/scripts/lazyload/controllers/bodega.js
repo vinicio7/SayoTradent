@@ -179,7 +179,7 @@
                 modal = $modal.open({
                     templateUrl: 'views/bodega/modal_bodega.html',
                     scope: $scope,
-                    size: 'lg',
+                    size: 'md',
                     resolve: function() {},
                     windowClass: 'default'
                 });
