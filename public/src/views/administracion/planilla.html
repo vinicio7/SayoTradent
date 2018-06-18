@@ -1,0 +1,113 @@
+<div class="page">
+    <div class="page-wrap">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default table-responsive panel-hovered mb20"  >
+                    <div class="panel-heading"><h4>REGISTRO DE PLANILLA</h4></div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <button type="button" class="btn btn-success btn-rounded" ng-click="modalCreateOpen()" md-ink-ripple><i class="fa fa-plus"></i> Ingreso</button>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="small text-bold left mt5">
+                                Mostrar
+                                <select data-ng-model="numPerPage"
+                                        data-ng-options="num for num in numPerPageOpts"
+                                        data-ng-change="onNumPerPageChange()">
+                                </select>
+                                &nbsp;entradas
+                            </div>
+                        </div>
+                    </div>
+                    <!-- data table -->
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>#
+                                <div class="th">
+                                    <i class="fa fa-caret-up icon-up"
+                                        ng-click=" order('phone') "
+                                        ng-class="{active: row == 'phone'}"></i>
+                                    <i class="fa fa-caret-down icon-down"
+                                        ng-click=" order('-phone') "
+                                        ng-class="{active: row == '-phone'}"></i>
+                                </div>
+                            </th>
+
+                            <th>No. Empleado
+                                <div class="th">
+                                    <i class="fa fa-caret-up icon-up"
+                                        ng-click=" order('phone') "
+                                        ng-class="{active: row == 'phone'}"></i>
+                                    <i class="fa fa-caret-down icon-down"
+                                        ng-click=" order('-phone') "
+                                        ng-class="{active: row == '-phone'}"></i>
+                                </div>
+                            </th>
+                            <th>
+                                Nombre 
+                                <div class="th">
+                                    <i class="fa fa-caret-up icon-up"
+                                        ng-click=" order('phone') "
+                                        ng-class="{active: row == 'phone'}"></i>
+                                    <i class="fa fa-caret-down icon-down"
+                                        ng-click=" order('-phone') "
+                                        ng-class="{active: row == '-phone'}"></i>
+                                </div>
+                            </th>
+
+                            <th>
+                                Liquido Total 
+                                <div class="th">
+                                    <i class="fa fa-caret-up icon-up"
+                                        ng-click=" order('phone') "
+                                        ng-class="{active: row == 'phone'}"></i>
+                                    <i class="fa fa-caret-down icon-down"
+                                        ng-click=" order('-phone') "
+                                        ng-class="{active: row == '-phone'}"></i>
+                                </div>
+                            </th>
+
+                            <th>
+                                Detalles
+                            </th>
+                            
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="data in currentPageStores track by $index">
+                                <td>{{ $index + 1 }}</td>
+                                <td>{{ data.no_empleado }}</td>
+                                <td>{{ data.nombre }}</td>
+                                <td>Q{{ data.total }}</td>
+                                <td>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-primary fa fa-list-ul  " ng-click="modalDetail(data)" md-ink-ripple></button>
+                                    </div>
+    
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!-- #end data table -->
+                    <div class="panel-footer clearfix">
+                        <p class="left mt15 small">
+                            Mostrando {{currentPageStores.length*(currentPage - 1) + 1}} a {{currentPageStores.length*currentPage}} de {{datas.length}} entradas
+                        </p>
+                        <pagination boundary-links="true" total-items="filteredData.length" ng-model="currentPage" class="pagination-sm right"
+                                    max-size="5" ng-change="select(currentPage)" items-per-page="numPerPage" rotate="false"
+                                    previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
+                        </pagination>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- #end page-wrap -->
+</div>
+
+<div class="toast toast-{{positionModel}}" style=" z-index: 10000;">
+    <alert ng-repeat="toast in toasts" type="{{toast.type}}" close="closeAlert($index)" class="toast-{{toast.anim}}">
+        <div ng-bind-html="toast.msg"></div>
+    </alert>
+</div>

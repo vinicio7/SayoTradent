@@ -2,9 +2,9 @@
 {
     'use strict';
 
-    angular.module('app.usuarios', ['app.service.usuarios'])
+    angular.module('app.planilla', ['app.service.planilla'])
 
-        .controller('UsuariosController', ['$scope', '$filter', '$http', '$modal', '$interval', 'UsuariosService', function($scope, $filter, $http, $modal, $timeout, UsuariosService)  {
+        .controller('PlanillaController', ['$scope', '$filter', '$http', '$modal', '$interval', 'PlanillaService', function($scope, $filter, $http, $modal, $timeout, PlanillaService)  {
            
             // General variables
             $scope.datas = [];
@@ -19,9 +19,76 @@
             $scope.toasts = [];
             var modal;
 
+            // calcular suledo ordinario
+            $scope.diasTrabajados = function(item){
+                var numero ;
+                if(item.dias_trabajados){
+                     numero = (item.sueldo_base/30)*item.dias_trabajados;
+                }else{
+                     numero = 0;
+                }
+                $scope.planilla.sueldo_ordinario = numero.toFixed(2);
+
+                // bono legal
+                var bono ;
+                if(item.dias_trabajados){
+                    bono = (250/30)*item.dias_trabajados;
+                }else{
+                    bono = 0;
+                }
+                $scope.planilla.bon_legal = bono.toFixed(2);
+
+                // extras dia
+                var ex_dia ;
+                if (item.horas_ex_dia) {
+                    ex_dia = ((item.sueldo_base/30)/8)*1.5*item.horas_ex_dia;
+                }else{
+                    ex_dia = 0;
+                };
+                $scope.planilla.sueldo_ex_dia = ex_dia.toFixed(2);
+
+                // extras noche
+                var ex_noche ;
+                if (item.horas_ex_noche) {
+                    ex_noche = ((item.sueldo_base/30)/8)*2*item.horas_ex_noche;
+                }else{
+                    ex_noche = 0;
+                };
+                $scope.planilla.sueldo_ex_noche = ex_noche.toFixed(2);
+
+                
+                // total horas extras
+                $scope.planilla.total_ex = parseFloat($scope.planilla.sueldo_ex_noche) + parseFloat($scope.planilla.sueldo_ex_dia);
+            }
+            // fin de calcular sueldo ordinario
+
+
+            $scope.incentivos = function(item){
+                var pn = item.bon_inc_base/2/12*item.incentivo_pn;
+                $scope.planilla.incentivo_pn1 = pn.toFixed(2);
+
+                var as = item.bon_inc_base/2/12*item.incentivo_as;
+                $scope.planilla.incentivo_as1 = as.toFixed(2);
+
+                var total_bn = parseFloat($scope.planilla.incentivo_pn1) + parseFloat($scope.planilla.incentivo_as1);
+                $scope.planilla.total_bn_inc = total_bn.toFixed(2);
+
+                var total_ingresos = parseFloat($scope.planilla.sueldo_ordinario) + parseFloat($scope.planilla.total_ex) + parseFloat($scope.planilla.bon_legal) + parseFloat($scope.planilla.total_bn_inc);
+                $scope.planilla.total_ingresos = total_ingresos.toFixed(2);
+
+                var igss = (parseFloat($scope.planilla.sueldo_ordinario) + parseFloat($scope.planilla.total_ex)) * 0.0483;
+                $scope.planilla.igss = igss.toFixed(2);
+
+                var total_des = parseFloat($scope.planilla.igss) + parseFloat($scope.planilla.isr) +  parseFloat($scope.planilla.otros_descuentos);
+                $scope.planilla.total_descuentos = total_des.toFixed(2);
+
+                var liquido = parseFloat($scope.planilla.total_ingresos) - parseFloat($scope.planilla.total_descuentos);
+                $scope.planilla.total = liquido.toFixed(2);
+            }
+
             // Function for load table
             function MostarDatos() {
-                UsuariosService.index().then(function(response) {
+                PlanillaService.index().then(function(response) {
                     $scope.datas = response.data.records;
                     $scope.search();
                     $scope.select($scope.currentPage);
@@ -83,7 +150,7 @@
             // Function for sending data
             $scope.saveData = function (customer) {
                 if ($scope.action == 'new') {
-                    UsuariosService.store(customer).then(
+                    PlanillaService.store(customer).then(
                         function successCallback(response) {
                             if (response.data.result) {
                                 MostarDatos();
@@ -102,7 +169,7 @@
                     );
                 }
                 else if ($scope.action == 'update') {
-                    UsuariosService.update(customer).then(
+                    PlanillaService.update(customer).then(
                         function successCallback(response) {
                             if (response.data.result) {
                                 modal.close();
@@ -120,7 +187,7 @@
                     );
                 }
                 else if ($scope.action == 'delete') {
-                    UsuariosService.destroy(customer.id).then(
+                    PlanillaService.destroy(customer.id).then(
                         function successCallback(response) {
                             if (response.data.result) {
                                 MostarDatos();
@@ -141,41 +208,34 @@
             };   
             // Functions for modals
             $scope.modalCreateOpen = function() {
-                $scope.usuario = {};
-                $scope.action = 'new'; 
+                $scope.planilla = {};
+                $scope.action = 'new';
+                
                 modal = $modal.open({
-                    templateUrl: 'views/usuarios/modal_usuarios.html',
-                    scope: $scope,
-                    size: 'lg', 
-                    resolve: function() {},
-                    windowClass: 'default'
-                });
-            };
-
-            $scope.modalEditOpen = function(data) {
-                $scope.action = 'update';
-                $scope.usuario = data;
-                modal = $modal.open({
-                    templateUrl: 'views/usuarios/modal_usuarios.html',
+                    templateUrl: 'views/administracion/modal_planilla.html',
                     scope: $scope,
                     size: 'lg',
+                    backdrop: 'static',
+                    keyboard: false, 
                     resolve: function() {},
                     windowClass: 'default'
                 });
-            
             };
 
-            $scope.modalDeleteOpen = function(data) {
-                $scope.action = 'delete';
-                $scope.usuario = data;
+
+            $scope.modalDetail = function(data){
+                $scope.action = 'detail';
+                $scope.planilla = data;
                 modal = $modal.open({
-                    templateUrl: 'views/usuarios/modal_usuarios.html',
+                    templateUrl: 'views/administracion/modal_planilla.html',
                     scope: $scope,
-                    size: 'md',
+                    size: 'lg',
+                    backdrop: 'static',
+                    keyboard: false, 
                     resolve: function() {},
                     windowClass: 'default'
                 });
-            };
+            }
 
             $scope.modalClose = function() {
                 modal.close();

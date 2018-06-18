@@ -1,30 +1,36 @@
 <div class="modal-style">
-        <div class="modal-header clearfix">
-            <h4 ng-if="action == 'new'" class="modal-title">Nuevo Usario</h4>
-            <h4 ng-if="action == 'update'" class="modal-title">Editar Usuario</h4>
-            <h4 ng-if="action == 'delete'" class="modal-title">Eliminar Usuario</h4>
-            <span class="close ion ion-android-close" ng-click="modalClose()"></span>
+    <div class="modal-header clearfix">
+        <h4 ng-if="action == 'new'" class="modal-title">Nuevo Usuario</h4>
+        <h4 ng-if="action == 'update'" class="modal-title">Editar Usuario</h4>
+        <h4 ng-if="action == 'delete'" class="modal-title">Eliminar Usuario</h4>
+        <span class="close ion ion-android-close" ng-click="modalClose()"></span>
+    </div>
+    <div class="modal-body">
+        <div class="row form-group" ng-if="action == 'delete'">
+            <h3>¿Está seguro de eliminar este Usuario?</h3>
         </div>
-        <div class="modal-body">
-            <div class="row form-group" ng-if="action == 'delete'">
-                <h3>¿Está seguro de eliminar este usuario?</h3>
-            </div>
-            <form class="form-horizontal" name="form" ng-if="action != 'delete'" action="javascript:;" novalidate>
-                <div class="row form-group">
-                    <div class="col-sm-4">
-                        <label>Nombre</label>
-                        <input type="text" class="form-control" ng-model="roles_usuarios.descripcion" required>
-                    </div>
-                    <div class="col-sm-4">
-                        <label>Usuario</label>
-                        <input type="text" class="form-control" ng-model="roles_usuarios.descripcion" required>
-                    </div>
-                    <div class="col-sm-4">
-                        <label>Email</label>
-                        <input type="text" class="form-control" ng-model="roles_usuarios.descripcion" required>
-                    </div>
+        <form class="form-horizontal" name="form" ng-if="action != 'delete'" action="javascript:;" novalidate>
+            <div class="row form-group">
+                <div class="col-sm-6">
+                    <label>Nombre</label>
+                    <input type="text" class="form-control" ng-model="usuario.nombre" required>
                 </div>
-                <br>
+                <div class="col-sm-6">
+                    <label>Usuario</label>
+                    <input type="text" class="form-control" ng-model="usuario.usuario" required>
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-sm-6">
+                    <label>Password</label>
+                    <input type="password" class="form-control" ng-model="usuario.password" required>
+                </div>
+                <div class="col-sm-6">
+                    <label>Email</label>
+                    <input type="email" class="form-control" ng-model="usuario.email" required>
+                </div>
+            </div>
+            <br>
                 <label><b>Selecciona los roles que puede acceder<b></label>
                 <br>
                 <br>
@@ -32,7 +38,7 @@
                     <div class="col-sm-3">
                         <div class="form-check">
                             <label>
-                                <input type="checkbox" ng-model="roles_usuarios.mi_perfil"
+                                <input type="checkbox" ng-model="usuario.registro"
                                 ng-true-value="1" ng-false-value="0" > <span class="label-text">Registro</span>
                             </label> 
                         </div>
@@ -40,7 +46,7 @@
                     <div class="col-sm-3">
                         <div class="form-check">
                             <label>
-                                <input type="checkbox"  name="propiedadess" ng-model="roles_usuarios.propiedades"
+                                <input type="checkbox"  name="propiedadess" ng-model="usuario.administracion"
                                 ng-true-value="1" ng-false-value="0"> <span class="label-text">Administracion</span>
                             </label>
                         </div>
@@ -48,15 +54,15 @@
                     <div class="col-sm-3">
                         <div class="form-check">
                             <label>
-                                <input type="checkbox"  name="mantenimientoss" ng-model="roles_usuarios.mantenimientos"
-                                ng-true-value="1" ng-false-value="0"> <span class="label-text">Bodega</span>
+                                <input type="checkbox"  name="mantenimientoss" ng-model="usuario.produccion"
+                                ng-true-value="1" ng-false-value="0"> <span class="label-text">Producción</span>
                             </label>
                         </div>
                     </div>
                     <div class="col-sm-3">
                         <div class="form-check">
                             <label>
-                                <input type="checkbox"  name="contactoss" ng-model="roles_usuarios.contactos"
+                                <input type="checkbox"  name="contactoss" ng-model="usuario.compras"
                                 ng-true-value="1" ng-false-value="0"> <span class="label-text">Compras</span>
                             </label>
                         </div>
@@ -66,15 +72,15 @@
                     <div class="col-sm-3">
                         <div class="form-check">
                             <label>
-                                <input type="checkbox"  name="reportess" ng-model="roles_usuarios.reportes"
-                                ng-true-value="1" ng-false-value="0"> <span class="label-text">Ventas</span>
+                                <input type="checkbox"  name="reportess" ng-model="usuario.despachos"
+                                ng-true-value="1" ng-false-value="0"> <span class="label-text">Despachos</span>
                             </label>
                         </div>
                     </div>
                     <div class="col-sm-3">
                         <div class="form-check">
                             <label>
-                                <input type="checkbox"  name="usuarioss" ng-model="roles_usuarios.usuarios"
+                                <input type="checkbox"  name="usuarioss" ng-model="usuario.control"
                                 ng-true-value="1" ng-false-value="0"> <span class="label-text">Control de Calidad</span>
                             </label>
                         </div>
@@ -82,25 +88,25 @@
                     <div class="col-sm-3">
                         <div class="form-check">
                             <label>
-                                <input type="checkbox"  name="roless" ng-model="roles_usuarios.roles"
+                                <input type="checkbox"  name="roless" ng-model="usuario.usuarios"
                                 ng-true-value="1" ng-false-value="0"> <span class="label-text">Usuarios</span>
                             </label>
                         </div>
                     </div>
-                </div>             
-                <div class="row form-group">
-                    <div class="col-sm-12 text-right">
-                        <button class="btn btn-danger" ng-click="modalClose()">Cerrar</button>
-                        <button class="btn btn-success" ng-if="action == 'new'" ng-disabled="form.$invalid" ng-click="saveData(roles_usuarios)">Registrar</button>
-                        <button class="btn btn-success" ng-if="action == 'update'" ng-disabled="form.$invalid" ng-click="saveData(roles_usuarios)">Editar</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-        <div class="row form-group">
+                </div>            
+            <div class="row form-group">
                 <div class="col-sm-12 text-right">
-                    <button class="btn btn-success" ng-if="action == 'delete'" ng-click="modalClose()">Cerrar</button>
-                    <button class="btn btn-danger"  ng-if="action == 'delete'" ng-click="saveData(roles_usuarios)">Eliminar</button>
+                    <button class="btn btn-danger" ng-click="modalClose()">Cerrar</button>
+                    <button class="btn btn-success" ng-if="action == 'new'" ng-disabled="form.$invalid" ng-click="saveData(usuario)">Registrar</button>
+                    <button class="btn btn-success" ng-if="action == 'update'" ng-disabled="form.$invalid" ng-click="saveData(usuario)">Editar</button>
                 </div>
             </div>
+        </form>
     </div>
+    <div class="row form-group">
+        <div class="col-sm-10 text-right">
+            <button class="btn btn-success" ng-if="action == 'delete'" ng-click="modalClose()">Cerrar</button>
+            <button class="btn btn-danger"  ng-if="action == 'delete'" ng-click="saveData(usuario)">Eliminar</button>
+        </div>
+    </div>
+</div>

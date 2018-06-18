@@ -102,7 +102,11 @@
 			{
                     name: "app.service.usuarios",
                     files: ["scripts/lazyload/services/usuarios.js"]
-            },
+			},
+			{
+				name: "app.service.planilla",
+				files: ["scripts/lazyload/services/planilla.js"]
+			},
 			]
 		})
 	}])
@@ -371,15 +375,15 @@
 		});
 		// fin
 
-		// administracion
-		$routeProvider.when("/administracion", {
-			templateUrl: "views/administracion/administracion.html",
-			// controller: "ContactosController",
+		// Planilla
+		$routeProvider.when("/administracion/planilla", {
+			templateUrl: "views/administracion/planilla.html",
+			controller: "PlanillaController",
 			resolve: {
 				 deps: ["$ocLazyLoad", function(a) {
                     return a.load({
-                        // name: 'app.registro',
-                        // files: ['scripts/lazyload/controllers/registro.js']
+                        name: 'app.registro',
+                        files: ['scripts/lazyload/controllers/planilla.js']
                     })
                 }]
 			}
