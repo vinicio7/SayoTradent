@@ -2,9 +2,9 @@
 {
     'use strict';
 
-    angular.module('app.bodega', [])
+    angular.module('app.control', [])
 
-        .controller('BodegaController', ['$scope', '$filter', '$http', '$modal', '$interval', function($scope, $filter, $http, $modal, $timeout)  {
+        .controller('ControlController', ['$scope', '$filter', '$http', '$modal', '$interval', function($scope, $filter, $http, $modal, $timeout)  {
             // var user_data = localStorageService.get('user_data');
             // if (user_data.type === 'root') {
             //     $window.location.href = './#/404';
@@ -150,8 +150,10 @@
             $scope.modalCreateOpen = function() {
                 $scope.customer = {};
                 $scope.action = 'new';
+                console.log("llego a usuarios nuevos");
+
                 modal = $modal.open({
-                    templateUrl: 'views/bodega/modal_bodega.html',
+                    templateUrl: 'views/usuarios/modal_usuarios.html',
                     scope: $scope,
                     size: 'lg',
                     resolve: function() {},
@@ -164,9 +166,9 @@
                 $scope.customer = data;
 
                 modal = $modal.open({
-                    templateUrl: 'views/bodega/modal_bodega.html',
+                    templateUrl: 'views/control_calidad/modal_control.html',
                     scope: $scope,
-                    size: 'lg',
+                    size: 'sm',
                     resolve: function() {},
                     windowClass: 'default'
                 });
@@ -177,7 +179,7 @@
                 $scope.customer = data;
 
                 modal = $modal.open({
-                    templateUrl: 'views/bodega/modal_bodega.html',
+                    templateUrl: 'views/usuarios/modal_usuarios.html',
                     scope: $scope,
                     size: 'md',
                     resolve: function() {},

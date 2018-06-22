@@ -484,12 +484,12 @@
 		// control de calidad
 		$routeProvider.when("/control_de_calidad", {
 			templateUrl: "views/control_calidad/control_calidad.html",
-			// controller: "ContactosController",
+			controller: "ControlController",
 			resolve: {
 				 deps: ["$ocLazyLoad", function(a) {
                     return a.load({
-                        // name: 'app.registro',
-                        // files: ['scripts/lazyload/controllers/registro.js']
+                        name: 'app.registro',
+                        files: ['scripts/lazyload/controllers/control.js']
                     })
                 }]
 			}
