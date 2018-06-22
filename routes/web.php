@@ -18,6 +18,7 @@ Route::get('/', function () {
 Route::group(['prefix' => 'ws'], function (){
 
 	Route::resource ('usuarios', 			'UsuariosController');
+	Route::resource ('ordenes', 			'OrdenesController');
 });
 
 Auth::routes();

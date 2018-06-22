@@ -9,21 +9,57 @@ class Orden extends Model
     protected $table    = 'ordenes';
 	// protected $fillable = ['usuario', 'clave', 'activado'];
     protected $fillable = ['orden',
-                           'usuario', 
                            'fecha_hora', 
-                           'empresa',
+                           'id_empresa',
                            'po',
-                           'estilo',
-                           'empresa',
+                           'id_estilo',
                            'descripcion', 
-                           'calibre',
-                           'metraje',
+                           'id_calibre',
+                           'id_metraje',
                            'tipo',
-                           'color',
+                           'id_color',
+                           'estado',
                            'cantidad',
                            'precio',
-                           'fecha',
-                           'referencias',
-                           'lugar_entrega'
+                           'fecha_entrega',
+                           'fecha_aprobacion',
+                           'id_referencias',
+                           'id_lugar'
 						   ];
+
+  public function empresa()
+  {
+      return $this->hasOne('App\Empresa', 'id', 'id_empresa');
+  }
+
+  public function estilo()
+  {
+      return $this->hasOne('App\Estilo', 'id', 'id_estilo');
+  }
+
+  public function calibre()
+  {
+      return $this->hasOne('App\Calibre', 'id', 'id_calibre');
+  }
+
+  public function metraje()
+  {
+      return $this->hasOne('App\Metraje', 'id', 'id_metraje');
+  }
+
+  public function color()
+  {
+      return $this->hasOne('App\Color', 'id', 'id_color');
+  }
+
+  public function referencia()
+  {
+      return $this->hasOne('App\Referencia', 'id', 'id_referencias');
+  }
+
+  public function lugar()
+  {
+      return $this->hasOne('App\Lugar', 'id', 'id_lugar');
+  }
+
 }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CrearTablaTeñido extends Migration
+class CrearTablaEmpresas extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,9 @@ class CrearTablaTeñido extends Migration
      */
     public function up()
     {
-        Schema::create('teñido', function (Blueprint $table) {
+        Schema::create('empresas', function (Blueprint $table) {
             $table->increments('id');
-            $table->Integer('id_orden');
-            $table->Date('fecha_inicio');
-            $table->Date('fecha_fin');
-            $table->Integer('cantidad');
-            $table->text('receta');
+            $table->text('descripcion');
             $table->timestamps();
         });
     }
@@ -31,6 +27,6 @@ class CrearTablaTeñido extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('teñido');
+        Schema::dropIfExists('empresas');
     }
 }

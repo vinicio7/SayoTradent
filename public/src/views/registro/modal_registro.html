@@ -13,60 +13,67 @@
                 <div class="row form-group">
                     <div class="col-sm-4">
                         <label>Cliente</label>
-                        <input type="text" class="form-control" required>
+                        <input type="text" ng-model="registro.cliente" class="form-control" required>
                     </div>
                     <div class="col-sm-4">
                         <label>Orden</label>
-                        <input type="text" class="form-control" required>
+                        <input type="text" ng-model="registro.orden" class="form-control" required>
                     </div>
-
                     <div class="col-sm-4">
                         <label>Fecha y Hora de Ingreso</label>
-                        <input type="date" class="form-control" required>
+                        <input type="datetime-local" ng-model="registro.fecha_hora" class="form-control" required>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-4" style="margin-top: 10px;">
+                        <label>Empresa</label>
+                        <input type="text" ng-model="registro.empresa" class="form-control" required>
+                    </div>
+                    <div class="col-sm-4" style="margin-top: 10px;">
                         <label>PO</label>
-                        <input type="text" class="form-control" required>
+                        <input type="text" ng-model="registro.po" class="form-control" required>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-4" style="margin-top: 10px;">
                         <label>Estilo</label>
-                        <input type="text" class="form-control" required>
+                        <input type="text" ng-model="registro.estilo" class="form-control" required>
                     </div>
-                     <div class="col-sm-4">
-                        <label>Tipo</label>
-                        <input type="text" class="form-control" required>
+                    <div class="col-sm-4" style="margin-top: 10px;">
+                        <label>Descripcion</label>
+                        <input type="text" ng-model="registro.descripcion" class="form-control" required>
                     </div>
-                     <div class="col-sm-4">
-                        <label>Calibre</label>
-                        <input type="text" class="form-control" required>
-                    </div>
-                     <div class="col-sm-4">
+                    <div class="col-sm-4" style="margin-top: 10px;">
                         <label>Metraje</label>
-                        <input type="text" class="form-control" required>
+                        <input type="text" ng-model="registro.metraje" class="form-control" required>
                     </div>
-                     <div class="col-sm-4">
-                        <label>Cantidad</label>
-                        <input type="text" class="form-control" required>
+                    <div class="col-sm-4" style="margin-top: 10px;">
+                        <label>Tipo</label>
+                        <select class="form-control" ng-model="registro.tipo" required>                  
+                            <option disabled>Selecciona un tipo</option>
+                            <option value="1">Normal</option>
+                            <option value="2">CAFTA</option>
+                        </select>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-4" style="margin-top: 10px;">
                         <label>Color</label>
-                        <input type="text" class="form-control" required>
+                        <input type="text" ng-model="registro.color" class="form-control" required>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-4" style="margin-top: 10px;">
+                        <label>Cantidad</label>
+                        <input type="number" ng-model="registro.cantidad" class="form-control" required>
+                    </div>
+                    <div class="col-sm-4" style="margin-top: 10px;">
                         <label>Precio</label>
-                        <input type="text" class="form-control" required>
+                        <input type="number" ng-model="registro.precio" class="form-control" required>
                     </div>
-                     <div class="col-sm-4">
+                     <div class="col-sm-4" style="margin-top: 10px;">
                         <label>Referencias</label>
-                        <input type="text" class="form-control" required>
+                        <input type="text" ng-model="registro.referencias" class="form-control" required>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-4" style="margin-top: 10px;">
                         <label>Lugar de entrega</label>
-                        <input type="text" class="form-control" required>
+                        <input type="text" ng-model="registro.lugar_entrega" class="form-control" required>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-4" style="margin-top: 10px;">
                         <label>Estado</label>
-                        <input type="text" class="form-control" required>
+                        <input type="text" ng-model="registro.estado" class="form-control" required>
                     </div>
 
                 </div>
@@ -74,8 +81,8 @@
                 <div class="row form-group">
                     <div class="col-sm-12 text-right">
                         <button class="btn btn-danger" ng-click="modalClose()">Cerrar</button>
-                        <button class="btn btn-success" ng-if="action == 'new'" ng-disabled="form.$invalid" ng-click="saveData()">Registrar</button>
-                        <button class="btn btn-success" ng-if="action == 'update'" ng-disabled="form.$invalid" ng-click="saveData()">Editar</button>
+                        <button class="btn btn-success" ng-if="action == 'new'" ng-disabled="form.$invalid" ng-click="saveData(registro)">Registrar</button>
+                        <button class="btn btn-success" ng-if="action == 'update'" ng-disabled="form.$invalid" ng-click="saveData(registro)">Editar</button>
                     </div>
                 </div>
             </form>

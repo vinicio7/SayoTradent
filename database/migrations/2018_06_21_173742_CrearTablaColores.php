@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CrearTablaMaseo extends Migration
+class CrearTablaColores extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,9 @@ class CrearTablaMaseo extends Migration
      */
     public function up()
     {
-        Schema::create('maseo', function (Blueprint $table) {
+        Schema::create('colores', function (Blueprint $table) {
             $table->increments('id');
-            $table->Integer('id_orden');
-            $table->Date('fecha_inicio');
-            $table->Date('fecha_fin');
-            $table->Integer('cantidad');
-            $table->Integer('tipo');
+            $table->text('descripcion');
             $table->timestamps();
         });
     }
@@ -31,6 +27,6 @@ class CrearTablaMaseo extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('maseo');
+        Schema::dropIfExists('colores');
     }
 }
