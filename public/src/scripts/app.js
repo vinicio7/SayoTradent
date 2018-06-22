@@ -119,6 +119,14 @@
 				name: "app.service.compras",
 				files: ["scripts/lazyload/services/compras.js"]
 			},
+			{
+				name: "app.service.movimientos",
+				files: ["scripts/lazyload/services/movimientos.js"]
+			},
+			{
+				name: "app.service.ordenes",
+				files: ["scripts/lazyload/services/ordenes.js"]
+			},
 			]
 		})
 	}])
@@ -375,12 +383,12 @@
 		// registro
 		$routeProvider.when("/registro", {
 			templateUrl: "views/registro/registro.html",
-			controller: "RegistroController",
+			controller: "OrdenesController",
 			resolve: {
 				 deps: ["$ocLazyLoad", function(a) {
                     return a.load({
-                        name: 'app.registro',
-                        files: ['scripts/lazyload/controllers/registro.js']
+                        name: 'app.ordenes',
+                        files: ['scripts/lazyload/controllers/ordenes.js']
                     })
                 }]
 			}
@@ -461,6 +469,23 @@
 		});
 
 		// fin #/administracion/clientes
+
+		//#/administracion/movimientos
+
+		$routeProvider.when("/administracion/movimientos", {
+			templateUrl: "views/administracion/movimientos.html",
+			controller: "MovimientosController",
+			resolve: {
+				 deps: ["$ocLazyLoad", function(a) {
+                    return a.load({
+                        name: 'app.movimientos',
+                        files: ['scripts/lazyload/controllers/movimientos.js']
+                    })
+                }]
+			}
+		});
+
+		// fin#/administracion/movimientos
 
 		// bodegas
 		$routeProvider.when("/bodega", {

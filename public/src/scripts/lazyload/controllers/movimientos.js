@@ -2,9 +2,9 @@
 {
     'use strict';
 
-    angular.module('app.proveedores', ['app.service.proveedores'])
+    angular.module('app.movimientos', ['app.service.movimientos'])
 
-        .controller('MovimientosController', ['$scope', '$filter', '$http', '$modal', '$interval', 'ProveedoresService', function($scope, $filter, $http, $modal, $timeout, ProveedoresService)  {
+        .controller('MovimientosController', ['$scope', '$filter', '$http', '$modal', '$interval', 'MovimientosService', function($scope, $filter, $http, $modal, $timeout, MovimientosService)  {
            
             // General variables
             $scope.datas = [];
@@ -21,7 +21,7 @@
 
             // Function for load table
             function MostarDatos() {
-                ProveedoresService.index().then(function(response) {
+                MovimientosService.index().then(function(response) {
                     $scope.datas = response.data.records;
                     $scope.search();
                     $scope.select($scope.currentPage);
@@ -30,7 +30,7 @@
 
             $scope.redirect = function(){ 
                
-                window.location="../ws/excel/proveedores";
+                window.location="../ws/excel/movimientos";
                 createToast('success', '<strong>Éxito: </strong>'+'Reporte Creado Exitosamente');
                 $timeout( function(){ closeAlert(0); }, 3000);
             
@@ -91,7 +91,7 @@
             // Function for sending data
             $scope.saveData = function (customer) {
                 if ($scope.action == 'new') {
-                    ProveedoresService.store(customer).then(
+                    MovimientosService.store(customer).then(
                         function successCallback(response) {
                             if (response.data.result) {
                                 MostarDatos();
@@ -110,7 +110,7 @@
                     );
                 }
                 else if ($scope.action == 'update') {
-                    ProveedoresService.update(customer).then(
+                    MovimientosService.update(customer).then(
                         function successCallback(response) {
                             if (response.data.result) {
                                 modal.close();
@@ -128,7 +128,7 @@
                     );
                 }
                 else if ($scope.action == 'delete') {
-                    ProveedoresService.destroy(customer.id).then(
+                    MovimientosService.destroy(customer.id).then(
                         function successCallback(response) {
                             if (response.data.result) {
                                 MostarDatos();
@@ -149,10 +149,10 @@
             };   
             // Functions for modals
             $scope.modalCreateOpen = function() {
-                $scope.proveedor = {};
+                $scope.movimiento = {};
                 $scope.action = 'new'; 
                 modal = $modal.open({
-                    templateUrl: 'views/administracion/modal_movimientos.html',
+                    templateUrl: 'views/administracion/modal_movimiento.html',
                     scope: $scope,
                     size: 'lg', 
                     resolve: function() {},
@@ -162,9 +162,9 @@
 
             $scope.modalEditOpen = function(data) {
                 $scope.action = 'update';
-                $scope.proveedor = data;
+                $scope.movimiento = data;
                 modal = $modal.open({
-                    templateUrl: 'views/administracion/modal_movimientos.html',
+                    templateUrl: 'views/administracion/modal_movimiento.html',
                     scope: $scope,
                     size: 'lg',
                     resolve: function() {},
@@ -175,9 +175,9 @@
 
             $scope.modalDeleteOpen = function(data) {
                 $scope.action = 'delete';
-                $scope.proveedor = data;
+                $scope.movimiento = data;
                 modal = $modal.open({
-                    templateUrl: 'views/administracion/modal_movimientos.html',
+                    templateUrl: 'views/administracion/modal_movimiento.html',
                     scope: $scope,
                     size: 'md',
                     resolve: function() {},

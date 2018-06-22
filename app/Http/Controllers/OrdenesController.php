@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Orden;
+use App\Http\Controllers\Controller;
+use Validator;
+
 class OrdenesController extends Controller
 {
 
@@ -311,4 +314,57 @@ class OrdenesController extends Controller
             return response()->json($response, $this->status_code);
         }
     }
+
+        private function rules($request)
+        {
+            switch ($request->method())
+            {
+                case 'GET':
+                case 'POST':
+                    {
+                        return Validator::make($request->all(), [
+                            'orden'              => 'required',
+                            'fecha_hora'         => 'required',
+                            'id_empresa'         => 'required',
+                            'po'                 => 'required',
+                            'id_estilo'          => 'required',
+                            'descripcion'        => 'required',
+                            'id_calibre'         => 'required',
+                            'id_metraje'         => 'required',
+                            'tipo'               => 'required',
+                            'id_color'           => 'required',
+                            'cantidad'           => 'required',
+                            'estado'             => 'required',
+                            'precio'             => 'required',
+                            'fecha_entrega'      => 'required',
+                            'fecha_aprobacion'   => 'required',
+                            'id_referencias'     => 'required',
+                            'id_lugar'           => 'required'
+                        ]);
+                    }
+                case 'PUT':
+                    {
+                        return Validator::make($request->all(), [
+                            'cantidad'          => 'required',
+                            'cliente'           => 'required',
+                            'color'             => 'required',
+                            'descripcion'       => 'required',
+                            'empresa'           => 'required',
+                            'estado'            => 'required',
+                            'estilo'            => 'required',
+                            'fecha_hora'        => 'required',
+                            'lugar_entrega'     => 'required',
+                            'metraje'           => 'required',
+                            'orden '            => 'required',
+                            'po'                => 'required',
+                            'precio'            => 'required',
+                            'referencias '      => 'required',
+                            'tipo'               => 'required'
+                        ]);
+                    }
+                case 'PATCH':
+                case 'DELETE':
+                default: break;
+            }
+        }
 }

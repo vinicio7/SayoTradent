@@ -36,7 +36,7 @@
                                 </div>
                             </th>
 
-                            <th>Tipo
+                            <th>Tipo de movimiento
                                 <div class="th">
                                     <i class="fa fa-caret-up icon-up"
                                         ng-click=" order('phone') "
@@ -71,10 +71,15 @@
                             </th>
 
                             <th>
-                                Documento
-                            </th>
-                            <th>
-                                Cobrado
+                                Saldo 
+                                <div class="th">
+                                    <i class="fa fa-caret-up icon-up"
+                                        ng-click=" order('phone') "
+                                        ng-class="{active: row == 'phone'}"></i>
+                                    <i class="fa fa-caret-down icon-down"
+                                        ng-click=" order('-phone') "
+                                        ng-class="{active: row == '-phone'}"></i>
+                                </div>
                             </th>
                             <th>
                                 Editar
@@ -86,13 +91,12 @@
                         </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Egreso</td>
-                                <td>Q. 500.00</td>
-                                <td>Compra de accesorios de limpieza</td>
-                                <td>54404000</td>
-                                <td>Si</td>
+                            <tr ng-repeat="data in currentPageStores track by $index">
+                                <td>{{ $index + 1 }}</td>
+                                <td>{{ data.tipo_movimiento }}</td>
+                                <td>{{ data.monto }}</td>
+                                <td>{{ data.descripcion }}</td>
+                                <td>{{ data.saldo }}</td>
                                 <td>
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-info ion ion-edit" ng-click="modalEditOpen(data)" md-ink-ripple></button>

@@ -101,13 +101,12 @@
                             </tr>
                             </thead>
                             <tbody>
-                                <tr >
-                                    <td>1</td>
-                                    <td>1234</td>
-                                    <td>Sayo Tradent</td>
-                                    <td>100 hilos blancos 3/4</td>  
-                                    <td>2018-06-05 09:54:04</td>  
-                                    <td>Recibido</td>                
+                                <tr ng-repeat="data in currentPageStores track by $index">
+                                    <td>{{ $index + 1 }}</td>
+                                    <td>{{ data.tipo_movimiento }}</td>
+                                    <td>{{ data.monto }}</td>
+                                    <td>{{ data.descripcion }}</td>
+                                    <td>{{ data.saldo }}</td>             
                                     <td>
                                         <div class="btn-group">
                                             <button type="button" class="btn btn-primary fa fa-list-ul" ng-click="modalEditOpen(data)" md-ink-ripple></button>
@@ -134,7 +133,7 @@
                         <!-- #end data table -->
                         <div class="panel-footer clearfix">
                             <p class="left mt15 small">
-                                Mostrando 1 a 1 de 1 entradas
+                                Mostrando {{currentPageStores.length*(currentPage - 1) + 1}} a {{currentPageStores.length*currentPage}} de {{datas.length}} entradas
                             </p>
                             <pagination boundary-links="true" total-items="filteredData.length" ng-model="currentPage" class="pagination-sm right"
                                         max-size="5" ng-change="select(currentPage)" items-per-page="numPerPage" rotate="false"
