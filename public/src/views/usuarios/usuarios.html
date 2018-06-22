@@ -7,6 +7,7 @@
                         <div class="panel-body">
                             <div class="row">
                                 <button type="button" class="btn btn-success btn-rounded" ng-click="modalCreateOpen()" md-ink-ripple><i class="fa fa-plus"></i> Nuevo Usuario</button>
+                                <button ng-click="redirect()" type="button" class="btn btn-info btn-rounded"> <i class="fa fa-file-excel-o"></i>&nbsp;Excel</button>
                             </div>
                             <br>
                             <div class="row">
@@ -78,25 +79,19 @@
                             </tr>
                             </thead>
                             <tbody>
-                                <tr >
-                                    <td>1</td>
-                                    <td>Mario Lopez</td>
-                                    <td>Mlopez</td>
-                                    <td>mario@gmail.com</td>                
-                                    <!-- <td>
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-primary fa fa-list-ul" ng-click="modalInfoOpen(data)" md-ink-ripple></button>
-                                        </div>
-                                    </td> -->
+                                <tr ng-repeat="data in currentPageStores track by $index">
+                                    <td>{{ $index + 1 }}</td>
+                                    <td>{{ data.nombre }}</td>
+                                    <td>{{ data.usuario }}</td>
+                                    <td>{{ data.email }}</td>
                                     <td>
                                         <div class="btn-group">
                                             <button type="button" class="btn btn-info ion ion-edit" ng-click="modalEditOpen(data)" md-ink-ripple></button>
                                         </div>
+        
                                     </td>
                                     <td>
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-danger ion ion-trash-a" ng-click="modalDeleteOpen(data)" md-ink-ripple></button>
-                                        </div>
+                                        <button type="button" class="btn btn-danger ion ion-trash-a" ng-click="modalDeleteOpen(data)" md-ink-ripple></button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -104,7 +99,7 @@
                         <!-- #end data table -->
                         <div class="panel-footer clearfix">
                             <p class="left mt15 small">
-                                Mostrando 1 a 1 de 1 entradas
+                                Mostrando {{currentPageStores.length*(currentPage - 1) + 1}} a {{currentPageStores.length*currentPage}} de {{datas.length}} entradas
                             </p>
                             <pagination boundary-links="true" total-items="filteredData.length" ng-model="currentPage" class="pagination-sm right"
                                         max-size="5" ng-change="select(currentPage)" items-per-page="numPerPage" rotate="false"

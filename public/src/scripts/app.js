@@ -102,7 +102,23 @@
 			{
                     name: "app.service.usuarios",
                     files: ["scripts/lazyload/services/usuarios.js"]
-            },
+			},
+			{
+				name: "app.service.planilla",
+				files: ["scripts/lazyload/services/planilla.js"]
+			},
+			{
+				name: "app.service.proveedores",
+				files: ["scripts/lazyload/services/proveedores.js"]
+			},
+			{
+				name: "app.service.clientes",
+				files: ["scripts/lazyload/services/clientes.js"]
+			},
+			{
+				name: "app.service.compras",
+				files: ["scripts/lazyload/services/compras.js"]
+			},
 			]
 		})
 	}])
@@ -371,20 +387,54 @@
 		});
 		// fin
 
-		// administracion
-		$routeProvider.when("/administracion", {
-			templateUrl: "views/administracion/administracion.html",
-			// controller: "ContactosController",
+		// Planilla
+		$routeProvider.when("/administracion/planilla", {
+			templateUrl: "views/administracion/planilla.html",
+			controller: "PlanillaController",
 			resolve: {
 				 deps: ["$ocLazyLoad", function(a) {
                     return a.load({
-                        // name: 'app.registro',
-                        // files: ['scripts/lazyload/controllers/registro.js']
+                        name: 'app.planilla',
+                        files: ['scripts/lazyload/controllers/planilla.js']
                     })
                 }]
 			}
 		});
 		// fin
+
+		// #/administracion/proveedores
+
+		$routeProvider.when("/administracion/proveedores", {
+			templateUrl: "views/administracion/proveedores.html",
+			controller: "ProveedoresController",
+			resolve: {
+				 deps: ["$ocLazyLoad", function(a) {
+                    return a.load({
+                        name: 'app.proveedores',
+                        files: ['scripts/lazyload/controllers/proveedores.js']
+                    })
+                }]
+			}
+		});
+
+		// fin #/administracion/proveedores
+
+		// #/administracion/clientes
+
+		$routeProvider.when("/administracion/clientes", {
+			templateUrl: "views/administracion/clientes.html",
+			controller: "ClientesController",
+			resolve: {
+				 deps: ["$ocLazyLoad", function(a) {
+                    return a.load({
+                        name: 'app.clientes',
+                        files: ['scripts/lazyload/controllers/clientes.js']
+                    })
+                }]
+			}
+		});
+
+		// fin #/administracion/clientes
 
 		// bodegas
 		$routeProvider.when("/bodega", {
@@ -404,12 +454,12 @@
 		// compras
 		$routeProvider.when("/compras", {
 			templateUrl: "views/compras/compras.html",
-			// controller: "ContactosController",
+			controller: "ComprasController",
 			resolve: {
 				 deps: ["$ocLazyLoad", function(a) {
                     return a.load({
-                        // name: 'app.registro',
-                        // files: ['scripts/lazyload/controllers/registro.js']
+                        name: 'app.compras',
+                        files: ['scripts/lazyload/controllers/compras.js']
                     })
                 }]
 			}

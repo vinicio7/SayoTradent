@@ -1,10 +1,10 @@
-var contactos_service = angular.module('app.service.usuarios', []);
+var contactos_service = angular.module('app.service.usuarios', ['app.constants']);
 
 contactos_service.service('UsuariosService', ['$http', 'WS_URL', function($http, WS_URL)  {
     delete $http.defaults.headers.common['X-Requested-With'];
 
     this.index = function(params){
-        return $http.get(WS_URL+'usuarios', {params:params});
+        return $http.get(WS_URL+'usuarios');
     };
 
     this.store = function(params) {
@@ -19,7 +19,5 @@ contactos_service.service('UsuariosService', ['$http', 'WS_URL', function($http,
         return $http.delete(WS_URL+'usuarios/' + id);
     };
 
-    this.searchCustomer = function(params){
-        return $http.get(WS_URL+'usuarios/search', {params:params});
-    };
+   
 }]);

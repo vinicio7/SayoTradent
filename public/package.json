@@ -10,5 +10,10 @@
     "grunt-contrib-less": "^1.0.0",
     "grunt-contrib-uglify": "^0.7.0",
     "grunt-processhtml": "^0.3.7"
+  },
+  "dependencies": {
+    "angular-local-storage": "^0.7.1",
+    "angular-localstorage": "^1.1.5",
+    "node-localstorage": "^1.3.1"
   }
 }

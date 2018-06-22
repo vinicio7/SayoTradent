@@ -12,5 +12,8 @@ class Usuarios extends Model
                            'usuario', 
                            'password', 
                            'email', 
+                           'registro', 'administracion', 'produccion',
+                            'compras', 'despachos', 'control',
+                            'usuarios',
 						   ];
 }

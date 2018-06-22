@@ -18,6 +18,15 @@ Route::get('/', function () {
 Route::group(['prefix' => 'ws'], function (){
 
 	Route::resource ('usuarios', 			'UsuariosController');
+	Route::any 		('login', 				'UsuariosController@login');
+	Route::resource ('planilla', 			'PlanillaController');
+	Route::resource ('proveedores', 		'ProveedoresController');
+	Route::resource ('clientes', 			'ClientesController');
+	Route::resource ('compras', 			'ComprasController');
+	Route::resource ('excel/usuarios', 		'ExcelController');
+	Route::any 		('excel/proveedores', 	'ExcelController@reporteProveedores');
+	Route::any 		('excel/clientes', 		'ExcelController@reporteClientes');
+	Route::any 		('excel/compras', 		'ExcelController@reporteCompras');
 	Route::resource ('ordenes', 			'OrdenesController');
 });
 

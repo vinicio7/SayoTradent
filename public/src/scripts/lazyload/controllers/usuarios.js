@@ -2,14 +2,10 @@
 {
     'use strict';
 
-    angular.module('app.usuarios', [])
+    angular.module('app.usuarios', ['app.service.usuarios'])
 
-        .controller('UsuariosController', ['$scope', '$filter', '$http', '$modal', '$interval', function($scope, $filter, $http, $modal, $timeout)  {
-            // var user_data = localStorageService.get('user_data');
-            // if (user_data.type === 'root') {
-            //     $window.location.href = './#/404';
-            // }
-
+        .controller('UsuariosController', ['$scope', '$filter', '$http', '$modal', '$interval', 'UsuariosService', function($scope, $filter, $http, $modal, $timeout, UsuariosService)  {
+           
             // General variables
             $scope.datas = [];
             $scope.currentPageStores = [];
@@ -24,14 +20,21 @@
             var modal;
 
             // Function for load table
-            // function loadDataTable() {
-            //     var params = { company_id:user_data.company_id };
-            //     CustomersService.index(params).then(function(response) {
-            //         $scope.datas = response.data.records;
-            //         $scope.search();
-            //         $scope.select($scope.currentPage);
-            //     });
-            // }
+            function MostarDatos() {
+                UsuariosService.index().then(function(response) {
+                    $scope.datas = response.data.records;
+                    $scope.search();
+                    $scope.select($scope.currentPage);
+                });
+            }
+
+            $scope.redirect = function(){ 
+               
+                window.location="../ws/excel/usuarios";
+                createToast('success', '<strong>Éxito: </strong>'+'Reporte Creado Exitosamente');
+                $timeout( function(){ closeAlert(0); }, 3000);
+            
+            }
 
             // Functions of table
             $scope.select = function(page) {
@@ -70,7 +73,7 @@
                 $scope.onOrderChange();
             };
 
-            // loadDataTable();
+            MostarDatos();
 
             // Function for toast
             function createToast (type, message) {
@@ -88,11 +91,10 @@
             // Function for sending data
             $scope.saveData = function (customer) {
                 if ($scope.action == 'new') {
-                    customer.company_id = user_data.company_id;
-                    CustomersService.store(customer).then(
+                    UsuariosService.store(customer).then(
                         function successCallback(response) {
                             if (response.data.result) {
-                                loadDataTable();
+                                MostarDatos();
                                 modal.close();
                                 createToast('success', '<strong>Éxito: </strong>'+response.data.message);
                                 $timeout( function(){ closeAlert(0); }, 3000);
@@ -108,7 +110,7 @@
                     );
                 }
                 else if ($scope.action == 'update') {
-                    CustomersService.update(customer).then(
+                    UsuariosService.update(customer).then(
                         function successCallback(response) {
                             if (response.data.result) {
                                 modal.close();
@@ -126,10 +128,10 @@
                     );
                 }
                 else if ($scope.action == 'delete') {
-                    CustomersService.destroy(customer.id).then(
+                    UsuariosService.destroy(customer.id).then(
                         function successCallback(response) {
                             if (response.data.result) {
-                                loadDataTable();
+                                MostarDatos();
                                 modal.close();
                                 createToast('success', '<strong>Éxito: </strong>'+response.data.message);
                                 $timeout( function(){ closeAlert(0); }, 3000);
@@ -144,18 +146,15 @@
                         }
                     );
                 }
-            };
-
+            };   
             // Functions for modals
             $scope.modalCreateOpen = function() {
-                $scope.customer = {};
-                $scope.action = 'new';
-                console.log("llego a usuarios nuevos");
-
+                $scope.usuario = {};
+                $scope.action = 'new'; 
                 modal = $modal.open({
                     templateUrl: 'views/usuarios/modal_usuarios.html',
                     scope: $scope,
-                    size: 'lg',
+                    size: 'lg', 
                     resolve: function() {},
                     windowClass: 'default'
                 });
@@ -163,8 +162,7 @@
 
             $scope.modalEditOpen = function(data) {
                 $scope.action = 'update';
-                $scope.customer = data;
-
+                $scope.usuario = data;
                 modal = $modal.open({
                     templateUrl: 'views/usuarios/modal_usuarios.html',
                     scope: $scope,
@@ -172,12 +170,12 @@
                     resolve: function() {},
                     windowClass: 'default'
                 });
+            
             };
 
             $scope.modalDeleteOpen = function(data) {
                 $scope.action = 'delete';
-                $scope.customer = data;
-
+                $scope.usuario = data;
                 modal = $modal.open({
                     templateUrl: 'views/usuarios/modal_usuarios.html',
                     scope: $scope,
@@ -189,6 +187,7 @@
 
             $scope.modalClose = function() {
                 modal.close();
+                MostarDatos();
             }
         }])
 }());
