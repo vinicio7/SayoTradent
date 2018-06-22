@@ -2,10 +2,17 @@
 "use strict";
 
 
-angular.module("app.ctrls", [])
+angular.module("app.ctrls", ["LocalStorageModule","app.constants"])
 
 // Root Controller
-.controller("AppCtrl", ["$rootScope", "$scope", "$timeout", function($rs, $scope, $timeout) {
+.controller("AppCtrl", ["$rootScope", "$scope", "$timeout", "localStorageService", "$window",function($rs, $scope, $timeout,localStorageService, $window) {
+	var usuario = localStorageService.get('usuario');
+	console.log(usuario);
+    $scope.usuario = usuario;
+    if (!localStorageService.get('usuario')) {
+        $window.location.href = 'login.html';
+    }
+
 	var mm = window.matchMedia("(max-width: 767px)");
 	$rs.isMobile = mm.matches ? true: false;
 
@@ -115,10 +122,10 @@ angular.module("app.ctrls", [])
 }])
 
 
-.controller("HeadCtrl", ["$scope", "Fullscreen", function($scope, Fullscreen) {
+.controller("HeadCtrl", ["$scope", "Fullscreen", "localStorageService", "$window", function($scope, Fullscreen,  localStorageService, $window) {
 	$scope.toggleFloatingSidebar = function() {
 		$scope.floatingSidebar = $scope.floatingSidebar ? false : true;
-		console.log("floating-sidebar: " + $scope.floatingSidebar);
+		//console.log("floating-sidebar: " + $scope.floatingSidebar);
 	};
 
 	$scope.goFullScreen = function() {
@@ -128,6 +135,11 @@ angular.module("app.ctrls", [])
          	Fullscreen.all()
 	};
 
+	$scope.salir = function () {
+         localStorageService.clearAll();
+         if (!localStorageService.get('usuario'))
+             $window.location.href = 'login.html';
+    };
 	
 }])
 

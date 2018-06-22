@@ -86,7 +86,7 @@ class UsuariosController extends Controller {
                     $record = Usuarios::create([
                         'nombre'               => $request->input('nombre'),                           
                         'usuario'              => $request->input('usuario'),
-                        'password'             => $request->input('password'),
+                        'password'             => \Hash::make($request->input('password')),
                         'email'                => $request->input('email'),
                         'registro'             => $registro,
                         'administracion'       => $administracion,
@@ -122,6 +122,43 @@ class UsuariosController extends Controller {
         }
     }
 
+    public function login(Request $request){
+		try {
+            $validacion = Usuarios::where('usuario',$request->input('usuario'))->first();
+			if ($validacion) {
+				if (\Hash::check($request->input('password'), $validacion->password)) {
+					
+					$validacion->registro 				= $validacion->registro;
+					$validacion->administracion 		= $validacion->administracion;
+					$validacion->produccion 			= $validacion->produccion;
+					$validacion->compras 				= $validacion->compras;
+					$validacion->despachos 				= $validacion->despachos;
+					$validacion->control 				= $validacion->control;
+					$validacion->usuarios 				= $validacion->usuarios;
+																							
+					$this->status_code = 200;
+					$this->result      = true;
+					$this->message     = 'Sesión iniciada correctamente';
+					$this->records     = $validacion;
+				} else {
+					throw new \Exception('Contraseña incorrecta');
+				}
+			} else {
+				throw new \Exception('Usuario no encontrado');
+			}
+		} catch (\Exception $e) {
+			$this->status_code = 400;
+			$this->result      = false;
+			$this->message     = env('APP_DEBUG')?$e->getMessage():$this->message;
+		}finally{
+			$response = [
+				'result'  => $this->result,
+				'message' => $this->message,
+				'records' => $this->records,
+			];
+			return response()->json($response, $this->status_code);
+		}
+	}
 
     public function show($id){
         try {
@@ -154,7 +191,6 @@ class UsuariosController extends Controller {
     public function update(Request $request, $id) {
 		try {
             $validacion = Usuarios::where('usuario',$request->input('usuario'))->first();                   
-
             if ($validacion == true && $validacion->id != $id) {
                 throw new \Exception('Ya existe este usuario.');
             } else {

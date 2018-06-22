@@ -1,0 +1,55 @@
+<div class="modal-style">
+    <div class="modal-header clearfix">
+        <h4 ng-if="action == 'new'" class="modal-title">Nuevo cliente</h4>
+        <h4 ng-if="action == 'update'" class="modal-title">Editar cliente</h4>
+        <h4 ng-if="action == 'delete'" class="modal-title">Eliminar cliente</h4>
+        <span class="close ion ion-android-close" ng-click="modalClose()"></span>
+    </div>
+    <div class="modal-body">
+        <div class="row form-group" ng-if="action == 'delete'">
+            <h3>¿Está seguro de eliminar este cliente?</h3>
+        </div>
+        <form class="form-horizontal" name="form" ng-if="action != 'delete'" action="javascript:;" novalidate>
+            <div class="row form-group">
+                <div class="col-sm-4">
+                    <label>Nombre</label>
+                    <input type="text" class="form-control" ng-model="cliente.nombre" required>
+                </div>
+                <div class="col-sm-4">
+                    <label>NIT</label>
+                    <input type="text" class="form-control" ng-model="cliente.nit" required>
+                </div>
+                <div class="col-sm-4">
+                    <label>Telefono</label>
+                    <input type="text" class="form-control" ng-model="cliente.telefono" required>
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-sm-4">
+                    <label>Dirección</label>
+                    <input type="text" class="form-control" ng-model="cliente.direccion" required>
+                </div>
+
+                <div class="col-sm-4">
+                    <label>Credito</label>
+                    <input type="text" class="form-control" ng-model="cliente.credito" required>
+                </div>
+                
+            </div>
+            
+            <div class="row form-group">
+                <div class="col-sm-12 text-right">
+                    <button class="btn btn-danger" ng-click="modalClose()">Cerrar</button>
+                    <button class="btn btn-success" ng-if="action == 'new'" ng-disabled="form.$invalid" ng-click="saveData(cliente)">Registrar</button>
+                    <button class="btn btn-success" ng-if="action == 'update'" ng-disabled="form.$invalid" ng-click="saveData(cliente)">Editar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="row form-group">
+        <div class="col-sm-11    text-right">
+            <button class="btn btn-success" ng-if="action == 'delete'" ng-click="modalClose()">Cerrar</button>
+            <button class="btn btn-danger"  ng-if="action == 'delete'" ng-click="saveData(cliente)">Eliminar</button>
+        </div>
+    </div>
+</div>

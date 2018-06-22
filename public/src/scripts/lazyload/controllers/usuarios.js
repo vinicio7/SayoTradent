@@ -28,6 +28,14 @@
                 });
             }
 
+            $scope.redirect = function(){ 
+               
+                window.location="../ws/excel/usuarios";
+                createToast('success', '<strong>Éxito: </strong>'+'Reporte Creado Exitosamente');
+                $timeout( function(){ closeAlert(0); }, 3000);
+            
+            }
+
             // Functions of table
             $scope.select = function(page) {
                 var start = (page - 1)*$scope.numPerPage,
