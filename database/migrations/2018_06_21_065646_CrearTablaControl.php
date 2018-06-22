@@ -31,6 +31,6 @@ class CrearTablaControl extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('maseo');
+        Schema::dropIfExists('control_calidad');
     }
 }

@@ -32,7 +32,7 @@
                         <div class="form-check">
                             <label>
                                 <input type="checkbox" ng-model="roles_usuarios.mi_perfil"
-                                ng-true-value="1" ng-false-value="0" > <span class="label-text">Parametro 1</span>
+                                ng-true-value="1" ng-false-value="0" > <span class="label-text">Color</span>
                             </label> 
                         </div>
                     </div>
@@ -40,31 +40,31 @@
                         <div class="form-check">
                             <label>
                                 <input type="checkbox"  name="propiedadess" ng-model="roles_usuarios.propiedades"
-                                ng-true-value="1" ng-false-value="0"> <span class="label-text">parametro 2</span>
+                                ng-true-value="1" ng-false-value="0"> <span class="label-text">Metraje</span>
                             </label>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-check">
                             <label>
-                                <input type="checkbox"  name="mantenimientoss" ng-model="roles_usuarios.mantenimientos"
-                                ng-true-value="1" ng-false-value="0"> <span class="label-text">Parametro 3</span>
+                                <input type="checkbox"  name="mantenimientoss" ng-model="roles_usuarios.calibre"
+                                ng-true-value="1" ng-false-value="0"> <span class="label-text">Calibre</span>
                             </label>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-check">
                             <label>
-                                <input type="checkbox"  name="contactoss" ng-model="roles_usuarios.contactos"
-                                ng-true-value="1" ng-false-value="0"> <span class="label-text">Parametro 4</span>
+                                <input type="checkbox"  name="contactoss" ng-model="roles_usuarios.maseo"
+                                ng-true-value="1" ng-false-value="0"> <span class="label-text">Maseo</span>
                             </label>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-check">
                             <label>
-                                <input type="checkbox"  name="contactoss" ng-model="roles_usuarios.contactos"
-                                ng-true-value="1" ng-false-value="0"> <span class="label-text">Parametro 5</span>
+                                <input type="checkbox"  name="contactoss" ng-model="roles_usuarios.limpieza"
+                                ng-true-value="1" ng-false-value="0"> <span class="label-text">Limpieza</span>
                             </label>
                         </div>
                     </div>
@@ -72,7 +72,7 @@
                         <div class="form-check">
                             <label>
                                 <input type="checkbox"  name="contactoss" ng-model="roles_usuarios.contactos"
-                                ng-true-value="1" ng-false-value="0"> <span class="label-text">Parametro 5</span>
+                                ng-true-value="1" ng-false-value="0"> <span class="label-text">Empaquetado</span>
                             </label>
                         </div>
                     </div>
@@ -83,7 +83,7 @@
                     <div class="col-sm-12 text-right">
                         <button class="btn btn-danger" ng-click="modalClose()">Cerrar</button>
                         <button class="btn btn-success" ng-if="action == 'new'" ng-disabled="form.$invalid" ng-click="saveData(roles_usuarios)">Registrar</button>
-                        <button class="btn btn-success" ng-if="action == 'update'" ng-disabled="form.$invalid" ng-click="saveData(roles_usuarios)">Editar</button>
+                        <button class="btn btn-success" ng-if="action == 'update'" ng-disabled="form.$invalid" ng-click="saveData(roles_usuarios)">Registrar</button>
                     </div>
                 </div>
             </form>

@@ -58,7 +58,7 @@
                             </th>
 
                             <th>
-                                Liquido Total 
+                                Sueldo base 
                                 <div class="th">
                                     <i class="fa fa-caret-up icon-up"
                                         ng-click=" order('phone') "
@@ -70,7 +70,7 @@
                             </th>
 
                             <th>
-                                Detalles
+                                Pagos
                             </th>
                             
                         </tr>
@@ -80,7 +80,7 @@
                                 <td>{{ $index + 1 }}</td>
                                 <td>{{ data.no_empleado }}</td>
                                 <td>{{ data.nombre }}</td>
-                                <td>Q{{ data.total }}</td>
+                                <td>Q{{ data.sueldo_base }}</td>
                                 <td>
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-primary fa fa-list-ul  " ng-click="modalDetail(data)" md-ink-ripple></button>

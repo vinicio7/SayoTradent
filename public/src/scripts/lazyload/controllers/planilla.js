@@ -149,6 +149,7 @@
 
             // Function for sending data
             $scope.saveData = function (customer) {
+                console.log(customer);
                 if ($scope.action == 'new') {
                     PlanillaService.store(customer).then(
                         function successCallback(response) {

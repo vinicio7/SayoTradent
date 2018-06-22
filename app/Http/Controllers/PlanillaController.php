@@ -37,38 +37,43 @@ class PlanillaController extends Controller{
     public function store(Request $request){
         // dd($request);
             try {
-                $record = Planilla::create([
-                    'no_empleado'                   => $request->input('no_empleado'),
-                    'nombre'       			        => $request->input('nombre'),
-                    'dias_trabajados'       		=> $request->input('dias_trabajados'),
-                    'horas_ex_dia'          		=> $request->input('horas_ex_dia'),
-                    'horas_ex_noche'          		=> $request->input('horas_ex_noche'),
-                    'sueldo_ordinario'       		=> $request->input('sueldo_ordinario'),
-                    'sueldo_ex_dia'       		    => $request->input('sueldo_ex_dia'),
-                    'sueldo_ex_noche'               => $request->input('sueldo_ex_noche'),
-                    'total_ex'                      => $request->input('total_ex'),
-                    'bon_legal'                     => $request->input('bon_legal'),
-                    'bon_inc_base'       		    => $request->input('bon_inc_base'),
-                    'incentivo_pn'       		    => $request->input('incentivo_pn'),
-                    'incentivo_as'       		    => $request->input('incentivo_as'),
-                    'incentivo_pn1'       		    => $request->input('incentivo_pn1'),
-                    'incentivo_as1'       		    => $request->input('incentivo_as1'),
-                    'total_bn_inc'       		    => $request->input('total_bn_inc'),
-                    'total_ingresos'       		    => $request->input('total_ingresos'),
-                    'igss'       		            => $request->input('igss'),
-                    'isr'       		            => $request->input('isr'),
-                    'otros_descuentos'       		=> $request->input('otros_descuentos'),
-                    'total_descuentos'       		=> $request->input('total_descuentos'),
-                    'total'       		            => $request->input('total'),
-                    'sueldo_base'       		    => $request->input('sueldo_base'),
-                    ]);
-                if ($record) {
-                    $this->status_code  = 200;
-                    $this->result       = true;
-                    $this->message      = 'Registro de  planilla creado correctamente';
-                    $this->records      = $record;
+                $validacion = Planilla::where('no_empleado',$request->input('no_empleado'))->first();
+                if (!$validacion) {
+                    $record = Planilla::create([
+                        'no_empleado'                   => $request->input('no_empleado'),
+                        'nombre'       			        => $request->input('nombre'),
+                        // 'dias_trabajados'       		=> $request->input('dias_trabajados'),
+                        // 'horas_ex_dia'          		=> $request->input('horas_ex_dia'),
+                        // 'horas_ex_noche'          		=> $request->input('horas_ex_noche'),
+                        'sueldo_base'       		=> $request->input('sueldo_base'),
+                        // 'sueldo_ex_dia'       		    => $request->input('sueldo_ex_dia'),
+                        // 'sueldo_ex_noche'               => $request->input('sueldo_ex_noche'),
+                        // 'total_ex'                      => $request->input('total_ex'),
+                        // 'bon_legal'                     => $request->input('bon_legal'),
+                        // 'bon_inc_base'       		    => $request->input('bon_inc_base'),
+                        // 'incentivo_pn'       		    => $request->input('incentivo_pn'),
+                        // 'incentivo_as'       		    => $request->input('incentivo_as'),
+                        // 'incentivo_pn1'       		    => $request->input('incentivo_pn1'),
+                        // 'incentivo_as1'       		    => $request->input('incentivo_as1'),
+                        // 'total_bn_inc'       		    => $request->input('total_bn_inc'),
+                        // 'total_ingresos'       		    => $request->input('total_ingresos'),
+                        // 'igss'       		            => $request->input('igss'),
+                        // 'isr'       		            => $request->input('isr'),
+                        // 'otros_descuentos'       		=> $request->input('otros_descuentos'),
+                        // 'total_descuentos'       		=> $request->input('total_descuentos'),
+                        // 'total'       		            => $request->input('total'),
+                        // 'sueldo_base'       		    => $request->input('sueldo_base'),
+                        ]);
+                    if ($record) {
+                        $this->status_code  = 200;
+                        $this->result       = true;
+                        $this->message      = 'Registro de  planilla creado correctamente';
+                        $this->records      = $record;
+                    } else {
+                        throw new \Exception('El registro no pudo ser creado');
+                    }
                 } else {
-                    throw new \Exception('El registro de planill no pudo ser creado');
+                    throw new \Exception('El registro ya existe');
                 }
             } catch (\Exception $e) {
                 $this->status_code  = 400;

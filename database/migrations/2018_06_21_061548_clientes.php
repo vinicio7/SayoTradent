@@ -16,10 +16,10 @@ class Clientes extends Migration
         Schema::create('clientes', function (Blueprint $table) {
             $table->increments('id');
             $table->String('nombre');
-            $table->Integer('nit');
+            $table->text('nit');
             $table->Integer('telefono');
             $table->String('direccion');
-            $table->Float('credito');
+            $table->decimal('credito', 8, 2);
             $table->timestamps();
         });
     }

@@ -16,7 +16,7 @@ class Proveedores extends Migration
         Schema::create('proveedores', function (Blueprint $table) {
             $table->increments('id');
             $table->String('nombre');
-            $table->Integer('nit');
+            $table->text('nit');
             $table->String('descripcion');
             $table->timestamps();
         });
