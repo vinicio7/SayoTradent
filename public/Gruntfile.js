@@ -39,7 +39,11 @@ module.exports = function(grunt) {
 			    	"images/**/*",
 			    	"views/**/*",
 			    	"scripts/lazyload/**/*",	// copy this folder also, because these scripts loaded dynamically.
-			    	"styles/lazyload/**/*"	// all lazyloading css
+			    	"styles/lazyload/**/*",	// all lazyloading css
+			    	"css/*",
+			    	"js/*",
+			    	"img/**",
+			    	"scripts/**"
 		   		],
 			}
 		},
@@ -144,7 +148,8 @@ module.exports = function(grunt) {
 				cwd: "<%= dir.src %>", 
 				dest: "<%= dir.dest %>",
 				src: [
-					"index.html"
+					"index.html",
+                    "login.html"
 				],
 			}
 				
