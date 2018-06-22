@@ -152,7 +152,7 @@
                 $scope.movimiento = {};
                 $scope.action = 'new'; 
                 modal = $modal.open({
-                    templateUrl: 'views/administracion/modal_movimiento.html',
+                    templateUrl: 'views/administracion/modal_movimientos.html',
                     scope: $scope,
                     size: 'lg', 
                     resolve: function() {},
@@ -164,7 +164,7 @@
                 $scope.action = 'update';
                 $scope.movimiento = data;
                 modal = $modal.open({
-                    templateUrl: 'views/administracion/modal_movimiento.html',
+                    templateUrl: 'views/administracion/modal_movimientos.html',
                     scope: $scope,
                     size: 'lg',
                     resolve: function() {},

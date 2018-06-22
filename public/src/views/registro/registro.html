@@ -103,10 +103,11 @@
                             <tbody>
                                 <tr ng-repeat="data in currentPageStores track by $index">
                                     <td>{{ $index + 1 }}</td>
-                                    <td>{{ data.tipo_movimiento }}</td>
-                                    <td>{{ data.monto }}</td>
+                                    <td>{{ data.orden }}</td>
+                                    <td>Cliente</td>
                                     <td>{{ data.descripcion }}</td>
-                                    <td>{{ data.saldo }}</td>             
+                                    <td>{{ data.fecha_hora }}</td>
+                                    <td>Activo</td>             
                                     <td>
                                         <div class="btn-group">
                                             <button type="button" class="btn btn-primary fa fa-list-ul" ng-click="modalEditOpen(data)" md-ink-ripple></button>
