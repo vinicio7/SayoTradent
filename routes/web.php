@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-		return redirect(env('PHASE'));
+		return redirect('dist');
 });
 
 Route::group(['prefix' => 'ws'], function (){

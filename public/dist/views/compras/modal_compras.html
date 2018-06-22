@@ -1,0 +1,60 @@
+<div class="modal-style">
+    <div class="modal-header clearfix">
+        <h4 ng-if="action == 'new'" class="modal-title">Nueva compra</h4>
+        <h4 ng-if="action == 'update'" class="modal-title">Editar compra</h4>
+        <h4 ng-if="action == 'delete'" class="modal-title">Eliminar compra</h4>
+        <span class="close ion ion-android-close" ng-click="modalClose()"></span>
+    </div>
+    <div class="modal-body">
+        <div class="row form-group" ng-if="action == 'delete'">
+            <h3>¿Está seguro de eliminar esta compra?</h3>
+        </div>
+        <form class="form-horizontal" name="form" ng-if="action != 'delete'" action="javascript:;" novalidate>
+            <div class="row form-group">
+                <div class="col-sm-4">
+                    <label>No. de factura</label>
+                    <input type="text" class="form-control" ng-model="compra.no_factura" required>
+                </div>
+                <div class="col-sm-4">
+                    <label>Producto</label>
+                    <input type="text" class="form-control" ng-model="compra.producto" required>
+                </div>
+                <div class="col-sm-4">
+                    <label>Cantidad</label>
+                    <input type="text" class="form-control" ng-model="compra.cantidad" required>
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-sm-4">
+                    <label>Proveedor</label>
+                    <select class="form-control" ng-model="compra.id_proveedor" >
+                        <option disabled="" >Seleccione una opción</option>
+                        <option ng-repeat="item in proveedores" value="{{item.id}}">{{item.nombre}}</option>
+                    </select>
+                </div>
+                <div class="col-sm-4">
+                    <label>Precio</label>
+                    <input type="text" class="form-control" ng-model="compra.precio" required>
+                </div>
+                <div class="col-sm-4">
+                    <label>Fecha</label>
+                    <input type='date' class="form-control" ng-model="compra.fecha" required>
+                </div>
+            </div>
+            
+            <div class="row form-group">
+                <div class="col-sm-12 text-right">
+                    <button class="btn btn-danger" ng-click="modalClose()">Cerrar</button>
+                    <button class="btn btn-success" ng-if="action == 'new'" ng-disabled="form.$invalid" ng-click="saveData(compra)">Registrar</button>
+                    <button class="btn btn-success" ng-if="action == 'update'" ng-disabled="form.$invalid" ng-click="saveData(compra)">Editar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="row form-group">
+        <div class="col-sm-10 text-right">
+            <button class="btn btn-success" ng-if="action == 'delete'" ng-click="modalClose()">Cerrar</button>
+            <button class="btn btn-danger"  ng-if="action == 'delete'" ng-click="saveData(compra)">Eliminar</button>
+        </div>
+    </div>
+</div>
