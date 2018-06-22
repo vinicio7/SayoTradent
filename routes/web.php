@@ -27,7 +27,10 @@ Route::group(['prefix' => 'ws'], function (){
 	Route::any 		('excel/proveedores', 	'ExcelController@reporteProveedores');
 	Route::any 		('excel/clientes', 		'ExcelController@reporteClientes');
 	Route::any 		('excel/compras', 		'ExcelController@reporteCompras');
+	Route::any 		('excel/movimientos', 	'ExcelController@reporteMovimientos');
 	Route::resource ('ordenes', 			'OrdenesController');
+	Route::resource ('movimientos', 		'MovimientosController');
+	// Route::resource ('empresa', 			'EmpresasController');
 });
 
 Auth::routes();

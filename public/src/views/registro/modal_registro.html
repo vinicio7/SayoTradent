@@ -12,10 +12,6 @@
             <form class="form-horizontal" name="form" ng-if="action != 'delete'" action="javascript:;" novalidate>
                 <div class="row form-group">
                     <div class="col-sm-4">
-                        <label>Cliente</label>
-                        <input type="text" ng-model="registro.cliente" class="form-control" required>
-                    </div>
-                    <div class="col-sm-4">
                         <label>Orden</label>
                         <input type="text" ng-model="registro.orden" class="form-control" required>
                     </div>
@@ -23,25 +19,34 @@
                         <label>Fecha y Hora de Ingreso</label>
                         <input type="datetime-local" ng-model="registro.fecha_hora" class="form-control" required>
                     </div>
-                    <div class="col-sm-4" style="margin-top: 10px;">
+                    <div class="col-sm-4">
                         <label>Empresa</label>
-                        <input type="text" ng-model="registro.empresa" class="form-control" required>
+                        <input type="text" ng-model="registro.id_empresa" class="form-control" required>
                     </div>
+                    
                     <div class="col-sm-4" style="margin-top: 10px;">
                         <label>PO</label>
                         <input type="text" ng-model="registro.po" class="form-control" required>
                     </div>
+
                     <div class="col-sm-4" style="margin-top: 10px;">
                         <label>Estilo</label>
-                        <input type="text" ng-model="registro.estilo" class="form-control" required>
+                        <input type="text" ng-model="registro.id_estilo" class="form-control" required>
                     </div>
+
                     <div class="col-sm-4" style="margin-top: 10px;">
                         <label>Descripcion</label>
                         <input type="text" ng-model="registro.descripcion" class="form-control" required>
                     </div>
+
+                    <div class="col-sm-4" style="margin-top: 10px;">
+                        <label>Calibre</label>
+                        <input type="text" ng-model="registro.id_calibre" class="form-control" required>
+                    </div>
+                    
                     <div class="col-sm-4" style="margin-top: 10px;">
                         <label>Metraje</label>
-                        <input type="text" ng-model="registro.metraje" class="form-control" required>
+                        <input type="text" ng-model="registro.id_metraje" class="form-control" required>
                     </div>
                     <div class="col-sm-4" style="margin-top: 10px;">
                         <label>Tipo</label>
@@ -53,28 +58,39 @@
                     </div>
                     <div class="col-sm-4" style="margin-top: 10px;">
                         <label>Color</label>
-                        <input type="text" ng-model="registro.color" class="form-control" required>
+                        <input type="text" ng-model="registro.id_color" class="form-control" required>
                     </div>
                     <div class="col-sm-4" style="margin-top: 10px;">
                         <label>Cantidad</label>
                         <input type="number" ng-model="registro.cantidad" class="form-control" required>
                     </div>
                     <div class="col-sm-4" style="margin-top: 10px;">
-                        <label>Precio</label>
-                        <input type="number" ng-model="registro.precio" class="form-control" required>
-                    </div>
-                     <div class="col-sm-4" style="margin-top: 10px;">
-                        <label>Referencias</label>
-                        <input type="text" ng-model="registro.referencias" class="form-control" required>
-                    </div>
-                    <div class="col-sm-4" style="margin-top: 10px;">
-                        <label>Lugar de entrega</label>
-                        <input type="text" ng-model="registro.lugar_entrega" class="form-control" required>
-                    </div>
-                    <div class="col-sm-4" style="margin-top: 10px;">
                         <label>Estado</label>
                         <input type="text" ng-model="registro.estado" class="form-control" required>
                     </div>
+                    <div class="col-sm-4" style="margin-top: 10px;">
+                        <label>Precio</label>
+                        <input type="number" ng-model="registro.precio" class="form-control" required>
+                    </div>
+
+                    <div class="col-sm-4"  style="margin-top: 10px;">
+                        <label>Fecha de Entrega</label>
+                        <input type="datetime-local" ng-model="registro.fecha_entrega" class="form-control" required>
+                    </div>
+
+                     <div class="col-sm-4" style="margin-top: 10px;">
+                        <label>Fecha de Aprobación</label>
+                        <input type="text" ng-model="registro.fecha_aprobacion" class="form-control" required>
+                    </div>
+                    <div class="col-sm-4" style="margin-top: 10px;">
+                        <label>Referencia</label>
+                        <input type="text" ng-model="registro.id_referencias" class="form-control" required>
+                    </div>
+                    <div class="col-sm-4" style="margin-top: 10px;">
+                        <label>Lugar de entrega</label>
+                        <input type="text" ng-model="registro.id_lugar" class="form-control" required>
+                    </div>
+                    
 
                 </div>
                 <br>
