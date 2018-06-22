@@ -14,7 +14,8 @@ module.exports = function(grunt) {
 		dir: dirConfig,
 		uglify: {
 			options: {
-				mangle: false
+				mangle: false,
+				maxLineLen: 100000
 			},
 			// compress it dynamically, then concatenate with grunt concat.
 			dist: {
