@@ -7,6 +7,7 @@ use App\Usuarios;
 use App\Proveedores;
 use App\Clientes;
 use App\Compras;
+use App\Movimientos;
 
 class ExcelController extends Controller
 {
@@ -141,6 +142,30 @@ class ExcelController extends Controller
                    $data[] = $row;
                 } 
                 // dd($data);
+          $sheet->fromArray($data);
+      });
+      })->export('xls');
+    }
+
+    public function reporteMovimientos(Request $request){
+        \Excel::create('Movimientos', function($excel) use ($request){
+             $excel->sheet('Datos', function($sheet) use ($request) {
+
+                $reporte = Movimientos::all();
+                // dd($reporte);
+
+             $data = [];
+                foreach ($reporte as $reporte) {
+                   $row = [];
+                   $row ["Tipo de Movimiento"]     = $reporte->tipo_movimiento;
+                   $row ["Monto"]                  = $reporte->monto;
+                   $row ["Descripción"]            = $reporte->descripcion;
+                   $row ["Saldo"]                  = $reporte->saldo;
+                   $row ["Fecha de Creación"]      = $reporte->created_at;
+              
+                   $data[] = $row;
+                } 
+
           $sheet->fromArray($data);
       });
       })->export('xls');

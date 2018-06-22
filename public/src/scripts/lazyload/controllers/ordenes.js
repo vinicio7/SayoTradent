@@ -2,9 +2,10 @@
 {
     'use strict';
 
-    angular.module('app.registro', [])
+    angular.module('app.ordenes', ['app.service.ordenes'])
 
-        .controller('RegistroController', ['$scope', '$filter', '$http', '$modal', '$interval', function($scope, $filter, $http, $modal, $timeout)  {
+        .controller('OrdenesController', ['$scope', '$filter', '$http', '$modal', '$interval', 'OrdenesService', function($scope, $filter, $http, $modal, $timeout, OrdenesService)  {
+           
             // General variables
             $scope.datas = [];
             $scope.currentPageStores = [];
@@ -19,14 +20,21 @@
             var modal;
 
             // Function for load table
-            // function loadDataTable() {
-            //     var params = { company_id:user_data.company_id };
-            //     CustomersService.index(params).then(function(response) {
-            //         $scope.datas = response.data.records;
-            //         $scope.search();
-            //         $scope.select($scope.currentPage);
-            //     });
-            // }
+            function MostarDatos() {
+                OrdenesService.index().then(function(response) {
+                    $scope.datas = response.data.records;
+                    $scope.search();
+                    $scope.select($scope.currentPage);
+                });
+            }
+
+            $scope.redirect = function(){ 
+               
+                window.location="../ws/excel/proveedores";
+                createToast('success', '<strong>Éxito: </strong>'+'Reporte Creado Exitosamente');
+                $timeout( function(){ closeAlert(0); }, 3000);
+            
+            }
 
             // Functions of table
             $scope.select = function(page) {
@@ -65,7 +73,7 @@
                 $scope.onOrderChange();
             };
 
-            // loadDataTable();
+            MostarDatos();
 
             // Function for toast
             function createToast (type, message) {
@@ -82,12 +90,12 @@
 
             // Function for sending data
             $scope.saveData = function (customer) {
+                console.log(customer);
                 if ($scope.action == 'new') {
-                    customer.company_id = user_data.company_id;
-                    CustomersService.store(customer).then(
+                    OrdenesService.store(customer).then(
                         function successCallback(response) {
                             if (response.data.result) {
-                                loadDataTable();
+                                MostarDatos();
                                 modal.close();
                                 createToast('success', '<strong>Éxito: </strong>'+response.data.message);
                                 $timeout( function(){ closeAlert(0); }, 3000);
@@ -103,7 +111,7 @@
                     );
                 }
                 else if ($scope.action == 'update') {
-                    CustomersService.update(customer).then(
+                    OrdenesService.update(customer).then(
                         function successCallback(response) {
                             if (response.data.result) {
                                 modal.close();
@@ -121,10 +129,10 @@
                     );
                 }
                 else if ($scope.action == 'delete') {
-                    CustomersService.destroy(customer.id).then(
+                    OrdenesService.destroy(customer.id).then(
                         function successCallback(response) {
                             if (response.data.result) {
-                                loadDataTable();
+                                MostarDatos();
                                 modal.close();
                                 createToast('success', '<strong>Éxito: </strong>'+response.data.message);
                                 $timeout( function(){ closeAlert(0); }, 3000);
@@ -139,16 +147,15 @@
                         }
                     );
                 }
-            };
-
+            };   
             // Functions for modals
             $scope.modalCreateOpen = function() {
-                $scope.action = 'new';
-
+                $scope.registro = {};
+                $scope.action = 'new'; 
                 modal = $modal.open({
                     templateUrl: 'views/registro/modal_registro.html',
                     scope: $scope,
-                    size: 'lg',
+                    size: 'lg', 
                     resolve: function() {},
                     windowClass: 'default'
                 });
@@ -156,8 +163,7 @@
 
             $scope.modalEditOpen = function(data) {
                 $scope.action = 'update';
-                $scope.customer = data;
-
+                $scope.registro = data;
                 modal = $modal.open({
                     templateUrl: 'views/registro/modal_registro.html',
                     scope: $scope,
@@ -165,12 +171,12 @@
                     resolve: function() {},
                     windowClass: 'default'
                 });
+            
             };
 
             $scope.modalDeleteOpen = function(data) {
                 $scope.action = 'delete';
-                $scope.customer = data;
-
+                $scope.registro = data;
                 modal = $modal.open({
                     templateUrl: 'views/registro/modal_registro.html',
                     scope: $scope,
@@ -182,6 +188,7 @@
 
             $scope.modalClose = function() {
                 modal.close();
+                MostarDatos();
             }
         }])
 }());
