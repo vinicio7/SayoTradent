@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CrearTablaMuestras extends Migration
+class Crearmuestras extends Migration
 {
     /**
      * Run the migrations.
@@ -15,11 +15,12 @@ class CrearTablaMuestras extends Migration
     {
         Schema::create('muestras', function (Blueprint $table) {
             $table->increments('id');
-            $table->Integer('id_orden');
-            $table->integer('tipo');//1 2 3 
-            $table->Date('fecha');
-            $table->String('envio');
-            $table->integer('cantidad');
+            $table->String('id_orden');
+            $table->Datetime('fecha_hora');
+            $table->String ('envio');
+            $table->String('rechazo')->nullable();
+            $table->Datetime('fecha_ok');
+            $table->String('id_estado');
             $table->timestamps();
         });
     }

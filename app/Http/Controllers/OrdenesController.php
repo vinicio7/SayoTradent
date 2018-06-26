@@ -4,6 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Orden;
+use App\Empresa;
+use App\Estilo;
+use App\Calibre;
+use App\Color;
+use App\Referencia;
+use App\Lugar;
+use App\Metraje;
+use App\Muestra;
+use App\Estados;
+use App\Despachos;
 use App\Http\Controllers\Controller;
 use Validator;
 
@@ -42,6 +52,29 @@ class OrdenesController extends Controller
     {
         try {
             $records           = Empresa::all();
+            $this->status_code = 200;
+            $this->result      = true;
+            $this->message     = 'Registros consultados correctamente';
+            $this->records     = $records;
+        } catch (\Exception $e) {
+            $this->status_code = 400;
+            $this->result      = false;
+            $this->message     = env('APP_DEBUG')?$e->getMessage():$this->message;
+        }finally{
+            $response = [
+                'result'  => $this->result,
+                'message' => $this->message,
+                'records' => $this->records,
+            ];
+
+            return response()->json($response, $this->status_code);
+        }
+    }
+
+    public function estado()
+    {
+        try {
+            $records           = Estados::all();
             $this->status_code = 200;
             $this->result      = true;
             $this->message     = 'Registros consultados correctamente';
@@ -201,31 +234,46 @@ class OrdenesController extends Controller
 
     public function store(Request $request)
     {
-        try
-        {
-            $validator = $this->rules($request);
-            if (!$validator->fails()) {
-                $this->records = Orden::create($request->all());
-                $this->result  = true;
-                $this->message = 'Registro creado exitosamente.';
+        try {
+            $record = Orden::create([
+                'orden'                 => $request->input('orden'),
+                'fecha_hora'       	    => date("Y-m-d", strtotime($request->input('fecha_hora'))),
+                'id_empresa'       		=> $request->input('id_empresa'),
+                'po'          		    => $request->input('po'),
+                'id_estilo'          	=> $request->input('id_estilo'),
+                'descripcion'       	=> $request->input('descripcion'),
+                'id_calibre'       		=> $request->input('id_calibre'),
+                'id_metraje'            => $request->input('id_metraje'),
+                'tipo'                  => $request->input('tipo'),
+                'id_color'              => $request->input('id_color'),
+                'cantidad'       		=> $request->input('cantidad'),
+                'balance'       		=> $request->input('cantidad'),
+                'total_salida'       	=> '0',
+                'amount'                => '0',
+                'precio'       		    => $request->input('precio'),
+                'fecha_entrega'         =>date("Y-m-d", strtotime($request->input('fecha_entrega'))),
+                'id_referencias'       	=> $request->input('id_referencias'),
+                'id_lugar'       		=> $request->input('id_lugar'),
+                ]);
+            if ($record) {
+                $this->status_code  = 200;
+                $this->result       = true;
+                $this->message      = 'Registro de  planilla creado correctamente';
+                $this->records      = $record;
             } else {
-                $this->result = false;
-                $this->message = $validator->messages()->first();
+                throw new \Exception('El registro de planill no pudo ser creado');
             }
-        }
-        catch(Exception $e)
-        {
-            $this->status_code  = 200;
+        } catch (\Exception $e) {
+            $this->status_code  = 400;
             $this->result       = false;
             $this->message      = env('APP_DEBUG') ? $e->getMessage() : $this->message;
-        }
-        finally
-        {
+        } finally {
             $response = [
-                'result'    =>  $this->result,
-                'message'   =>  $this->message,
-                'records'   =>  $this->records
+                'result'  => $this->result,
+                'message' => $this->message,
+                'records' => $this->records,
             ];
+
             return response()->json($response, $this->status_code);
         }
     }
@@ -315,56 +363,132 @@ class OrdenesController extends Controller
         }
     }
 
-        private function rules($request)
-        {
-            switch ($request->method())
-            {
-                case 'GET':
-                case 'POST':
-                    {
-                        return Validator::make($request->all(), [
-                            'orden'              => 'required',
-                            'fecha_hora'         => 'required',
-                            'id_empresa'         => 'required',
-                            'po'                 => 'required',
-                            'id_estilo'          => 'required',
-                            'descripcion'        => 'required',
-                            'id_calibre'         => 'required',
-                            'id_metraje'         => 'required',
-                            'tipo'               => 'required',
-                            'id_color'           => 'required',
-                            'cantidad'           => 'required',
-                            'estado'             => 'required',
-                            'precio'             => 'required',
-                            'fecha_entrega'      => 'required',
-                            'fecha_aprobacion'   => 'required',
-                            'id_referencias'     => 'required',
-                            'id_lugar'           => 'required'
-                        ]);
-                    }
-                case 'PUT':
-                    {
-                        return Validator::make($request->all(), [
-                            'cantidad'          => 'required',
-                            'cliente'           => 'required',
-                            'color'             => 'required',
-                            'descripcion'       => 'required',
-                            'empresa'           => 'required',
-                            'estado'            => 'required',
-                            'estilo'            => 'required',
-                            'fecha_hora'        => 'required',
-                            'lugar_entrega'     => 'required',
-                            'metraje'           => 'required',
-                            'orden '            => 'required',
-                            'po'                => 'required',
-                            'precio'            => 'required',
-                            'referencias '      => 'required',
-                            'tipo'               => 'required'
-                        ]);
-                    }
-                case 'PATCH':
-                case 'DELETE':
-                default: break;
+    public function muestrastore(Request $request)
+    {
+        // dd($request);
+        try {
+            $record = Muestra::create([
+                
+                'fecha_hora'       	=> date("Y-m-d", strtotime($request->input('fecha_hora'))),
+                'id_orden'       	=> $request->input('id_orden'),
+                'envio'       		=> $request->input('envio'),
+                'rechazo'           => $request->input('rechazo'),
+                'fecha_ok'          =>date("Y-m-d", strtotime($request->input('fecha_ok'))),
+                'id_estado'       	=> $request->input('id_estado'),
+                ]);
+            if ($record) {
+                $this->status_code  = 200;
+                $this->result       = true;
+                $this->message      = 'Registro de  planilla creado correctamente';
+                $this->records      = $record;
+            } else {
+                throw new \Exception('El registro de planill no pudo ser creado');
             }
+        } catch (\Exception $e) {
+            $this->status_code  = 400;
+            $this->result       = false;
+            $this->message      = env('APP_DEBUG') ? $e->getMessage() : $this->message;
+        } finally {
+            $response = [
+                'result'  => $this->result,
+                'message' => $this->message,
+                'records' => $this->records,
+            ];
+
+            return response()->json($response, $this->status_code);
         }
+    }
+
+    public function mostrarmuestra($id)
+    {
+        // dd("llego");
+        try {
+
+            $this->status_code  = 200;
+            $this->result       = true;
+            $this->message      = 'Registro consultado correctamente.';
+            $this->records      = Muestra::where('id_orden', $id)->with('estados')->get();
+
+        } catch (Exception $e) {
+            $this->status_code  = 200;
+            $this->result       = false;
+            $this->message      = env('APP_DEBUG') ? $e->getMessage() : $this->message;
+        } finally {
+            $response = [
+                'result'    =>  $this->result,
+                'message'   =>  $this->message,
+                'records'   =>  $this->records
+            ];
+
+            return response()->json($response, $this->status_code);
+        }
+    }
+
+
+    public function despachostore(Request $request)
+    {
+        // dd($request);
+        try {
+            $record = Despachos::create([
+                
+                'fecha'       	    => date("Y-m-d", strtotime($request->input('fecha_hora'))),
+                'id_orden'       	=> $request->input('id_orden'),
+                'envio'       		=> $request->input('envio'),
+                'cantidad'          => $request->input('cantidad'),
+               
+                ]);
+            if ($record) {
+                $record                 = Orden::find($request->input('id_orden'));
+                $record->total_salida   = $record->total_salida + $request->input('cantidad');
+                $record->balance        = $record->balance - $record->total_salida;
+                $record->amount         = $record->precio * $record->total_salida;
+                
+                $record->save();
+                $this->status_code      = 200;
+                $this->result           = true;
+                $this->message          = 'Registro de despacho creado correctamente';
+                $this->records          = $record;
+            } else {
+                throw new \Exception('El registro de despacho no pudo ser creado');
+            }
+        } catch (\Exception $e) {
+            $this->status_code  = 400;
+            $this->result       = false;
+            $this->message      = env('APP_DEBUG') ? $e->getMessage() : $this->message;
+        } finally {
+            $response = [
+                'result'  => $this->result,
+                'message' => $this->message,
+                'records' => $this->records,
+            ];
+
+            return response()->json($response, $this->status_code);
+        }
+    }
+
+
+    public function mostrardespacho($id)
+    {
+        // dd("llego");
+        try {
+
+            $this->status_code  = 200;
+            $this->result       = true;
+            $this->message      = 'Registro consultado correctamente.';
+            $this->records      = Despachos::where('id_orden', $id)->get();
+
+        } catch (Exception $e) {
+            $this->status_code  = 200;
+            $this->result       = false;
+            $this->message      = env('APP_DEBUG') ? $e->getMessage() : $this->message;
+        } finally {
+            $response = [
+                'result'    =>  $this->result,
+                'message'   =>  $this->message,
+                'records'   =>  $this->records
+            ];
+
+            return response()->json($response, $this->status_code);
+        }
+    }
 }
