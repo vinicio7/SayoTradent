@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <!-- <base href="/"> -->
+
+        <title>Sayo Trading - Sistema de Control</title>
+
+        <!-- Icons -->
+        <link rel="shortcut icon" href="../img/favicon.png" type="image/png" />
+        <link rel="stylesheet" href="fonts/ionicons/css/ionicons.min.css">
+        <link rel="stylesheet" href="fonts/font-awesome/css/font-awesome.min.css">
+
+
+        <!-- Css/Less Stylesheets -->
+        <link rel="stylesheet" href="styles/angular-material.min.css"/>
+        <link rel="stylesheet" href="styles/bootstrap.min.css"/>
+        <link rel="stylesheet" href="styles/main.min.css"/>
+
+        <!-- <link rel="stylesheet" href="styles/vendors/bootstrap.min.css"> -->
+        <!-- <link rel="stylesheet" href="_tmp/main.min.css"> -->
+
+        <link href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,300' rel='stylesheet' type='text/css'>
+
+        <!-- Match Media polyfill for IE9 -->
+        <!--[if IE 9]> <script src="scripts/ie/matchMedia.js"></script>  <![endif]-->
+        
+    </head>
+
+    <body ng-app="login" ng-controller="LoginController"  style="background-image: url(../img/ddd.png); background-repeat: no-repeat; -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;">
+        <div class="page page-auth">
+            <!-- <div class="auth-container" style="opacity: 0.7;margin-top: 60px;"> -->
+            <div class="auth-container" style="margin-top: 60px;">
+                <div class="form-head mb20">
+                    <center><img src="../img/amd.png" style="width: 300px;"></center>
+                    <!-- <h1 class="site-logo h2 mb5 mt5 text-center text-uppercase text-bold"><a href="/">Remax Platinum</a></h1> -->
+                    <h5 class="text-normal h4 text-center" style="color:white">Iniciar sesión en <b style="color:white">Sayo Trading</b></h5>
+                </div>
+                <div class="form-container">
+                    <form class="form-horizontal" action="javascript:;">
+                        <md-input-container>
+                            <label >Usuario</label>
+                            <input type="text" placeholder="Ingrese su usuario" ng-model="info.usuario">
+                        </md-input-container>
+                        <md-input-container>
+                            <label >Contraseña</label>
+                            <input type="password" placeholder="Ingrese su contraseña" ng-model="info.password">
+                        </md-input-container>
+                        <div class="btn-group btn-group-justified mb15">
+                            <div class="btn-group">
+                                <button type="submit" class="btn btn-success" ng-disabled="form.$valid" ng-click="iniciarSesion(info)" style="background-color: #4472c4;border-color:#4472c4"><h4>Ingresar</h4></button>
+                            </div>
+                        </div>
+                        <div class="clearfix text-right small">
+                             <!-- <h5><a href="http://52.70.43.79/remax-web/public/src/resetpassword.html" style="color:#de152b">Restablecer Contraseña</a></h5> -->
+                            <h5><a href="" style="color:white">Restablecer Contraseña</a></h5> 
+                        </div>
+                        <div class="clearfix text- small">
+                            <h5 style="color:#4472c4">Todos los derechos reservados - <a href="http://researchmobile.co" style="color:#4472c4">Researchmobile</a></h5>
+                        </div>
+
+                    </form>
+                </div>
+            </div> <!-- #end signin-container -->
+        </div>
+        <div class="toast toast-{{positionModel}}">
+            <alert ng-repeat="toast in toasts" type="{{toast.type}}" close="closeAlert($index)" class="toast-{{toast.anim}}">
+                <div ng-bind-html="toast.msg"></div>
+            </alert>
+        </div>
+    </body>
+    <!-- #settings -->
+<!-- 
+    <footer style="background-color: #d01625; margin-top: 240px; height: 60px">
+        <div height="70px">
+            <center><h4><bDesign by Research mobile 2017</h4></center>
+        </div>
+    </footer> -->
+
+
+    <!-- Dev only -->    <script src="https://maps.google.com/maps/api/js?key=AIzaSyAXFQKuj7guxJIc5mDFR6XRGrxeVJ09vVc&sensor=true"></script>
+
+    <script src="scripts/vendors.js"></script>
+
+    <script src="scripts/plugins.js"></script>
+
+
+    <script src="scripts/app.js"></script>
+    <script src="../node_modules/angular-local-storage/dist/angular-local-storage.js"></script>
+    <script src="scripts/lazyload/controllers/login.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/es5-shim/2.2.0/es5-shim.js"></script>
+    <script src="../node_modules/angular-local-storage/dist/angular-local-storage.js"></script>
+    <script>
+      document.createElement('ui-select');
+      document.createElement('ui-select-match');
+      document.createElement('ui-select-choices');
+    </script>
+</html>

@@ -14,7 +14,8 @@ module.exports = function(grunt) {
 		dir: dirConfig,
 		uglify: {
 			options: {
-				mangle: false
+				mangle: false,
+				maxLineLen: 100000
 			},
 			// compress it dynamically, then concatenate with grunt concat.
 			dist: {
@@ -38,7 +39,11 @@ module.exports = function(grunt) {
 			    	"images/**/*",
 			    	"views/**/*",
 			    	"scripts/lazyload/**/*",	// copy this folder also, because these scripts loaded dynamically.
-			    	"styles/lazyload/**/*"	// all lazyloading css
+			    	"styles/lazyload/**/*",	// all lazyloading css
+			    	"css/*",
+			    	"js/*",
+			    	"img/**",
+			    	"scripts/**"
 		   		],
 			}
 		},
@@ -143,7 +148,8 @@ module.exports = function(grunt) {
 				cwd: "<%= dir.src %>", 
 				dest: "<%= dir.dest %>",
 				src: [
-					"index.html"
+					"index.html",
+                    "login.html"
 				],
 			}
 				

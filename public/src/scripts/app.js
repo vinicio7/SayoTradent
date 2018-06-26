@@ -396,6 +396,19 @@
 		// fin
 
 		// Planilla
+		$routeProvider.when("/teñido", {
+			templateUrl: "views/bodega/teñido.html",
+			controller: "TenidoController",
+			resolve: {
+				 deps: ["$ocLazyLoad", function(a) {
+                    return a.load({
+                        name: 'app.planilla',
+                        files: ['scripts/lazyload/controllers/tenido.js']
+                    })
+                }]
+			}
+		});
+
 		$routeProvider.when("/administracion/planilla", {
 			templateUrl: "views/administracion/planilla.html",
 			controller: "PlanillaController",
@@ -420,6 +433,19 @@
                     return a.load({
                         name: 'app.proveedores',
                         files: ['scripts/lazyload/controllers/proveedores.js']
+                    })
+                }]
+			}
+		});
+
+		$routeProvider.when("/administracion/movimientos", {
+			templateUrl: "views/administracion/movimientos.html",
+			controller: "MovimientosController",
+			resolve: {
+				 deps: ["$ocLazyLoad", function(a) {
+                    return a.load({
+                        name: 'app.proveedores',
+                        files: ['scripts/lazyload/controllers/movimientos.js']
                     })
                 }]
 			}
