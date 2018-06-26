@@ -19,6 +19,51 @@ contactos_service.service('OrdenesService', ['$http', 'WS_URL', function($http, 
         return $http.delete(WS_URL+'ordenes/' + id);
     };
 
+    this.empresas = function(params){
+        return $http.get(WS_URL+'empresa');
+    };
+
+    this.estilos = function(params){
+        return $http.get(WS_URL+'estilos');
+    };
     
+    this.calibres = function(params){
+        return $http.get(WS_URL+'calibres');
+    };
+
+    this.metrajes = function(params){
+        return $http.get(WS_URL+'metraje');
+    };
+
+    this.colores = function(params){
+        return $http.get(WS_URL+'colores');
+    };
    
+    this.referencias = function(params){
+        return $http.get(WS_URL+'referencias');
+    };
+
+    this.lugares = function(params){
+        return $http.get(WS_URL+'lugares');
+    };
+
+    this.estados = function(params){
+        return $http.get(WS_URL+'estados');
+    };
+
+    this.muestra = function(params){
+        return $http.post(WS_URL+'muestra', params);
+    };
+
+    this.show = function(id){
+        return $http.get(WS_URL+'mostrar/muestra/'+id);
+    };
+
+    this.despachos = function(params){
+        return $http.post(WS_URL+'despachos', params);
+    };
+
+    this.show_despachos = function(id){
+        return $http.get(WS_URL+'mostrar/despacho/'+id);
+    };
 }]);
