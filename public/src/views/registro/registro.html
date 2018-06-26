@@ -49,17 +49,6 @@
                                     </div>
                                 </th>
                                 <th>
-                                    Cliente
-                                    <div class="th">
-                                        <i class="fa fa-caret-up icon-up"
-                                            ng-click=" order('phone') "
-                                            ng-class="{active: row == 'phone'}"></i>
-                                        <i class="fa fa-caret-down icon-down"
-                                            ng-click=" order('-phone') "
-                                            ng-class="{active: row == '-phone'}"></i>
-                                    </div>
-                                </th>
-                                <th>
                                     Descripción
                                     <div class="th">
                                         <i class="fa fa-caret-up icon-up"
@@ -82,8 +71,33 @@
                                             ng-class="{active: row == '-phone'}"></i>
                                     </div>
                                 </th>
+
                                 <th>
-                                    Estado
+                                    Total de Salida
+                                    <div class="th">
+                                        <i class="fa fa-caret-up icon-up"
+                                            ng-click=" order('phone') "
+                                            ng-class="{active: row == 'phone'}"></i>
+                                        <i class="fa fa-caret-down icon-down"
+                                            ng-click=" order('-phone') "
+                                            ng-class="{active: row == '-phone'}"></i>
+                                    </div>
+                                </th>
+
+                                <th>
+                                    Balance
+                                    <div class="th">
+                                        <i class="fa fa-caret-up icon-up"
+                                            ng-click=" order('phone') "
+                                            ng-class="{active: row == 'phone'}"></i>
+                                        <i class="fa fa-caret-down icon-down"
+                                            ng-click=" order('-phone') "
+                                            ng-class="{active: row == '-phone'}"></i>
+                                    </div>
+                                </th>
+
+                                <th>
+                                    Amount
                                     <div class="th">
                                         <i class="fa fa-caret-up icon-up"
                                             ng-click=" order('phone') "
@@ -95,38 +109,33 @@
                                 </th>
                                  
                                 <th>Muestra</th> 
-                                <th>Salidas</th>                  
-                                <th>Editar</th>
-                                <th>Eliminar</th>
+                                <th>Despacho</th>    
                             </tr>
                             </thead>
                             <tbody>
                                 <tr ng-repeat="data in currentPageStores track by $index">
                                     <td>{{ $index + 1 }}</td>
-                                    <td>{{ data.tipo_movimiento }}</td>
-                                    <td>{{ data.monto }}</td>
+                                    <td>{{ data.orden }}</td>
                                     <td>{{ data.descripcion }}</td>
-                                    <td>{{ data.saldo }}</td>             
+                                    <td>{{ data.fecha_hora }}</td> 
+                                    <td>{{ data.total_salida }}</td> 
+                                    <td>{{ data.balance }}</td> 
+                                    <td>{{ data.amount }}</td>       
                                     <td>
                                         <div class="btn-group">
-                                            <button type="button" class="btn btn-primary fa fa-list-ul" ng-click="modalEditOpen(data)" md-ink-ripple></button>
+                                          <center>  <button type="button" class="btn btn-primary fa fa-list-ul" ng-click="modalMuestra(data)" md-ink-ripple></button> </center>
                                         </div>
                                     </td>
                                      <td>
                                         <div class="btn-group">
-                                            <button type="button" class="btn btn-primary fa fa-list-ul" ng-click="modalEditOpen(data)" md-ink-ripple></button>
+                                         <center> <button type="button" class="btn btn-primary fa fa-list-ul" ng-click="modalDespacho(data)" md-ink-ripple></button> </center>
                                         </div>
                                     </td>
-                                    <td>
+                                    <!-- <td>
                                         <div class="btn-group">
-                                            <button type="button" class="btn btn-info ion ion-edit" ng-click="modalEditOpen(data)" md-ink-ripple></button>
+                                            <button type="button" class="btn btn-primary fa fa-list-ul" ng-click="modalEntregado(data)" md-ink-ripple></button>
                                         </div>
-                                    </td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-danger ion ion-trash-a" ng-click="modalDeleteOpen(data)" md-ink-ripple></button>
-                                        </div>
-                                    </td>
+                                    </td> -->
                                 </tr>
                             </tbody>
                         </table>

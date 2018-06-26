@@ -21,7 +21,10 @@
                     </div>
                     <div class="col-sm-4">
                         <label>Empresa</label>
-                        <input type="text" ng-model="registro.id_empresa" class="form-control" required>
+                        <select class="form-control" ng-model="registro.id_empresa" >
+                            <option disabled="" >Seleccione una opción</option>
+                            <option ng-repeat="item in empresas" value="{{item.id}}">{{item.descripcion}}</option>
+                        </select>
                     </div>
                     
                     <div class="col-sm-4" style="margin-top: 10px;">
@@ -31,7 +34,10 @@
 
                     <div class="col-sm-4" style="margin-top: 10px;">
                         <label>Estilo</label>
-                        <input type="text" ng-model="registro.id_estilo" class="form-control" required>
+                        <select class="form-control" ng-model="registro.id_estilo" >
+                            <option disabled="" >Seleccione una opción</option>
+                            <option ng-repeat="item in estilos" value="{{item.id}}">{{item.descripcion}}</option>
+                        </select>
                     </div>
 
                     <div class="col-sm-4" style="margin-top: 10px;">
@@ -41,12 +47,18 @@
 
                     <div class="col-sm-4" style="margin-top: 10px;">
                         <label>Calibre</label>
-                        <input type="text" ng-model="registro.id_calibre" class="form-control" required>
+                        <select class="form-control" ng-model="registro.id_calibre" >
+                            <option disabled="" >Seleccione una opción</option>
+                            <option ng-repeat="item in calibres" value="{{item.id}}">{{item.descripcion}}</option>
+                        </select>
                     </div>
                     
                     <div class="col-sm-4" style="margin-top: 10px;">
-                        <label>Metraje</label>
-                        <input type="text" ng-model="registro.id_metraje" class="form-control" required>
+                        <label>Metrage</label>
+                        <select class="form-control" ng-model="registro.id_metraje" >
+                            <option disabled="" >Seleccione una opción</option>
+                            <option ng-repeat="item in metrajes" value="{{item.id}}">{{item.descripcion}}</option>
+                        </select>
                     </div>
                     <div class="col-sm-4" style="margin-top: 10px;">
                         <label>Tipo</label>
@@ -58,15 +70,14 @@
                     </div>
                     <div class="col-sm-4" style="margin-top: 10px;">
                         <label>Color</label>
-                        <input type="text" ng-model="registro.id_color" class="form-control" required>
+                        <select class="form-control" ng-model="registro.id_color" >
+                            <option disabled="" >Seleccione una opción</option>
+                            <option ng-repeat="item in colores" value="{{item.id}}">{{item.descripcion}}</option>
+                        </select>
                     </div>
                     <div class="col-sm-4" style="margin-top: 10px;">
                         <label>Cantidad</label>
                         <input type="number" ng-model="registro.cantidad" class="form-control" required>
-                    </div>
-                    <div class="col-sm-4" style="margin-top: 10px;">
-                        <label>Estado</label>
-                        <input type="text" ng-model="registro.estado" class="form-control" required>
                     </div>
                     <div class="col-sm-4" style="margin-top: 10px;">
                         <label>Precio</label>
@@ -77,18 +88,19 @@
                         <label>Fecha de Entrega</label>
                         <input type="datetime-local" ng-model="registro.fecha_entrega" class="form-control" required>
                     </div>
-
-                     <div class="col-sm-4" style="margin-top: 10px;">
-                        <label>Fecha de Aprobación</label>
-                        <input type="text" ng-model="registro.fecha_aprobacion" class="form-control" required>
-                    </div>
                     <div class="col-sm-4" style="margin-top: 10px;">
                         <label>Referencia</label>
-                        <input type="text" ng-model="registro.id_referencias" class="form-control" required>
+                        <select class="form-control" ng-model="registro.id_referencias" >
+                            <option disabled="" >Seleccione una opción</option>
+                            <option ng-repeat="item in referencias" value="{{item.id}}">{{item.descripcion}}</option>
+                        </select>
                     </div>
                     <div class="col-sm-4" style="margin-top: 10px;">
                         <label>Lugar de entrega</label>
-                        <input type="text" ng-model="registro.id_lugar" class="form-control" required>
+                        <select class="form-control" ng-model="registro.id_lugar" >
+                            <option disabled="" >Seleccione una opción</option>
+                            <option ng-repeat="item in empresas" value="{{item.id}}">{{item.descripcion}}</option>
+                        </select>
                     </div>
                     
 

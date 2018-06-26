@@ -26,10 +26,11 @@ class CrearTablaOrdenes extends Migration
             $table->Integer('tipo');
             $table->Integer('id_color');
             $table->Integer('cantidad');
-            $table->Integer('estado');
+            $table->Integer('balance')->nullable();
+            $table->Integer('total_salida')->nullable();
+            $table->Integer('amount')->nullable();
             $table->decimal('precio', 8, 2);
             $table->Date('fecha_entrega');
-            $table->Date('fecha_aprobacion')->nullable();
             $table->Integer('id_referencias');
             $table->Integer('id_lugar');
             $table->timestamps();

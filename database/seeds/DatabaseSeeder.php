@@ -60,6 +60,13 @@ class DatabaseSeeder extends Seeder
             'descripcion'    => 'OFICINA INT/PATTY',        
         ]);
 
+        App\Estados::create([
+            'descripcion'    => 'Y Yet',        
+        ]);
+        App\Estados::create([
+            'descripcion'    => 'O ENT',        
+        ]);
+
         App\Usuarios::create([
             'nombre'                => 'Jesús Morales',
             'usuario'               => 'jmorales',

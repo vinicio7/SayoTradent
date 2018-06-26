@@ -4,8 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Calibre extends Model
+class Estados extends Model
 {
-    protected $table    = 'calibres';
+    protected $table    = 'estados';
     protected $fillable = ['descripcion'];
 }

@@ -18,11 +18,12 @@ class Orden extends Model
                            'id_metraje',
                            'tipo',
                            'id_color',
-                           'estado',
                            'cantidad',
+                           'balance',
+                           'total_salida',
+                           'amount',
                            'precio',
                            'fecha_entrega',
-                           'fecha_aprobacion',
                            'id_referencias',
                            'id_lugar'
 						   ];
@@ -61,5 +62,7 @@ class Orden extends Model
   {
       return $this->hasOne('App\Lugar', 'id', 'id_lugar');
   }
+
+  
 
 }
