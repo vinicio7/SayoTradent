@@ -21,7 +21,11 @@
                     </div>
                     <div class="col-sm-4">
                         <label>Empresa</label>
-                        <input type="text" ng-model="registro.id_empresa" class="form-control" required>
+                        
+                        <input class="form-control" name="browsers" list="browsers" ng-model="registro.id_empresa" >
+                        <datalist  id="browsers">
+                            <option ng-repeat="item in empresas" value="{{item.id}} - {{item.descripcion}}"></option>
+                        </datalist>
                     </div>
                     
                     <div class="col-sm-4" style="margin-top: 10px;">
@@ -31,7 +35,10 @@
 
                     <div class="col-sm-4" style="margin-top: 10px;">
                         <label>Estilo</label>
-                        <input type="text" ng-model="registro.id_estilo" class="form-control" required>
+                        <input class="form-control" name="estilo" list="estilo" ng-model="registro.id_estilo" >
+                        <datalist  id="estilo">
+                            <option ng-repeat="item in estilos" value="{{item.id}} - {{item.descripcion}}"></option>
+                        </datalist>
                     </div>
 
                     <div class="col-sm-4" style="margin-top: 10px;">
@@ -41,12 +48,18 @@
 
                     <div class="col-sm-4" style="margin-top: 10px;">
                         <label>Calibre</label>
-                        <input type="text" ng-model="registro.id_calibre" class="form-control" required>
+                        <input class="form-control" name="calibre" list="calibre" ng-model="registro.id_calibre" >
+                        <datalist  id="calibre">
+                            <option ng-repeat="item in calibres" value="{{item.id}} - {{item.descripcion}}"></option>
+                        </datalist>
                     </div>
                     
                     <div class="col-sm-4" style="margin-top: 10px;">
-                        <label>Metraje</label>
-                        <input type="text" ng-model="registro.id_metraje" class="form-control" required>
+                        <label>Metrage</label>
+                        <input class="form-control" name="metrage" list="metrage" ng-model="registro.id_metraje" >
+                        <datalist  id="metrage">
+                            <option ng-repeat="item in metrajes" value="{{item.id}} - {{item.descripcion}}"></option>
+                        </datalist>
                     </div>
                     <div class="col-sm-4" style="margin-top: 10px;">
                         <label>Tipo</label>
@@ -58,37 +71,37 @@
                     </div>
                     <div class="col-sm-4" style="margin-top: 10px;">
                         <label>Color</label>
-                        <input type="text" ng-model="registro.id_color" class="form-control" required>
+                        <input class="form-control" name="color" list="color" ng-model="registro.id_color" >
+                        <datalist  id="color">
+                            <option ng-repeat="item in colores" value="{{item.id}} - {{item.descripcion}}"></option>
+                        </datalist>
                     </div>
                     <div class="col-sm-4" style="margin-top: 10px;">
                         <label>Cantidad</label>
                         <input type="number" ng-model="registro.cantidad" class="form-control" required>
                     </div>
                     <div class="col-sm-4" style="margin-top: 10px;">
-                        <label>Estado</label>
-                        <input type="text" ng-model="registro.estado" class="form-control" required>
-                    </div>
-                    <div class="col-sm-4" style="margin-top: 10px;">
                         <label>Precio</label>
-                        <input type="number" ng-model="registro.precio" class="form-control" required>
+                        <input type="number" ng-model="registro.precio" min="1" class="form-control" required>
                     </div>
 
                     <div class="col-sm-4"  style="margin-top: 10px;">
                         <label>Fecha de Entrega</label>
                         <input type="datetime-local" ng-model="registro.fecha_entrega" class="form-control" required>
                     </div>
-
-                     <div class="col-sm-4" style="margin-top: 10px;">
-                        <label>Fecha de Aprobación</label>
-                        <input type="text" ng-model="registro.fecha_aprobacion" class="form-control" required>
-                    </div>
                     <div class="col-sm-4" style="margin-top: 10px;">
                         <label>Referencia</label>
-                        <input type="text" ng-model="registro.id_referencias" class="form-control" required>
+                        <input class="form-control" name="referencia" list="referencia" ng-model="registro.id_referencias" >
+                        <datalist  id="referencia">
+                            <option ng-repeat="item in referencias" value="{{item.id}} - {{item.descripcion}}"></option>
+                        </datalist>
                     </div>
                     <div class="col-sm-4" style="margin-top: 10px;">
                         <label>Lugar de entrega</label>
-                        <input type="text" ng-model="registro.id_lugar" class="form-control" required>
+                        <input class="form-control" name="entrega" list="entrega" ng-model="registro.id_lugar" >
+                        <datalist  id="entrega">
+                            <option ng-repeat="item in lugares" value="{{item.id}} - {{item.descripcion}}"></option>
+                        </datalist>
                     </div>
                     
 
