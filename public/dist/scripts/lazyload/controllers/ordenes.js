@@ -62,7 +62,6 @@
                     $scope.estados = response.data.records;
                 });
 
-                
                
             }
 
