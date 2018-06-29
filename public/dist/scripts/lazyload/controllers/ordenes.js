@@ -132,31 +132,31 @@
                 if ($scope.action == 'new') {
                     var clone_customer = Object.assign({}, customer);
                     var index = customer.id_empresa.indexOf(" -");
-                    let id_empresa = customer.id_empresa.slice(0, index);
+                    var id_empresa = customer.id_empresa.slice(0, index);
                     clone_customer.id_empresa = id_empresa;
 
                     var estilo = customer.id_estilo.indexOf(" -");
-                    let id_estilo = customer.id_estilo.slice(0, estilo);
+                    var id_estilo = customer.id_estilo.slice(0, estilo);
                     clone_customer.id_estilo = id_estilo;
 
                     var calibres = customer.id_calibre.indexOf(" -");
-                    let id_calibre = customer.id_calibre.slice(0, calibres);
+                    var id_calibre = customer.id_calibre.slice(0, calibres);
                     clone_customer.id_calibre = id_calibre;
 
                     var metraje = customer.id_metraje.indexOf(" -");
-                    let id_metraje = customer.id_metraje.slice(0, metraje);
+                    var id_metraje = customer.id_metraje.slice(0, metraje);
                     clone_customer.id_metraje = id_metraje;
 
                     var color = customer.id_color.indexOf(" -");
-                    let id_color = customer.id_color.slice(0, color);
+                    var id_color = customer.id_color.slice(0, color);
                     clone_customer.id_color = id_color;
 
                     var referencia = customer.id_referencias.indexOf(" -");
-                    let id_referencias = customer.id_referencias.slice(0, referencia);
+                    var id_referencias = customer.id_referencias.slice(0, referencia);
                     clone_customer.id_referencias = id_referencias;
 
                     var lugar = customer.id_lugar.indexOf(" -");
-                    let id_lugar = customer.id_lugar.slice(0, lugar);
+                    var id_lugar = customer.id_lugar.slice(0, lugar);
                     clone_customer.id_lugar = id_lugar;
 
                     OrdenesService.store(clone_customer).then(
