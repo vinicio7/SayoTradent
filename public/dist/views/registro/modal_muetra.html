@@ -1,0 +1,94 @@
+<div class="modal-style">
+    <div class="modal-header clearfix">
+        <h4 ng-if="action == 'muestra'" class="modal-title">Respuestas de Muestras</h4>
+        <span class="close ion ion-android-close" ng-click="modalClose()"></span>
+    </div>
+    <div class="modal-body">
+       
+        <form class="form-horizontal" name="form" ng-if="action != 'delete'" action="javascript:;" novalidate>
+                <div class="col-sm-12">
+                        <tabset justified="true">
+                            <tab heading="Registro">
+                                <div class="clearfix">
+                                    <div class="row form-group">
+                                        <div class="col-sm-4">
+                                            <label>Fecha de envio</label>
+                                            <input type="date" class="form-control" ng-model="datos.fecha_hora" required>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <label>Envio</label>
+                                            <input type="text" class="form-control" ng-model="datos.envio" required>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <label>Fecha OK</label>
+                                            <input type="date" class="form-control" ng-model="datos.fecha_ok"  required>
+                                        </div>
+                                    </div>
+                                </div>
+        
+                                <div class="clearfix">
+                                    <div class="row form-group">
+                                        <div class="col-sm-4">
+                                            <label>Estado</label>
+                                            <select class="form-control" ng-model="datos.id_estado" >
+                                                <option disabled="" >Seleccione una opción</option>
+                                                <option ng-repeat="item in estados" value="{{item.id}}">{{item.descripcion}}</option>
+                                            </select>
+                                        </div>
+        
+                                        <div class="col-sm-4">
+                                            <label>Rechazo</label>
+                                            <input type="text" class="form-control" ng-model="datos.rechazo"  required>
+                                        </div>
+                                        
+                                       
+                                    </div>
+                                </div>
+        
+                                
+                            </tab>
+                            
+        
+        
+                            <tab heading="Salidas de muestras" active="about.active">
+                                    <table class="table" >
+                                        <tbody>
+                                            <tr align="center" ng-if="prueba != null" >
+                                                <td >Fecha de envio </td>
+                                                <td >Envio</td>
+                                                <td >Fecha Ok</td>
+                                                <td >Estado</td>
+                                                <td >Rechazo</td>
+                                            </tr>
+                                            
+                                            
+                                            <tr align="center" ng-repeat="item in prueba">
+                                                <td> <h5> {{item.fecha_hora}}</h5></td>
+                                                <td> <h5> {{item.envio}}</h5></td>
+                                                <td> <h5> {{item.fecha_ok}}</h5></td>
+                                                <td> <h5> {{item.estados.descripcion}}</h5></td>
+                                                <td> <h5> {{item.rechazo}}</h5></td>
+                                            </tr>
+                                            
+                                        </tbody>
+                                    </table>
+                            </tab>
+                            
+                        </tabset>
+                    </div>  
+        
+                    <br>
+                    <!-- end tabs -->
+                    <div class="row form-group">
+                        <div class="col-sm-12 text-right">
+                            <br>
+                            <button class="btn btn-danger" ng-click="modalClose()">Cerrar</button>
+                            <button class="btn btn-success" ng-if="action == 'muestra'"  ng-click="saveData(datos)">Registrar</button>
+                            <button class="btn btn-success" ng-if="action == 'update'" ng-disabled="form.$invalid" ng-click="saveData(datos)">Editar</button>
+                        </div>
+                    </div>
+        </form>
+        
+    </div>
+    
+</div>

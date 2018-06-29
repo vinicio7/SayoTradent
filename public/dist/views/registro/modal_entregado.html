@@ -1,0 +1,45 @@
+<div class="modal-style">
+        <div class="modal-header clearfix">
+            <h4 ng-if="action == 'despacho'" class="modal-title">Total Entregado</h4>
+            <span class="close ion ion-android-close" ng-click="modalClose()"></span>
+        </div>
+        <div class="modal-body">
+           
+            <form class="form-horizontal" name="form" ng-if="action != 'delete'" action="javascript:;" novalidate>
+                <div ng-repeat="item in prueba">
+                    <table class="table" >
+                        <tbody>
+                            <tr align="center"  >
+                                <td >Total de salida </td>
+                                <td >Balance</td>
+                                <td >Cantidad</td>
+                                
+                            </tr>
+                            
+                            
+                            <tr align="center" ng-repeat="item in prueba">
+                                <td> <h5> {{item.fecha}}</h5></td>
+                                <td> <h5> {{item.envio}}</h5></td>
+                                <td> <h5> {{item.cantidad}}</h5></td>
+                                
+                            </tr>
+                            
+                        </tbody>
+                    </table>
+                </div>                
+            
+                <br>
+                <!-- end tabs -->
+                <div class="row form-group">
+                    <div class="col-sm-12 text-right">
+                        <br>
+                        <button class="btn btn-danger" ng-click="modalClose()">Cerrar</button>
+                        <!-- <button class="btn btn-success" ng-if="action == 'despacho'"  ng-click="saveData(datos)">Registrar</button>
+                        <button class="btn btn-success" ng-if="action == 'update'" ng-disabled="form.$invalid" ng-click="saveData(datos)">Editar</button> -->
+                    </div>
+                </div>
+            </form>
+            
+        </div>
+        
+    </div>
