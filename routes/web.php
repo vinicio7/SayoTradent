@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-		return redirect('dist');
+		return redirect('src');
 });
 
 Route::group(['prefix' => 'ws'], function (){
@@ -22,6 +22,7 @@ Route::group(['prefix' => 'ws'], function (){
 	Route::resource ('planilla', 				'PlanillaController');
 	Route::resource ('proveedores', 			'ProveedoresController');
 	Route::resource ('clientes', 				'ClientesController');
+    Route::resource ('cuentas', 				'CuentasController');
 	Route::resource ('compras', 				'ComprasController');
 	Route::resource ('excel/usuarios', 			'ExcelController');
 	Route::any 		('excel/proveedores', 		'ExcelController@reporteProveedores');

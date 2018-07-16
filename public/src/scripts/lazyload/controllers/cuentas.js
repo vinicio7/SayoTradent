@@ -2,9 +2,9 @@
 {
     'use strict';
 
-    angular.module('app.movimientos', ['app.service.movimientos'])
+    angular.module('app.cuentas', ['app.service.cuentas'])
 
-        .controller('MovimientosController', ['$scope', '$filter', '$http', '$modal', '$interval', 'MovimientosService', function($scope, $filter, $http, $modal, $timeout, MovimientosService)  {
+        .controller('CuentasController', ['$scope', '$filter', '$http', '$modal', '$interval', 'CuentasService', function($scope, $filter, $http, $modal, $timeout, CuentasService)  {
            
             // General variables
             $scope.datas = [];
@@ -21,16 +21,16 @@
 
             // Function for load table
             function MostarDatos() {
-                MovimientosService.index().then(function(response) {
+                CuentasService.index().then(function(response) {
                     $scope.datas = response.data.records;
                     $scope.search();
                     $scope.select($scope.currentPage);
                 });
             }
-
+            
             $scope.redirect = function(){ 
                
-                window.location="../ws/excel/movimientos";
+                window.location="../ws/excel/cuentas";
                 createToast('success', '<strong>Éxito: </strong>'+'Reporte Creado Exitosamente');
                 $timeout( function(){ closeAlert(0); }, 3000);
             
@@ -72,13 +72,9 @@
                 $scope.filteredData = $filter('orderBy')($scope.datas, rowName);
                 $scope.onOrderChange();
             };
-             function cargarModal(){
-             MovimientosService.cuentas().then(function(response){
-                    $scope.cuentas = response.data.records;
-                });
-         }
+
             MostarDatos();
-            cargarModal();
+
             // Function for toast
             function createToast (type, message) {
                 $scope.toasts.push({
@@ -95,11 +91,7 @@
             // Function for sending data
             $scope.saveData = function (customer) {
                 if ($scope.action == 'new') {
-                     var clone_customer = Object.assign({}, customer);
-                    var cuenta = customer.cuenta_id.indexOf(" -");
-                    var cuenta_id = customer.cuenta_id.slice(0, cuenta);
-                    clone_customer.cuenta_id = cuenta_id;
-                    MovimientosService.store(customer).then(
+                    CuentasService.store(customer).then(
                         function successCallback(response) {
                             if (response.data.result) {
                                 MostarDatos();
@@ -118,7 +110,7 @@
                     );
                 }
                 else if ($scope.action == 'update') {
-                    MovimientosService.update(customer).then(
+                    CuentasService.update(customer).then(
                         function successCallback(response) {
                             if (response.data.result) {
                                 modal.close();
@@ -136,7 +128,7 @@
                     );
                 }
                 else if ($scope.action == 'delete') {
-                    MovimientosService.destroy(customer.id).then(
+                    CuentasService.destroy(customer.id).then(
                         function successCallback(response) {
                             if (response.data.result) {
                                 MostarDatos();
@@ -157,11 +149,10 @@
             };   
             // Functions for modals
             $scope.modalCreateOpen = function() {
-                
-                $scope.movimiento = {};
+                $scope.cliente = {};
                 $scope.action = 'new'; 
                 modal = $modal.open({
-                    templateUrl: 'views/administracion/modal_movimientos.html',
+                    templateUrl: 'views/administracion/modal_cuentas.html',
                     scope: $scope,
                     size: 'lg', 
                     resolve: function() {},
@@ -171,9 +162,9 @@
 
             $scope.modalEditOpen = function(data) {
                 $scope.action = 'update';
-                $scope.movimiento = data;
+                $scope.cuenta = data;
                 modal = $modal.open({
-                    templateUrl: 'views/administracion/modal_movimientos.html',
+                    templateUrl: 'views/administracion/modal_cuentas.html',
                     scope: $scope,
                     size: 'lg',
                     resolve: function() {},
@@ -184,9 +175,9 @@
 
             $scope.modalDeleteOpen = function(data) {
                 $scope.action = 'delete';
-                $scope.movimiento = data;
+                $scope.cuenta = data;
                 modal = $modal.open({
-                    templateUrl: 'views/administracion/modal_movimientos.html',
+                    templateUrl: 'views/administracion/modal_cuentas.html',
                     scope: $scope,
                     size: 'md',
                     resolve: function() {},

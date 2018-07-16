@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Movimientos;
-
+use App\Cuentas;
 class MovimientosController extends Controller
 {
     protected $result      = false;
@@ -33,7 +33,28 @@ class MovimientosController extends Controller
 			return response()->json($response, $this->status_code);
 		}
 	}
+	 public function cuentas()
+    {
+        try {
+            $records           = Cuentas::all();
+            $this->status_code = 200;
+            $this->result      = true;
+            $this->message     = 'Registros consultados correctamente';
+            $this->records     = $records;
+        } catch (\Exception $e) {
+            $this->status_code = 400;
+            $this->result      = false;
+            $this->message     = env('APP_DEBUG')?$e->getMessage():$this->message;
+        }finally{
+            $response = [
+                'result'  => $this->result,
+                'message' => $this->message,
+                'records' => $this->records,
+            ];
 
+            return response()->json($response, $this->status_code);
+        }
+    }
 	public function store(Request $request) {
         // dd($request);
 		try {
@@ -42,8 +63,15 @@ class MovimientosController extends Controller
                     'tipo_movimiento'       => $request->input('tipo_movimiento'),
                     'monto'                 => $request->input('monto'),
                     'descripcion'           => $request->input('descripcion'),
-                    'saldo'                 => $request->input('saldo'),
-                ]);
+                    'fecha'      		    => $request->input('fecha'),
+                    'no_cheque'             => $request->input('no_cheque'),
+                    'nombre'   		        => $request->input('nombre'),
+                    'moneda'                => $request->input('moneda'),
+                    'cobrado'    		    => $request->input('cobrado'),
+                    'balanceQ'              => $request->input('balanceQ'),
+                    'balance_D'             => $request->input('balance_D'),
+                    'cuenta_id'               => $request->input('cuenta_id'),
+                     ]);
             if ($record) {
                 $this->status_code = 200;
                 $this->result      = true;
@@ -103,7 +131,15 @@ class MovimientosController extends Controller
                 $record->tipo_movimiento    = $request->input('tipo_movimiento', $record->tipo_movimiento);
                 $record->monto              = $request->input('monto', $record->monto);
                 $record->descripcion  	    = $request->input('descripcion', $record->descripcion);
-                $record->saldo  	        = $request->input('saldo', $record->saldo);
+              
+                $record->fecha     		    = $request->input('fecha',$record->fecha);
+                $record->no_cheque          = $request->input('no_cheque', $record->no_cheque);
+                $record->nombre  		    = $request->input('nombre', $record->nombre);
+                $record->moneda             = $request->input('moneda',$record->moneda);
+                $record->cobrado    		= $request->input('cobrado',$record->cobrado );
+                $record->balanceQ           = $request->input('balanceQ',$record->balanceQ);
+                $record->balance_D          = $request->input('balance_D',$record->balance_D);
+                $record->cuenta_id          = $request->input('cuenta_id',$record->cuenta_id );
                 
                 $record->save();
                 if ($record->save()) {

@@ -18,6 +18,8 @@ contactos_service.service('MovimientosService', ['$http', 'WS_URL', function($ht
     this.destroy = function(id) {
         return $http.delete(WS_URL+'movimientos/' + id);
     };
-
+    this.cuentas = function(params){
+        return $http.get(WS_URL+'cuentas');
+    };
    
 }]);
