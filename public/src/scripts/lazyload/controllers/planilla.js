@@ -223,6 +223,19 @@
                 });
             };
 
+            $scope.modalEditOpen = function(data) {
+                $scope.action = 'update';
+                $scope.planilla = data;
+                modal = $modal.open({
+                    templateUrl: 'views/administracion/modal_planilla.html',
+                    scope: $scope,
+                    size: 'lg',
+                    resolve: function() {},
+                    windowClass: 'default'
+                });
+
+            };
+
 
             $scope.modalDetail = function(data){
                 $scope.action = 'detail';
