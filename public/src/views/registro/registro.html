@@ -97,7 +97,7 @@
                                 </th>
 
                                 <th>
-                                    Amount
+                                    Cantidad
                                     <div class="th">
                                         <i class="fa fa-caret-up icon-up"
                                             ng-click=" order('phone') "
@@ -109,7 +109,8 @@
                                 </th>
                                  
                                 <th>Muestra</th> 
-                                <th>Despacho</th>    
+                                <th>Despacho</th>
+                                <th>Editar</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -124,19 +125,19 @@
 
                                     <td>
                                         <div class="btn-group">
-                                          <center>  <button type="button" class="btn btn-primary fa fa-list-ul" ng-click="modalMuestra(data)" md-ink-ripple></button> </center>
+                                           <button type="button" class="btn btn-primary fa fa-list-ul" ng-click="modalMuestra(data)" md-ink-ripple></button>
                                         </div>
                                     </td>
                                      <td>
                                         <div class="btn-group">
-                                         <center> <button type="button" class="btn btn-primary fa fa-list-ul" ng-click="modalDespacho(data)" md-ink-ripple></button> </center>
+                                            <button type="button" class="btn btn-primary fa fa-list-ul" ng-click="modalDespacho(data)" md-ink-ripple></button>
                                         </div>
                                     </td>
-                                    <!-- <td>
+                                    <td>
                                         <div class="btn-group">
-                                            <button type="button" class="btn btn-primary fa fa-list-ul" ng-click="modalEntregado(data)" md-ink-ripple></button>
+                                            <button type="button" class="btn btn-info ion ion-edit" ng-click="modalDetailOpen(data)" md-ink-ripple></button>
                                         </div>
-                                    </td> -->
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
