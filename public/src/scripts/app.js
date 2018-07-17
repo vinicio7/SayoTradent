@@ -127,6 +127,10 @@
 				name: "app.service.ordenes",
 				files: ["scripts/lazyload/services/ordenes.js"]
 			},
+			{
+				name: "app.service.cuentas",
+				files: ["scripts/lazyload/services/cuentas.js"]
+			},
 			]
 		})
 	}])
@@ -468,6 +472,18 @@
 			}
 		});
 
+		$routeProvider.when("/administracion/cuentas", {
+			templateUrl: "views/administracion/cuentas.html",
+			controller: "CuentasController",
+			resolve: {
+				 deps: ["$ocLazyLoad", function(a) {
+                    return a.load({
+                        name: 'app.cuentas',
+                        files: ['scripts/lazyload/controllers/cuentas.js']
+                    })
+                }]
+			}
+		});
 		// fin #/administracion/clientes
 
 		//#/administracion/movimientos

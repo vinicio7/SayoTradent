@@ -13,7 +13,7 @@
             <div class="row form-group">
                 <div class="col-sm-6">
                     <label>Tipo</label>
-                     <select class="form-control" ng-model="registro.movimiento" required>                  
+                     <select class="form-control" ng-model="movimiento.tipo_movimiento" required>                   
                             <option disabled>Selecciona un tipo</option>
                             <option value="1">Ingreso</option>
                             <option value="2">Egreso</option>
@@ -21,34 +21,70 @@
                 </div>
                 <div class="col-sm-6">
                     <label>Monto</label>
-                    <input type="text" class="form-control" ng-model="proveedor.nit" required>
+                    <input type="text" class="form-control" ng-model="movimiento.monto" required>
                 </div>
             </div>
             <div class="row form-group">
                 <div class="col-sm-6">
                     <label>Descripcion</label>
-                    <input type="text" class="form-control" ng-model="proveedor.descripcion" required>
+                    <input type="text" class="form-control" ng-model="movimiento.descripcion" required>
                 </div>
-                 <div class="col-sm-6">
-                    <label>Documento</label>
-                    <input type="text" class="form-control" ng-model="proveedor.document" required>
-                </div>
+                
                  <div class="col-sm-6">
                     <label>Cobrado</label>
-                     <select class="form-control" ng-model="registro.tipo" required>                  
+                     <select class="form-control" ng-model="movimiento.cobrado" required>                  
                             <option disabled>Selecciona un tipo</option>
                             <option value="1">Si</option>
                             <option value="2">No</option>
                         </select>
+
                 </div>
                 
             </div>
-            
+             <div class="row form-group">
+                <div class="col-sm-6">
+                    <label>fecha</label>
+                    <input type="date" class="form-control" ng-model="movimiento.fecha" required>
+                </div>
+                 <div class="col-sm-6">
+                    <label>número de cheque</label>
+                    <input type="number" class="form-control" ng-model="movimiento.no_fecha" required>
+                </div>
+
+
+            </div>
+            <div class="row form-group">
+                <div class="col-sm-6">
+                    <label>nombre</label>
+                    <input type="text" class="form-control" ng-model="movimiento.nombre" required>
+                </div>
+                <div class="col-sm-6">
+                 <label>Moneda</label>
+                     <select class="form-control" ng-model="movimiento.moneda" required>                  
+                            <option disabled>Selecciona un tipo</option>
+                            <option value="1">Q</option>
+                            <option value="2">$</option>
+                        </select>
+                </div>
+
+            </div>
+
+            <div class="row form-group">
+             <div class="col-sm-6" ">
+                <label>Cuenta</label>
+                        
+                        <input class="form-control" name="cuenta" list="cuenta" ng-model="movimiento.cuenta_id" >
+                        <datalist  id="cuenta">
+                            <option ng-repeat="item in cuentas" value="{{item.id}} - {{item.nombre}}"></option>
+                        </datalist>
+                </div>
+            </div>
+
             <div class="row form-group">
                 <div class="col-sm-12 text-right">
                     <button class="btn btn-danger" ng-click="modalClose()">Cerrar</button>
-                    <button class="btn btn-success" ng-if="action == 'new'" ng-disabled="form.$invalid" ng-click="saveData(proveedor)">Registrar</button>
-                    <button class="btn btn-success" ng-if="action == 'update'" ng-disabled="form.$invalid" ng-click="saveData(proveedor)">Editar</button>
+                    <button class="btn btn-success" ng-if="action == 'new'" ng-disabled="form.$invalid" ng-click="saveData(movimiento)">Registrar</button>
+                    <button class="btn btn-success" ng-if="action == 'update'" ng-disabled="form.$invalid" ng-click="saveData(movimiento)">Editar</button>
                 </div>
             </div>
         </form>
@@ -56,7 +92,7 @@
     <div class="row form-group">
         <div class="col-sm-10 text-right">
             <button class="btn btn-success" ng-if="action == 'delete'" ng-click="modalClose()">Cerrar</button>
-            <button class="btn btn-danger"  ng-if="action == 'delete'" ng-click="saveData(proveedor)">Eliminar</button>
+            <button class="btn btn-danger"  ng-if="action == 'delete'" ng-click="saveData(movimiento)">Eliminar</button>
         </div>
     </div>
 </div>
