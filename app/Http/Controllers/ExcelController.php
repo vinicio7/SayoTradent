@@ -8,7 +8,10 @@ use App\Proveedores;
 use App\Clientes;
 use App\Compras;
 use App\Movimientos;
+use App\Orden;
+use Carbon\Carbon;
 
+    
 class ExcelController extends Controller
 {
     public function index(Request $request){
@@ -170,5 +173,42 @@ class ExcelController extends Controller
       });
       })->export('xls');
     }
+
+    public function ordenesfechas(Request $request){
+        // dd($request);
+       
+        // $start_date =parse_str($request->start_date);
+        // $end_date = parse_str($request->end_date);
+        // dd($start_date, $end_date);     
+    
+        $request = Orden::whereBetween('fecha_entrega', [new Carbon($request->start_date), new Carbon($request->end_date)])->get();
+        // dd($request);
+        \Excel::create('Ordenes', function($excel) use ($request){
+             $excel->sheet('Datos', function($sheet) use ($request) {
+
+                $reporte = $request;
+                // dd($reporte);
+
+             $data = [];
+                foreach ($reporte as $reporte) {
+                   $row = [];
+                   $row ["No. de orden"]            = $reporte->orden;
+                   $row ["Fecha y Hora"]            = $reporte->fecha_hora;
+                   $row ["PO"]                      = $reporte->po;
+                   $row ["Descripcion"]             = $reporte->descripcion;
+                   $row ["Cantidad"]                = $reporte->cantidad;
+              
+                   $data[] = $row;
+                } 
+
+          $sheet->fromArray($data);
+      });
+      })->export('xls');
+    }
+
+    public function muestrasDoc(){
+        return view('layouts.docmuestra');
+    }
+
 }
 

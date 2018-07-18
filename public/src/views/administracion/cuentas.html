@@ -3,11 +3,11 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default table-responsive panel-hovered mb20"  >
-                    <div class="panel-heading"><h4>REGISTRO DE PLANILLA</h4></div>
+                    <div class="panel-heading"><h4>REGISTRO DE CUENTAS</h4></div>
                     <div class="panel-body">
                         <div class="row">
-                            <button type="button" class="btn btn-success btn-rounded" ng-click="modalCreateOpen()" md-ink-ripple><i class="fa fa-plus"></i>Ingreso</button>
-                        </div>
+                            <button type="button" class="btn btn-success btn-rounded" ng-click="modalCreateOpen()" md-ink-ripple><i class="fa fa-plus"></i> Ingreso</button>
+                                 </div>
                         <br>
                         <div class="row">
                             <div class="small text-bold left mt5">
@@ -35,7 +35,7 @@
                                 </div>
                             </th>
 
-                            <th>No. Empleado
+                            <th>Nombre de la cuenta
                                 <div class="th">
                                     <i class="fa fa-caret-up icon-up"
                                         ng-click=" order('phone') "
@@ -45,32 +45,13 @@
                                         ng-class="{active: row == '-phone'}"></i>
                                 </div>
                             </th>
-                            <th>
-                                Nombre 
-                                <div class="th">
-                                    <i class="fa fa-caret-up icon-up"
-                                        ng-click=" order('phone') "
-                                        ng-class="{active: row == 'phone'}"></i>
-                                    <i class="fa fa-caret-down icon-down"
-                                        ng-click=" order('-phone') "
-                                        ng-class="{active: row == '-phone'}"></i>
-                                </div>
-                            </th>
+                           
 
                             <th>
-                                Sueldo base 
-                                <div class="th">
-                                    <i class="fa fa-caret-up icon-up"
-                                        ng-click=" order('phone') "
-                                        ng-class="{active: row == 'phone'}"></i>
-                                    <i class="fa fa-caret-down icon-down"
-                                        ng-click=" order('-phone') "
-                                        ng-class="{active: row == '-phone'}"></i>
-                                </div>
+                                Editar
                             </th>
-
                             <th>
-                                Pagos
+                                Eliminar
                             </th>
                             
                         </tr>
@@ -78,14 +59,16 @@
                         <tbody>
                             <tr ng-repeat="data in currentPageStores track by $index">
                                 <td>{{ $index + 1 }}</td>
-                                <td>{{ data.no_empleado }}</td>
                                 <td>{{ data.nombre }}</td>
-                                <td>Q{{ data.sueldo_base }}</td>
+                              
                                 <td>
                                     <div class="btn-group">
-                                        <button type="button" class="btn btn-primary fa fa-list-ul  " ng-click="modalEditOpen(data)" md-ink-ripple></button>
+                                        <button type="button" class="btn btn-info ion ion-edit" ng-click="modalEditOpen(data)" md-ink-ripple></button>
                                     </div>
     
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-danger ion ion-trash-a" ng-click="modalDeleteOpen(data)" md-ink-ripple></button>
                                 </td>
                             </tr>
                         </tbody>

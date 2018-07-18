@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-		return redirect('dist');
+		return redirect('src');
 });
 
 Route::group(['prefix' => 'ws'], function (){
@@ -22,12 +22,14 @@ Route::group(['prefix' => 'ws'], function (){
 	Route::resource ('planilla', 				'PlanillaController');
 	Route::resource ('proveedores', 			'ProveedoresController');
 	Route::resource ('clientes', 				'ClientesController');
+    Route::resource ('cuentas', 				'CuentasController');
 	Route::resource ('compras', 				'ComprasController');
 	Route::resource ('excel/usuarios', 			'ExcelController');
 	Route::any 		('excel/proveedores', 		'ExcelController@reporteProveedores');
 	Route::any 		('excel/clientes', 			'ExcelController@reporteClientes');
 	Route::any 		('excel/compras', 			'ExcelController@reporteCompras');
 	Route::any 		('excel/movimientos', 		'ExcelController@reporteMovimientos');
+	Route::any 		('reporte/fechas', 			'ExcelController@ordenesfechas');
 	Route::resource ('ordenes', 				'OrdenesController');
 	Route::resource ('movimientos', 			'MovimientosController');
 	Route::get 		('empresa', 				'OrdenesController@empresas');
@@ -57,3 +59,5 @@ Route::group(['prefix' => 'ws'], function (){
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::any('muestrasDoc', 'ExcelController@muestrasDoc');
