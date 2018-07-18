@@ -63,6 +63,15 @@ class Orden extends Model
       return $this->hasOne('App\Lugar', 'id', 'id_lugar');
   }
 
-  
+  public function tenido()
+  {
+      return $this->hasOne('App\Tenido', 'id_orden', 'id');
+  }
+  public function secado()
+  {
+      return $this->hasOne('App\Secado', 'id_orden', 'id');
+  }
+   
+
 
 }

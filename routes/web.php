@@ -44,6 +44,15 @@ Route::group(['prefix' => 'ws'], function (){
 	Route::get 		('mostrar/muestra/{id}', 	'OrdenesController@mostrarmuestra');
 	Route::post 	('despachos', 				'OrdenesController@despachostore');
 	Route::get 		('mostrar/despacho/{id}', 	'OrdenesController@mostrardespacho');
+	Route::resource ('tenido', 				    'TenidoController');
+	Route::get      ('filtro/teñido', 			'TenidoController@filtrotenido');
+	Route::resource ('secado', 				    'SecadoController');
+	Route::get      ('filtro/secado', 			'SecadoController@filtrosecado');
+	Route::resource ('enconado', 				'EnconadoController');
+	Route::get      ('filtro/enconado', 		'EnconadoController@filtroenconado');
+	Route::resource ('devanado', 				'DevanadoController');
+	Route::get      ('filtro/devanado', 		'DevanadoController@filtrodevanado');
+	Route::resource ('maseo', 				    'MaseoController');
 
 });
 

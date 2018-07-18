@@ -16,10 +16,9 @@ class CrearTablaSecado extends Migration
         Schema::create('secado', function (Blueprint $table) {
             $table->increments('id');
             $table->Integer('id_orden');
-            $table->Date('fecha_inicio');
-            $table->Date('fecha_fin');
             $table->integer('cantidad');
-            $table->Integer('tipo');
+            $table->integer('estado_id');
+            $table->integer('etapa_id');
             $table->timestamps();
         });
     }

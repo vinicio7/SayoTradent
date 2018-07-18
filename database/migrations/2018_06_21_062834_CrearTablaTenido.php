@@ -16,10 +16,10 @@ class CrearTablaTenido extends Migration
         Schema::create('tenido', function (Blueprint $table) {
             $table->increments('id');
             $table->Integer('id_orden');
-            $table->Date('fecha_inicio');
-            $table->Date('fecha_fin');
             $table->Integer('cantidad');
             $table->text('receta');
+            $table->Integer('estado_id');
+            $table->Integer('etapa_id');
             $table->timestamps();
         });
     }

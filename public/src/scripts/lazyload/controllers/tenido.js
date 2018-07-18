@@ -2,12 +2,13 @@
 {
     'use strict';
 
-    angular.module('app.proveedores', ['app.service.proveedores'])
+    angular.module('app.tenido', ['app.service.tenido'])
 
-        .controller('TenidoController', ['$scope', '$filter', '$http', '$modal', '$interval', 'ProveedoresService', function($scope, $filter, $http, $modal, $timeout, ProveedoresService)  {
+        .controller('TenidoController', ['$scope', '$filter', '$http', '$modal', '$interval', 'TenidoService','WS_URL', function($scope, $filter, $http, $modal, $timeout, TenidoService,WS_URL)  {
            
             // General variables
             $scope.datas = [];
+            $scope.datas1 = [];
             $scope.currentPageStores = [];
             $scope.searchKeywords = '';
             $scope.filteredData = [];
@@ -17,16 +18,18 @@
             $scope.currentPage = 1;
             $scope.positionModel = 'topRight';
             $scope.toasts = [];
+
             var modal;
 
             // Function for load table
             function MostarDatos() {
-                ProveedoresService.index().then(function(response) {
+                TenidoService.ordenes().then(function(response) {
                     $scope.datas = response.data.records;
                     $scope.search();
-                    $scope.select($scope.currentPage);
+                    $scope.select($scope.currentPage);      
                 });
-            }
+                
+            } 
 
             $scope.redirect = function(){ 
                
@@ -42,6 +45,7 @@
                     end = start + $scope.numPerPage;
 
                 $scope.currentPageStores = $scope.filteredData.slice(start, end);
+                
             };
 
             $scope.onFilterChange = function() {
@@ -90,8 +94,9 @@
 
             // Function for sending data
             $scope.saveData = function (customer) {
+                console.log(customer);
                 if ($scope.action == 'new') {
-                    ProveedoresService.store(customer).then(
+                    TenidoService.store(customer).then(
                         function successCallback(response) {
                             if (response.data.result) {
                                 MostarDatos();
@@ -110,7 +115,7 @@
                     );
                 }
                 else if ($scope.action == 'update') {
-                    ProveedoresService.update(customer).then(
+                    TenidoService.update(customer).then(
                         function successCallback(response) {
                             if (response.data.result) {
                                 modal.close();
@@ -128,7 +133,7 @@
                     );
                 }
                 else if ($scope.action == 'delete') {
-                    ProveedoresService.destroy(customer.id).then(
+                    TenidoService.destroy(customer.id).then(
                         function successCallback(response) {
                             if (response.data.result) {
                                 MostarDatos();
@@ -148,9 +153,10 @@
                 }
             };   
             // Functions for modals
-            $scope.modalCreateOpen = function() {
-                $scope.proveedor = {};
+            $scope.modalCreateOpen = function(data) {
+                $scope.registro = {};
                 $scope.action = 'new'; 
+                $scope.registro.id_orden = data.id;
                 modal = $modal.open({
                     templateUrl: 'views/bodega/modal_tenido.html',
                     scope: $scope,
@@ -161,8 +167,24 @@
             };
 
             $scope.modalEditOpen = function(data) {
+                console.log("llego");
+                $http({
+                    method: 'GET',
+                    url:    WS_URL+'tenido/'+data.id
+                })
+                .then(function succesCallback (response) {
+                    if( response.data.result ) {
+                        data = response.data.records;
+                        $scope.registro = response.data.records;
+                    }
+                },
+                function errorCallback(response) {
+                    createToast('danger', '<strong>Error: </strong>'+response.data.message);
+                    $timeout( function(){ closeAlert(0); }, 3000);
+                })
                 $scope.action = 'update';
-                $scope.proveedor = data;
+                $scope.registro = data;
+                
                 modal = $modal.open({
                     templateUrl: 'views/bodega/modal_tenido.html',
                     scope: $scope,
