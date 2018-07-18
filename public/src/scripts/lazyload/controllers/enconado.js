@@ -2,9 +2,9 @@
 {
     'use strict';
 
-    angular.module('app.tenido', ['app.service.tenido'])
+    angular.module('app.enconado', ['app.service.enconado'])
 
-        .controller('TenidoController', ['$scope', '$filter', '$http', '$modal', '$interval', 'TenidoService','WS_URL', function($scope, $filter, $http, $modal, $timeout, TenidoService,WS_URL)  {
+        .controller('EnconadoController', ['$scope', '$filter', '$http', '$modal', '$interval', 'Enconado   Service','WS_URL', function($scope, $filter, $http, $modal, $timeout, EnconadoService,WS_URL)  {
            
             // General variables
             $scope.datas = [];
@@ -23,8 +23,9 @@
 
             // Function for load table
             function MostarDatos() {
-                TenidoService.ordenes().then(function(response) {
+                EnconadoService.ordenes().then(function(response) {
                     $scope.datas = response.data.records;
+                    console.log($scope.datas);
                     $scope.search();
                     $scope.select($scope.currentPage);      
                 });
@@ -96,7 +97,7 @@
             $scope.saveData = function (customer) {
                 console.log(customer);
                 if ($scope.action == 'new') {
-                    TenidoService.store(customer).then(
+                    EnconadoService.store(customer).then(
                         function successCallback(response) {
                             if (response.data.result) {
                                 MostarDatos();
@@ -115,7 +116,7 @@
                     );
                 }
                 else if ($scope.action == 'update') {
-                    TenidoService.update(customer).then(
+                    EnconadoService.update(customer).then(
                         function successCallback(response) {
                             if (response.data.result) {
                                 modal.close();
@@ -133,7 +134,7 @@
                     );
                 }
                 else if ($scope.action == 'delete') {
-                    TenidoService.destroy(customer.id).then(
+                    EnconadoService.destroy(customer.id).then(
                         function successCallback(response) {
                             if (response.data.result) {
                                 MostarDatos();
@@ -158,7 +159,7 @@
                 $scope.action = 'new'; 
                 $scope.registro.id_orden = data.id;
                 modal = $modal.open({
-                    templateUrl: 'views/bodega/modal_tenido.html',
+                    templateUrl: 'views/bodega/modal_enconado.html',
                     scope: $scope,
                     size: 'lg', 
                     resolve: function() {},
@@ -170,7 +171,7 @@
                 console.log("llego");
                 $http({
                     method: 'GET',
-                    url:    WS_URL+'tenido/'+data.id
+                    url:    WS_URL+'enconado/'+data.id
                 })
                 .then(function succesCallback (response) {
                     if( response.data.result ) {
@@ -186,7 +187,7 @@
                 $scope.registro = data;
                 
                 modal = $modal.open({
-                    templateUrl: 'views/bodega/modal_tenido.html',
+                    templateUrl: 'views/bodega/modal_enconado.html',
                     scope: $scope,
                     size: 'lg',
                     resolve: function() {},
@@ -199,7 +200,7 @@
                 $scope.action = 'delete';
                 $scope.proveedor = data;
                 modal = $modal.open({
-                    templateUrl: 'views/bodega/modal_tenido.html',
+                    templateUrl: 'views/bodega/modal_enconado.html',
                     scope: $scope,
                     size: 'md',
                     resolve: function() {},

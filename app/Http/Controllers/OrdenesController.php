@@ -28,7 +28,7 @@ class OrdenesController extends Controller
     public function index()
     {
         try {
-            $records           = Orden::with('empresa','estilo','calibre','metraje','color','referencia','lugar')->get();
+            $records           = Orden::with('empresa','estilo','calibre','metraje','color','referencia','lugar','tenido','secado')->get();
             $this->status_code = 200;
             $this->result      = true;
             $this->message     = 'Registros consultados correctamente';

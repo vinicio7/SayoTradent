@@ -1,8 +1,8 @@
 <div class="modal-style">
     <div class="modal-header clearfix">
-        <h4 ng-if="action == 'new'" class="modal-title">Nuevo proceso de teñido</h4>
-        <h4 ng-if="action == 'update'" class="modal-title">Editar teñido</h4>
-        <h4 ng-if="action == 'delete'" class="modal-title">Eliminar teñido</h4>
+        <h4 ng-if="action == 'new'" class="modal-title">Nuevo proceso de secado</h4>
+        <h4 ng-if="action == 'update'" class="modal-title">Editar secado</h4>
+        <h4 ng-if="action == 'delete'" class="modal-title">Eliminar secado</h4>
         <span class="close ion ion-android-close" ng-click="modalClose()"></span>
     </div>
     <div class="modal-body">
@@ -34,10 +34,7 @@
                     <label>Cantidad</label>
                     <input type="text" class="form-control" ng-model="registro.cantidad" required>
                 </div>
-                 <div class="col-sm-6">
-                    <label>Receta</label>
-                    <input type="text" class="form-control" ng-model="registro.receta" required>
-                </div>
+                
             </div>
             
             <div class="row form-group">

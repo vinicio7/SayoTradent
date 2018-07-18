@@ -5,10 +5,6 @@
                 <div class="panel panel-default table-responsive panel-hovered mb20"  >
                     <div class="panel-heading"><h4>PROCESO DE TEÑIDO</h4></div>
                     <div class="panel-body">
-                        <div class="row">
-                            <button type="button" class="btn btn-success btn-rounded" ng-click="modalCreateOpen()" md-ink-ripple><i class="fa fa-plus"></i> Ingreso</button>
-                            <button ng-click="redirect()" type="button" class="btn btn-info btn-rounded"> <i class="fa fa-file-excel-o"></i>&nbsp;Excel</button>
-                        </div>
                         <br>
                         <div class="row">
                             <div class="small text-bold left mt5">
@@ -59,7 +55,7 @@
                             </th>
 
                             <th>
-                                Etapa 
+                                 Estado
                                 <div class="th">
                                     <i class="fa fa-caret-up icon-up"
                                         ng-click=" order('phone') "
@@ -74,33 +70,34 @@
                                 Cantidad
                             </th>
                             <th>
-                                Receta
+                                Iniciar
                             </th>
                             <th>
                                 Editar
                             </th>
-                            <th>
-                                Eliminar
-                            </th>
+                            
                             
                         </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>12345</td>
-                                <td>05-10-2018 16:15</td>
-                                <td>Primer teñido</td>
-                                <td>10</td>
-                                <td>3161</td>
+                            <tr ng-repeat="data in currentPageStores track by $index">
+                                <td>{{ $index + 1 }}</td>
+                                <td>{{ data.orden }}</td>
+                                <td>{{ data.tenido.created_at }}</td>
+                                <td>
+                                    <label ng-if="data.tenido.estado_id == 1">Inicio</label>
+                                    <label ng-if="data.tenido.estado_id == 2">Fin</label>
+                                    <label ng-if="data.tenido.estado_id != 1 && data.tenido.estado_id != 2">Sin estado</label>
+                                </td>
+                                <td>{{ data.cantidad }}</td>
                                 <td>
                                     <div class="btn-group">
-                                        <button type="button" class="btn btn-info ion ion-edit" ng-click="modalEditOpen(data)" md-ink-ripple></button>
+                                        <button type="button" class="btn btn-primary fa fa-list-ul" ng-click="modalCreateOpen(data)" md-ink-ripple></button>
                                     </div>
     
                                 </td>
                                 <td>
-                                    <button type="button" class="btn btn-danger ion ion-trash-a" ng-click="modalDeleteOpen(data)" md-ink-ripple></button>
+                                    <button type="button" class="btn btn-info ion ion-edit" ng-click="modalEditOpen(data)" md-ink-ripple></button>
                                 </td>
                             </tr>
                         </tbody>

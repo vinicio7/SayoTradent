@@ -127,6 +127,26 @@
 				name: "app.service.ordenes",
 				files: ["scripts/lazyload/services/ordenes.js"]
 			},
+			{
+				name: "app.service.tenido",
+				files: ["scripts/lazyload/services/tenido.js"]
+			},
+			{
+				name: "app.service.secado",
+				files: ["scripts/lazyload/services/secado.js"]
+			},
+			{
+				name: "app.service.enconado",
+				files: ["scripts/lazyload/services/enconado.js"]
+			},
+			{
+				name: "app.service.devanado",
+				files: ["scripts/lazyload/services/devanado.js"]
+			},
+			{
+				name: "app.service.maseo",
+				files: ["scripts/lazyload/services/maseo.js"]
+			},
 			]
 		})
 	}])
@@ -402,8 +422,60 @@
 			resolve: {
 				 deps: ["$ocLazyLoad", function(a) {
                     return a.load({
-                        name: 'app.planilla',
+                        name: 'app.tenido',
                         files: ['scripts/lazyload/controllers/tenido.js']
+                    })
+                }]
+			}
+		});
+
+		$routeProvider.when("/secado", {
+			templateUrl: "views/bodega/secado.html",
+			controller: "SecadoController",
+			resolve: {
+				 deps: ["$ocLazyLoad", function(a) {
+                    return a.load({
+                        name: 'app.secado',
+                        files: ['scripts/lazyload/controllers/secado.js']
+                    })
+                }]
+			}
+		});
+
+		$routeProvider.when("/enconado", {
+			templateUrl: "views/bodega/enconado.html",
+			controller: "EnconadoController",
+			resolve: {
+				 deps: ["$ocLazyLoad", function(a) {
+                    return a.load({
+                        name: 'app.enconado',
+                        files: ['scripts/lazyload/controllers/enconado.js']
+                    })
+                }]
+			}
+		});
+
+		$routeProvider.when("/devanado", {
+			templateUrl: "views/bodega/devanado.html",
+			controller: "DevanadoController",
+			resolve: {
+				 deps: ["$ocLazyLoad", function(a) {
+                    return a.load({
+                        name: 'app.devanado',
+                        files: ['scripts/lazyload/controllers/devanado.js']
+                    })
+                }]
+			}
+		});
+
+		$routeProvider.when("/maseo", {
+			templateUrl: "views/bodega/maseo.html",
+			controller: "MaseoController",
+			resolve: {
+				 deps: ["$ocLazyLoad", function(a) {
+                    return a.load({
+                        name: 'app.maseo',
+                        files: ['scripts/lazyload/controllers/maseo.js']
                     })
                 }]
 			}
