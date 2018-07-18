@@ -9,16 +9,15 @@ class Movimientos extends Model
     protected $table    = 'movimientos';
 	// protected $fillable = ['usuario', 'clave', 'activado'];
     protected $fillable = ['tipo_movimiento',
-    						'monto', 
+    						           'monto', 
                            'descripcion',
-                           
-                            'fecha',
-    						'no_cheque', 
+                           'fecha',
+    						           'no_cheque', 
                            'nombre',
-                            'moneda',
-                            'cobrado',
-    						'balanceQ', 
+                           'moneda',
+                           'cobrado',
+    						           'balanceQ', 
                            'balance_D',
-                            'cuenta_id',
+                           'cuenta_id',
 						   ];
 }

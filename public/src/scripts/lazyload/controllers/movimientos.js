@@ -94,10 +94,14 @@
 
             // Function for sending data
             $scope.saveData = function (customer) {
+                console.log(customer);
                 if ($scope.action == 'new') {
                      var clone_customer = Object.assign({}, customer);
                     var cuenta = customer.cuenta_id.indexOf(" -");
                     var cuenta_id = customer.cuenta_id.slice(0, cuenta);
+                    console.log(clone_customer);
+                    console.log(cuenta);
+                    console.log(cuenta_id);
                     clone_customer.cuenta_id = cuenta_id;
                     MovimientosService.store(customer).then(
                         function successCallback(response) {

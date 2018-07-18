@@ -18,7 +18,14 @@ class Movimientos extends Migration
             $table->String('tipo_movimiento');
             $table->Float ('monto');
             $table->String('descripcion');
-            $table->Float('saldo');
+            $table->Date('fecha');
+            $table->String('no_cheque');
+            $table->String('nombre');
+            $table->String('moneda');
+            $table->tinyInteger('cobrado');
+            $table->Float('balanceQ')->nullable();
+            $table->Float('balance_D')->nullable();
+            $table->integer('cuenta_id');
             $table->timestamps();
         });
     }

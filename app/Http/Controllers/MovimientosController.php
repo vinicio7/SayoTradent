@@ -58,12 +58,12 @@ class MovimientosController extends Controller
 	public function store(Request $request) {
         // dd($request);
 		try {
-		
+			$fecha  = date_create($request->input('fecha'));
             $record = Movimientos::create([
                     'tipo_movimiento'       => $request->input('tipo_movimiento'),
                     'monto'                 => $request->input('monto'),
                     'descripcion'           => $request->input('descripcion'),
-                    'fecha'      		    => $request->input('fecha'),
+                    'fecha'      		    => $fecha->format('Y-m-d'),
                     'no_cheque'             => $request->input('no_cheque'),
                     'nombre'   		        => $request->input('nombre'),
                     'moneda'                => $request->input('moneda'),
