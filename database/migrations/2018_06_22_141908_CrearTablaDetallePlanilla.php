@@ -18,8 +18,6 @@ class CrearTablaDetallePlanilla extends Migration
             $table->integer('id_planilla');
             $table->integer('mes');
             $table->integer('quincena');
-            $table->Integer('no_empleado');
-            $table->String('nombre');
             $table->Float('sueldo_ordinario');
             $table->Float('dias_trabajados');
             $table->Float('horas_ex_dia');
