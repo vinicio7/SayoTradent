@@ -37,77 +37,7 @@
                         </div>
                     </tab>
                     
-
-
-					<tab heading="Calculo" active="about.active" ng-if="action == 'update'">
-                        <div class="clearfix">
-                            <div class="row form-group">
-                                <div class="col-sm-4">
-                                    <label>Incentivo PN</label>
-                                    <input type="text" class="form-control" ng-model="planilla.incentivo_pn" maxlength="2" ng-keyup="incentivos(planilla)" required>
-                                </div>
-                                <div class="col-sm-4">
-                                    <label>Incentivo AS</label>
-                                    <input type="text" class="form-control" ng-model="planilla.incentivo_as" maxlength="2" ng-keyup="incentivos(planilla)" required>
-                                </div>
-                                 <div class="col-sm-4">
-                                    <label>Bon. Inc. Base.</label>
-                                    <input type="text" class="form-control" ng-model="planilla.bon_inc_base" ng-keyup="incentivos(planilla)" required>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="clearfix">
-                            <div class="row form-group">
-                                <div class="col-sm-4">
-                                    <label>Sueldo ordinario</label>
-                                    <input disabled type="text" class="form-control" ng-model="planilla.sueldo_ordinario" required>
-                                </div>
-                                <div class="col-sm-4">
-                                    <label>Sueldo extra día</label>
-                                    <input disabled type="text" class="form-control" ng-model="planilla.sueldo_ex_dia" required>
-                                </div>
-                                <div class="col-sm-4">
-                                    <label>Sueldo extra noche</label>
-                                    <input disabled type="text" class="form-control" ng-model="planilla.sueldo_ex_noche" required>
-                                </div>
-                                
-                            </div>
-                        </div>
-
-                        <div class="clearfix">
-                            <div class="row form-group">
-                                <div class="col-sm-4">
-                                    <label>Total extras</label>
-                                    <input disabled type="text" class="form-control" ng-model="planilla.total_ex" required>
-                                </div>
-                                <div class="col-sm-4">
-                                    <label>Bon. Legal</label>
-                                    <input disabled type="text" class="form-control" ng-model="planilla.bon_legal" required>
-                                </div>
-                                <div class="col-sm-4">
-                                    <label>Incentivo PN</label>
-                                    <input disabled type="text" class="form-control" ng-model="planilla.incentivo_pn1" required>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="clearfix">
-                            <div class="row form-group">
-                                <div class="col-sm-4">
-                                    <label>Incentivo AS</label>
-                                    <input disabled type="text" class="form-control" ng-model="planilla.incentivo_as1" required>
-                                </div>
-                                <div class="col-sm-4">
-                                    <label>Total Bn. Inc.</label>
-                                    <input disabled type="text" class="form-control" ng-model="planilla.total_bn_inc" required>
-                                </div>
-                            </div>
-                        </div>
-                    </tab>
-
-                    
-					<tab heading="Pago" active="portfolio.active" ng-if="action == 'update'">
+					<tab heading="Datos" active="portfolio.active" ng-if="action == 'update'">
                         <div class="clearfix">
                             <div class="row form-group">
                                 <div class="col-sm-4">
@@ -168,8 +98,8 @@
                         <div class="clearfix">
                                 <div class="row form-group">
                                     <div class="col-sm-4">
-                                        <label>Total Ingresos</label>
-                                        <input disabled type="text" class="form-control" ng-model="planilla.total_ingresos" required>
+                                        <label>Otros Descuentos</label>
+                                        <input type="text" class="form-control" ng-model="planilla.otros_descuentos" ng-keyup="incentivos(planilla)" required>
                                     </div>
                                     <div class="col-sm-4">
                                         <label>IGSS</label>
@@ -184,8 +114,75 @@
                         <div class="clearfix">
                             <div class="row form-group">
                                 <div class="col-sm-4">
-                                    <label>Otros Descuentos</label>
-                                    <input type="text" class="form-control" ng-model="planilla.otros_descuentos" ng-keyup="incentivos(planilla)" required>
+                                    <label>Incentivo Puntualidad</label>
+                                    <input type="text" class="form-control" ng-model="planilla.incentivo_pn" maxlength="2" ng-keyup="incentivos(planilla)" required>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label>Incentivo Asistencia</label>
+                                    <input type="text" class="form-control" ng-model="planilla.incentivo_as" maxlength="2" ng-keyup="incentivos(planilla)" required>
+                                </div>
+                                 <div class="col-sm-4">
+                                    <label>Bon. Inc. Base.</label>
+                                    <input type="text" class="form-control" ng-model="planilla.bon_inc_base" ng-keyup="incentivos(planilla)" required>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </tab>
+
+                    <tab heading="Calculos" active="about.active" ng-if="action == 'update'">
+                        <div class="clearfix">
+                            <div class="row form-group">
+                                <div class="col-sm-4">
+                                    <label>Sueldo ordinario</label>
+                                    <input disabled type="text" class="form-control" ng-model="planilla.sueldo_ordinario" required>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label>Sueldo extra día</label>
+                                    <input disabled type="text" class="form-control" ng-model="planilla.sueldo_ex_dia" required>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label>Sueldo extra noche</label>
+                                    <input disabled type="text" class="form-control" ng-model="planilla.sueldo_ex_noche" required>
+                                </div>
+                                
+                            </div>
+                        </div>
+
+                        <div class="clearfix">
+                            <div class="row form-group">
+                                <div class="col-sm-4">
+                                    <label>Total extras</label>
+                                    <input disabled type="text" class="form-control" ng-model="planilla.total_ex" required>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label>Bon. Legal</label>
+                                    <input disabled type="text" class="form-control" ng-model="planilla.bon_legal" required>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label>Incentivo Puntualidad</label>
+                                    <input disabled type="text" class="form-control" ng-model="planilla.incentivo_pn1" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="clearfix">
+                            <div class="row form-group">
+                                <div class="col-sm-4">
+                                    <label>Incentivo Asistencia</label>
+                                    <input disabled type="text" class="form-control" ng-model="planilla.incentivo_as1" required>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label>Total Bn. Inc.</label>
+                                    <input disabled type="text" class="form-control" ng-model="planilla.total_bn_inc" required>
+                                </div>
+                            </div>
+                        </div>
+                         <div class="clearfix">
+                            <div class="row form-group">
+                                <div class="col-sm-4">
+                                    <label>Total Ingresos</label>
+                                    <input disabled type="text" class="form-control" ng-model="planilla.total_ingresos" required>
                                 </div>
                                 <div class="col-sm-4">
                                     <label>Total Descuentos</label>

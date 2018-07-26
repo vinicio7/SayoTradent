@@ -74,7 +74,7 @@ class PlanillaController extends Controller{
                         throw new \Exception('El registro no pudo ser creado');
                     }
                 } else {
-                    
+                    throw new \Exception('Ya existe un registro con ese número de empleado');
                 }
             } catch (\Exception $e) {
                 $this->status_code  = 400;
