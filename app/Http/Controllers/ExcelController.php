@@ -9,6 +9,8 @@ use App\Clientes;
 use App\Compras;
 use App\Movimientos;
 use App\Orden;
+use App\InventarioColorante;
+use App\Facturas;
 use Carbon\Carbon;
 
     
@@ -208,6 +210,58 @@ class ExcelController extends Controller
 
     public function muestrasDoc(){
         return view('layouts.docmuestra');
+    }
+
+    public function reporteInventarioColorantes(Request $request){
+        \Excel::create('InventarioColorante', function($excel) use ($request){
+             $excel->sheet('Datos', function($sheet) use ($request) {
+
+                $reporte = InventarioColorante::with('colorante')->get();
+                // dd($reporte);
+
+             $data = [];
+                foreach ($reporte as $reporte) {
+                   $row = [];
+                   $row ["Código"]          = $reporte->colorante->codigo;
+                   $row ["Colorante"]       = $reporte->colorante->colorante;
+                   $row ["Bodega"]          = $reporte->bodega;
+                   $row ["Despacho"]        = $reporte->despacho;
+                   $row ["Total"]           = $reporte->total;
+                   $row ["Fecha"]           = $reporte->fecha;
+              
+                   $data[] = $row;
+                } 
+                // dd($data);
+          $sheet->fromArray($data);
+      });
+      })->export('xls');
+    }
+
+    public function reporteFacturas(Request $request){
+        \Excel::create('Facturas', function($excel) use ($request){
+             $excel->sheet('Datos', function($sheet) use ($request) {
+
+                $reporte = Facturas::with('cliente','orden')->get();
+                // dd($reporte);
+
+             $data = [];
+                foreach ($reporte as $reporte) {
+                   $row = [];
+                   $row ["Fecha de emisión"]  = $reporte->fecha;
+                   $row ["Serie"]             = $reporte->serie;
+                   $row ["No. Factura"]       = $reporte->no_factura;
+                   $row ["Nombre"]            = $reporte->cliente->nombre;
+                   $row ["Nit"]               = $reporte->cliente->nit;
+                   $row ["Emisión en dólares"]= $reporte->emision_dolares;
+                   $row ["Tipo de cambio"]    = $reporte->tipo_cambio;
+                   $row ["Factura quetzalizada"] = $reporte->factura_quetzales;
+              
+                   $data[] = $row;
+                } 
+                // dd($data);
+          $sheet->fromArray($data);
+      });
+      })->export('xls');
     }
 
 }

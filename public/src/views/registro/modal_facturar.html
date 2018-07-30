@@ -1,0 +1,40 @@
+<div class="modal-style">
+        <div class="modal-header clearfix">
+            <h4 ng-if="action == 'facturar'" class="modal-title">Facturar</h4>
+            <span class="close ion ion-android-close" ng-click="modalClose()"></span>
+        </div>
+        <div class="modal-body">
+           
+            <form class="form-horizontal" name="form" ng-if="action != 'delete'" action="javascript:;" novalidate>
+                    <div class="col-sm-12">
+                            
+                            <div class="clearfix">
+                                <div class="row form-group">
+                                    <div class="col-sm-4">
+                                        <label>Serie</label>
+                                        <input type="text" class="form-control" ng-model="datos.serie" required>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <label>No.</label>
+                                        <input type="number" class="form-control" ng-model="datos.no_factura"  required>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>  
+            
+                        <br>
+                        <!-- end tabs -->
+                        <div class="row form-group">
+                            <div class="col-sm-12 text-right">
+                                <br>
+                                <button class="btn btn-danger" ng-click="modalClose()">Cerrar</button>
+                                <button class="btn btn-success" ng-if="action == 'facturar'"  ng-click="saveData(datos)">Registrar</button>
+                                <button class="btn btn-success" ng-if="action == 'update'" ng-disabled="form.$invalid" ng-click="saveData(datos)">Editar</button>
+                            </div>
+                        </div>
+            </form>
+            
+        </div>
+        
+    </div>

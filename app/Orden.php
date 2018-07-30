@@ -25,12 +25,13 @@ class Orden extends Model
                            'precio',
                            'fecha_entrega',
                            'id_referencias',
-                           'id_lugar'
+                           'id_lugar',
+                           'facturado'
 						   ];
 
-  public function empresa()
+  public function cliente()
   {
-      return $this->hasOne('App\Empresa', 'id', 'id_empresa');
+      return $this->hasOne('App\Clientes', 'id', 'id_empresa');
   }
 
   public function estilo()

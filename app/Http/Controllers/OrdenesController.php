@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Orden;
-use App\Empresa;
+use App\Cliente;
 use App\Estilo;
 use App\Calibre;
 use App\Color;
@@ -28,7 +28,7 @@ class OrdenesController extends Controller
     public function index()
     {
         try {
-            $records           = Orden::with('empresa','estilo','calibre','metraje','color','referencia','lugar','tenido','secado')->get();
+            $records           = Orden::with('cliente','estilo','calibre','metraje','color','referencia','lugar','tenido','secado')->get();
             $this->status_code = 200;
             $this->result      = true;
             $this->message     = 'Registros consultados correctamente';
@@ -48,10 +48,10 @@ class OrdenesController extends Controller
         }
     }
 
-    public function empresas()
+    public function cliente()
     {
         try {
-            $records           = Empresa::all();
+            $records           = Clientes::all();
             $this->status_code = 200;
             $this->result      = true;
             $this->message     = 'Registros consultados correctamente';
@@ -254,6 +254,7 @@ class OrdenesController extends Controller
                 'fecha_entrega'         =>date("Y-m-d", strtotime($request->input('fecha_entrega'))),
                 'id_referencias'       	=> $request->input('id_referencias'),
                 'id_lugar'       		=> $request->input('id_lugar'),
+                'facturado'             => false
                 ]);
             if ($record) {
                 $this->status_code  = 200;
