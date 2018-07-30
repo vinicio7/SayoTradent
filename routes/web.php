@@ -17,6 +17,7 @@ Route::get('/', function () {
 
 Route::group(['prefix' => 'ws'], function (){
 
+	Route::post 	('consultar',				'PlanillaController@consultar');
 	Route::resource ('usuarios', 				'UsuariosController');
 	Route::any 		('login', 					'UsuariosController@login');
 	Route::resource ('planilla', 				'PlanillaController');

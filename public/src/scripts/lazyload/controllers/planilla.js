@@ -17,8 +17,40 @@
             $scope.currentPage = 1;
             $scope.positionModel = 'topRight';
             $scope.toasts = [];
+            $scope.habilitar2 = false;
+            $scope.habilitar = true;
+            $scope.datos2 = [];
             var modal;
 
+            $scope.consultar = function(datos){
+                PlanillaService.consultar(datos).then(
+                        function successCallback(response) {
+                            $scope.planilla = datos;
+                            // $scope.planilla = response.data.records;
+                            $scope.habilitar2 = false;
+                            console.log(response.data.records);
+                            if (response.data.result) {
+                                createToast('success', '<strong>Éxito: </strong>'+response.data.message);
+                                $timeout( function(){ closeAlert(0); }, 3000);
+                            } else {
+                                createToast('danger', '<strong>Error: </strong>'+response.data.message);
+                                $timeout( function(){ closeAlert(0); }, 3000);
+                            }
+                        },
+                        function errorCallback(response) {
+                            console.log(response.data.records);
+                            $scope.planilla = response.data.records;
+                            $scope.habilitar2 = true;
+                            createToast('danger', '<strong>Error: </strong>'+response.data.message);
+                            $timeout( function(){ closeAlert(0); }, 3000);
+                        }
+                    );
+            }
+
+            $scope.encender = function(){
+                console.log("encendido");
+                $scope.habilitar = false;
+            }
             // calcular suledo ordinario
             $scope.diasTrabajados = function(item){
                 var numero ;

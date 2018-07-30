@@ -58,7 +58,25 @@ class MovimientosController extends Controller
 	public function store(Request $request) {
         // dd($request);
 		try {
+			$cuenta = explode(" -", $request->input('cuenta_id'));
 			$fecha  = date_create($request->input('fecha'));
+			$ultimo = Movimientos::all()->last();
+			$balanceQ = 0;
+			$balance_D = 0;
+			if ($request->input('tipo_movimiento') == 1) {
+				if ($request->input('moneda') == 1) {
+					$balanceQ  = intval($ultimo->balanceQ)  + intval($request->input('monto')); 
+				} else {
+					$balance_D = intval($ultimo->balance_D) + intval($request->input('monto')); 
+				}
+			} else {
+				if ($request->input('moneda') == 1) {
+					$balanceQ  = intval($ultimo->balanceQ)  - intval($request->input('monto')); 
+				} else {
+					$balance_D = intval($ultimo->balance_D) - intval($request->input('monto')); 
+				}
+			}
+			
             $record = Movimientos::create([
                     'tipo_movimiento'       => $request->input('tipo_movimiento'),
                     'monto'                 => $request->input('monto'),
@@ -68,9 +86,9 @@ class MovimientosController extends Controller
                     'nombre'   		        => $request->input('nombre'),
                     'moneda'                => $request->input('moneda'),
                     'cobrado'    		    => $request->input('cobrado'),
-                    'balanceQ'              => $request->input('balanceQ'),
-                    'balance_D'             => $request->input('balance_D'),
-                    'cuenta_id'               => $request->input('cuenta_id'),
+                    'balanceQ'              => $balanceQ,
+                    'balance_D'             => $balance_D,
+                    'cuenta_id'               => $cuenta[0],
                      ]);
             if ($record) {
                 $this->status_code = 200;
@@ -99,7 +117,7 @@ class MovimientosController extends Controller
 
 	public function show($id) {
 		try {
-			$record = Movimientos::find($id);
+			$record = MovimientosController::find($id);
 			if ($record) {
 				$this->status_code = 200;
 				$this->result      = true;
@@ -140,7 +158,20 @@ class MovimientosController extends Controller
                 $record->balanceQ           = $request->input('balanceQ',$record->balanceQ);
                 $record->balance_D          = $request->input('balance_D',$record->balance_D);
                 $record->cuenta_id          = $request->input('cuenta_id',$record->cuenta_id );
-                
+   //              if ($request->input('tipo_movimiento') == 1) {
+			// 	if ($request->input('moneda') == 1) {
+			// 		$balanceQ  = intval($ultimo->balanceQ)  + intval($request->input('monto')); 
+			// 	} else {
+			// 		$balance_D = intval($ultimo->balance_D) + intval($request->input('monto')); 
+			// 	}
+			// } else {
+			// 	if ($request->input('moneda') == 1) {
+			// 		$balanceQ  = intval($ultimo->balanceQ)  - intval($request->input('monto')); 
+			// 	} else {
+			// 		$balance_D = intval($ultimo->balance_D) - intval($request->input('monto')); 
+			// 	}
+			// }
+			
                 $record->save();
                 if ($record->save()) {
                     $this->status_code  = 200;

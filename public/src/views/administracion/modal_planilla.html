@@ -42,7 +42,7 @@
                             <div class="row form-group">
                                 <div class="col-sm-4">
                                     <label>Mes</label>
-                                    <select class="form-control" ng-model="planilla.mes" required>                  
+                                    <select class="form-control" ng-model="planilla.mes" ng-change="encender()" required>                  
                                         <option disabled>Selecciona un opción</option>
                                         <option value="1">Enero</option>
                                         <option value="2">Febrero</option>
@@ -60,7 +60,7 @@
                                 </div>
                                 <div class="col-sm-4">
                                     <label>Quincena</label>
-                                    <select class="form-control" ng-model="planilla.quincena" required>                  
+                                    <select class="form-control" ng-model="planilla.quincena" ng-change="consultar(planilla)" ng-disabled="habilitar" required>                  
                                         <option disabled>Selecciona un opción</option>
                                         <option value="1">Primera</option>
                                         <option value="2">Segunda</option>
@@ -68,7 +68,7 @@
                                 </div>
                                 <div class="col-sm-4">
                                     <label>Pagado</label>
-                                    <select class="form-control" ng-model="planilla.pagado" required>                  
+                                    <select class="form-control" ng-model="planilla.pagado" ng-disabled="habilitar2" required>                  
                                         <option disabled>Selecciona un opción</option>
                                         <option value="1">Si</option>
                                         <option value="2">No</option>

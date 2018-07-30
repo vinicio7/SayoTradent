@@ -35,6 +35,41 @@ class PlanillaController extends Controller{
             return response()->json($response, $this->status_code);
         }
     }
+
+    public function consultar(Request $request){
+        try {
+            $planilla = Planilla::where('no_empleado',$request->input('no_empleado'))->first();
+            if ($planilla) {
+                $detalle = DetallePlanilla::where('id_planilla',$planilla->id)->where('quincena',$request->input('quincena'))->where('mes',$request->input('mes'))->first();
+                if ($detalle) {
+                    $detalle = $detalle;
+                    throw new \Exception('Los registros para esta planilla ya existen');
+                } else {
+                    $detalle = [];
+                }
+            } else {
+                $detalle = [];
+            }
+            $this->status_code  = 200;
+            $this->result       = true;
+            $this->message      = 'Registros de planilla consultados correctamente.';
+            $this->records      = $detalle;
+        } catch (\Exception $e) {
+            $this->status_code  = 400;
+            $this->result       = false;
+            $this->message      = env('APP_DEBUG') ? $e->getMessage() : $this->message;
+            $this->records      = $detalle;
+        } finally {
+            $response = [
+                'result'  => $this->result,
+                'message' => $this->message,
+                'records' => $this->records,
+            ];
+
+            return response()->json($response, $this->status_code);
+        }
+    }
+
     public function store(Request $request){
 //         dd($request);
             try {
