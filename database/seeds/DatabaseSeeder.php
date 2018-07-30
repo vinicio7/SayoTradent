@@ -18,6 +18,21 @@ class DatabaseSeeder extends Seeder
             'descripcion'    => 'SAE A.',        
         ]);
 
+        App\Clientes::create([
+            'nombre'    => 'Pablo Gómez',
+            'nit'       => '28940316',
+            'telefono'  => '48776611',
+            'direccion' => 'Guatemala',
+            'credito'   => '5000.00'       
+        ]);
+        App\Clientes::create([
+            'nombre'    => 'Javier Gutiérrez',
+            'nit'       => '2823316',
+            'telefono'  => '41236611',
+            'direccion' => 'Guatemala',
+            'credito'   => '5000.00'        
+        ]);
+
         App\Estilo::create([
             'descripcion'    => 'OFA',        
         ]);

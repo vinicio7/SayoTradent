@@ -29,10 +29,12 @@ Route::group(['prefix' => 'ws'], function (){
 	Route::any 		('excel/clientes', 			'ExcelController@reporteClientes');
 	Route::any 		('excel/compras', 			'ExcelController@reporteCompras');
 	Route::any 		('excel/movimientos', 		'ExcelController@reporteMovimientos');
+	Route::any 		('excel/inventarioColorantes','ExcelController@reporteInventarioColorantes');
+	Route::any 		('excel/facturas',			'ExcelController@reporteFacturas');
 	Route::any 		('reporte/fechas', 			'ExcelController@ordenesfechas');
 	Route::resource ('ordenes', 				'OrdenesController');
 	Route::resource ('movimientos', 			'MovimientosController');
-	Route::get 		('empresa', 				'OrdenesController@empresas');
+	Route::get 		('cliente', 				'OrdenesController@cliente');
 	Route::get 		('estilos', 				'OrdenesController@estilos');
 	Route::get 		('calibres', 				'OrdenesController@calibres');
 	Route::get 		('metraje', 				'OrdenesController@metraje');
@@ -53,7 +55,10 @@ Route::group(['prefix' => 'ws'], function (){
 	Route::resource ('devanado', 				'DevanadoController');
 	Route::get      ('filtro/devanado', 		'DevanadoController@filtrodevanado');
 	Route::resource ('maseo', 				    'MaseoController');
-
+	Route::resource ('colorantes', 				'InventarioColoranteController');
+	Route::resource ('hilos', 					'CalibreController');
+	Route::resource ('colorantesInfo',			'ColoranteController');
+	Route::resource ('facturar',				'FacturasController');
 });
 
 Auth::routes();

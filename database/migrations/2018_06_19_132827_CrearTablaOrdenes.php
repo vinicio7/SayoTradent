@@ -33,6 +33,7 @@ class CrearTablaOrdenes extends Migration
             $table->Date('fecha_entrega');
             $table->Integer('id_referencias');
             $table->Integer('id_lugar');
+            $table->boolean('facturado');
             $table->timestamps();
         });
     }

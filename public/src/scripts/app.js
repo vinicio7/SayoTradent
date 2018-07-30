@@ -147,10 +147,18 @@
 				name: "app.service.maseo",
 				files: ["scripts/lazyload/services/maseo.js"]
 			},
-      {
-        name: "app.service.cuentas",
-				files: ["scripts/lazyload/services/cuentas.js"]
-      },
+			{
+				name: "app.service.colorante",
+				files: ["scripts/lazyload/services/colorante.js"]
+			},
+			{
+				name: "app.service.hilo",
+				files: ["scripts/lazyload/services/hilo.js"]
+			},
+		      {
+		        name: "app.service.cuentas",
+						files: ["scripts/lazyload/services/cuentas.js"]
+		      },
 			]
 		})
 	}])
@@ -480,6 +488,32 @@
                     return a.load({
                         name: 'app.maseo',
                         files: ['scripts/lazyload/controllers/maseo.js']
+                    })
+                }]
+			}
+		});
+
+		$routeProvider.when("/colorante", {
+			templateUrl: "views/inventario/inventarioColorante.html",
+			controller: "ColoranteController",
+			resolve: {
+				 deps: ["$ocLazyLoad", function(a) {
+                    return a.load({
+                        name: 'app.colorante',
+                        files: ['scripts/lazyload/controllers/colorante.js']
+                    })
+                }]
+			}
+		});
+
+		$routeProvider.when("/hilo", {
+			templateUrl: "views/inventario/inventarioHilos.html",
+			controller: "HiloController",
+			resolve: {
+				 deps: ["$ocLazyLoad", function(a) {
+                    return a.load({
+                        name: 'app.hilo',
+                        files: ['scripts/lazyload/controllers/hilo.js']
                     })
                 }]
 			}

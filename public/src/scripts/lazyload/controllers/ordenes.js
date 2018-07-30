@@ -30,8 +30,8 @@
 
 
             function cargarModal(){
-                OrdenesService.empresas().then(function(response){
-                    $scope.empresas = response.data.records;
+                OrdenesService.clientes().then(function(response){
+                    $scope.clientes = response.data.records;
                 });
                 
                 OrdenesService.estilos().then(function(response){
@@ -66,9 +66,9 @@
                
             }
 
-            $scope.redirect = function(){ 
+            $scope.facturasReporte = function(){ 
                
-                window.location="../ws/excel/proveedores";
+                window.location="../ws/excel/facturas";
                 createToast('success', '<strong>Éxito: </strong>'+'Reporte Creado Exitosamente');
                 $timeout( function(){ closeAlert(0); }, 3000);
             
@@ -256,13 +256,38 @@
                         }
                     );
                 }
+                else if ($scope.action == 'facturar') {
+                    customer.orden_id = $scope.registro.id;
+                    customer.cliente_id = $scope.registro.id_empresa;
+                    customer.emision_dolares = $scope.registro.precio;
+                    customer.tipo_cambio = 7.43;
+                    customer.factura_quetzales = customer.emision_dolares * customer.tipo_cambio;
+                    customer.fecha = new Date();
+                    // console.log(customer);
+                    OrdenesService.facturar(customer).then(
+                        function successCallback(response) {
+                            if (response.data.result) {
+                               MostarDatos();
+                                modal.close();
+                                createToast('success', '<strong>Éxito: </strong>'+response.data.message);
+                                $timeout( function(){ closeAlert(0); }, 3000);
+                            } else {
+                                createToast('danger', '<strong>Error: </strong>'+response.data.message);
+                                $timeout( function(){ closeAlert(0); }, 3000);
+                            }
+                        },
+                        function errorCallback(response) {
+                            createToast('danger', '<strong>Error: </strong>'+response.data.message);
+                            $timeout( function(){ closeAlert(0); }, 3000);
+                        }
+                    );
+                }
             };   
 
             $scope.addMuestra = function (data) {
                 console.log("llego");
                 console.log(data);
             }
-
 
             // Functions for modals
             $scope.modalCreateOpen = function() {
@@ -303,6 +328,19 @@
                     resolve: function() {},
                     windowClass: 'default'
                 });
+            };
+
+            $scope.modalFacturar = function(data) {
+                $scope.action = 'facturar';
+                $scope.registro = data;
+                modal = $modal.open({
+                    templateUrl: 'views/registro/modal_facturar.html',
+                    scope: $scope,
+                    size: 'lg',
+                    resolve: function() {},
+                    windowClass: 'default'
+                });
+            
             };
 
             $scope.modalMuestra = function(data) {
