@@ -237,6 +237,7 @@ class OrdenesController extends Controller
         try {
             $record = Orden::create([
                 'orden'                 => $request->input('orden'),
+                'id_estado'             => $request->input('id_estado'),
                 'fecha_hora'       	    => date("Y-m-d", strtotime($request->input('fecha_hora'))),
                 'id_empresa'       		=> $request->input('id_empresa'),
                 'po'          		    => $request->input('po'),

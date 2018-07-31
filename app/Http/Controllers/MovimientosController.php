@@ -66,14 +66,18 @@ class MovimientosController extends Controller
 			if ($request->input('tipo_movimiento') == 1) {
 				if ($request->input('moneda') == 1) {
 					$balanceQ  = intval($ultimo->balanceQ)  + intval($request->input('monto')); 
+					$balance_D  = $ultimo->balance_D;
 				} else {
 					$balance_D = intval($ultimo->balance_D) + intval($request->input('monto')); 
+				    $balanceQ  = $ultimo->balanceQ;
 				}
 			} else {
 				if ($request->input('moneda') == 1) {
 					$balanceQ  = intval($ultimo->balanceQ)  - intval($request->input('monto')); 
+					$balance_D  = $ultimo->balance_D;
 				} else {
 					$balance_D = intval($ultimo->balance_D) - intval($request->input('monto')); 
+					$balanceQ  = $ultimo->balanceQ;
 				}
 			}
 			
@@ -171,7 +175,7 @@ class MovimientosController extends Controller
 			// 		$balance_D = intval($ultimo->balance_D) - intval($request->input('monto')); 
 			// 	}
 			// }
-			
+
                 $record->save();
                 if ($record->save()) {
                     $this->status_code  = 200;

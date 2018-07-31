@@ -60,7 +60,27 @@
                                             ng-class="{active: row == '-phone'}"></i>
                                     </div>
                                 </th>
-
+                                <th>
+                                    Cliente
+                                </th>
+                                <th>
+                                    PO
+                                </th>
+                                <th>
+                                    Estilo
+                                </th>
+                                <th>
+                                    Calibre
+                                </th>
+                                <th>
+                                    Metraje
+                                </th>
+                                <th>
+                                    Tipo
+                                </th>
+                                <th>
+                                    Color
+                                </th>
                                 <th>
                                     Fecha y Hora de Ingreso
                                     <div class="th">
@@ -120,10 +140,25 @@
                                     <td>{{ $index + 1 }}</td>
                                     <td>{{ data.orden }}</td>
                                     <td>{{ data.descripcion }}</td>
+                                    <td>{{ data.cliente.nombre }}</td>
+                                    <td>{{ data.po }}</td>
+                                    <td>{{ data.estilo.descripcion }}</td>
+                                    <td>{{ data.calibre.descripcion }}</td>
+                                    <td>{{ data.metraje.descripcion }}</td>
+                                    <td>
+                                        <label ng-if="data.tipo == 1">
+                                            Normal
+                                        </label>
+                                        <label ng-if="data.tipo == 1">
+                                            Cafta
+                                        </label>
+                                    </td>
+                                    <td>{{ data.color.descripcion }}</td>
+
                                     <td>{{ data.fecha_hora }}</td> 
                                     <td>{{ data.total_salida }}</td> 
                                     <td>{{ data.balance }}</td> 
-                                    <td>{{ data.amount }}</td>       
+                                    <td>{{ data.cantidad }}</td>       
 
                                     <td>
                                         <div class="btn-group">
