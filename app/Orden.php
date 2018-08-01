@@ -72,7 +72,10 @@ class Orden extends Model
   {
       return $this->hasOne('App\Secado', 'id_orden', 'id');
   }
-   
+  public function tipoOrden()
+  {
+      return $this->hasOne('App\TipoOrden', 'id', 'tipo');
+  }
 
 
 }

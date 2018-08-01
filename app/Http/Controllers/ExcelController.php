@@ -11,6 +11,8 @@ use App\Movimientos;
 use App\Orden;
 use App\InventarioColorante;
 use App\Facturas;
+use App\Despachos;
+use App\Muestra;
 use Carbon\Carbon;
 
     
@@ -255,6 +257,130 @@ class ExcelController extends Controller
                    $row ["Emisión en dólares"]= $reporte->emision_dolares;
                    $row ["Tipo de cambio"]    = $reporte->tipo_cambio;
                    $row ["Factura quetzalizada"] = $reporte->factura_quetzales;
+              
+                   $data[] = $row;
+                } 
+                // dd($data);
+          $sheet->fromArray($data);
+      });
+      })->export('xls');
+    }
+
+    public function reporteDespachos(Request $request){
+        \Excel::create('Despachos', function($excel) use ($request){
+             $excel->sheet('Datos', function($sheet) use ($request) {
+
+                $reporte = Despachos::with('orden','orden.cliente','orden.estilo','orden.calibre','orden.metraje','orden.color','orden.lugar', 'orden.referencia','orden.tenido','orden.secado','orden.tipoOrden')->get();
+                 
+
+             $data = [];
+                foreach ($reporte as $reporte) {
+                   $row = [];
+                   $row ["Date"]             = $reporte->fecha;
+                   $row ["Factory"]          = $reporte->orden->cliente->nombre;
+                   $row ["PO. Numero"]       = $reporte->orden->po;
+                   $row ["Style"]            = $reporte->orden->estilo->descripcion;
+                   $row ["Tipo de orden"]    = $reporte->orden->tipoOrden->descripcion;
+                   $row ["Calibre"]          = $reporte->orden->calibre->descripcion;
+                   $row ["MTRS"]             = $reporte->orden->metraje->descripcion;
+                   $row ["Color"]            = $reporte->orden->color->descripcion;
+                   $row ["QTY"]              = $reporte->orden->cantidad;
+                   $row ["U/Price"]          = ($reporte->orden->precio / $reporte->orden->cantidad);
+                   $row ["Lugar de entrega"] = $reporte->orden->lugar->descripcion;
+                   $row ["Date"]             = $reporte->orden->fecha_entrega;
+                   $row ["Env#"]              = $reporte->envio;
+                   $row ["QTY"]              = $reporte->orden->cantidad;
+                   $row ["Amount"]           = $reporte->orden->precio;
+              
+                   $data[] = $row;
+                } 
+                // dd($data);
+          $sheet->fromArray($data);
+      });
+      })->export('xls');
+    }
+
+    public function reporteMuestras(Request $request){
+        \Excel::create('Muestras', function($excel) use ($request){
+             $excel->sheet('Datos', function($sheet) use ($request) {
+
+                $reporte = Muestra::with('orden','orden.cliente','orden.estilo','orden.calibre','orden.metraje','orden.color','orden.lugar', 'orden.referencia','orden.tenido','orden.secado','orden.tipoOrden')->get();
+                 
+
+             $data = [];
+                foreach ($reporte as $reporte) {
+                   $row = [];
+                   $row ["Fecha"]            = $reporte->fecha_hora;
+                   $row ["Cliente"]          = $reporte->orden->cliente->nombre;
+                   $row ["Orden"]            = $reporte->orden->orden;
+                   $row ["Envío"]            = $reporte->envio;
+                   $row ["Rechazo"]          = $reporte->rechazo;
+                   $row ["Fecha Aceptado"]   = $reporte->fecha_ok;
+              
+                   $data[] = $row;
+                } 
+                // dd($data);
+          $sheet->fromArray($data);
+      });
+      })->export('xls');
+    }
+
+    public function reporteOrdenesPorDia($param){
+        \Excel::create('OrdenesPorDia', function($excel) use ($param){
+             $excel->sheet('Datos', function($sheet) use ($param) {
+
+                $reporte = Orden::where('fecha_hora', $param)->with('cliente','estilo','calibre','metraje','color','lugar', 'referencia','tenido','secado','tipoOrden')->get();
+                 
+
+             $data = [];
+                foreach ($reporte as $reporte) {
+                   $row = [];
+                   $row ["Date"]             = $reporte->fecha_hora;
+                   $row ["Factory"]          = $reporte->cliente->nombre;
+                   $row ["PO. Numero"]       = $reporte->po;
+                   $row ["Style"]            = $reporte->estilo->descripcion;
+                   $row ["Tipo de orden"]    = $reporte->tipoOrden->descripcion;
+                   $row ["Calibre"]          = $reporte->calibre->descripcion;
+                   $row ["MTRS"]             = $reporte->metraje->descripcion;
+                   $row ["Color"]            = $reporte->color->descripcion;
+                   $row ["QTY"]              = $reporte->cantidad;
+                   $row ["U/Price"]          = ($reporte->precio / $reporte->cantidad);
+                   $row ["Amount"]           = $reporte->precio;
+                   $row ["Lugar de entrega"] = $reporte->lugar->descripcion;
+              
+                   $data[] = $row;
+                }  
+                // dd($data);
+          $sheet->fromArray($data);
+      });
+      })->export('xls');
+    }
+
+    public function reporteDespachosDiarios($param){
+        \Excel::create('DespachosDiarios', function($excel) use ($param){
+             $excel->sheet('Datos', function($sheet) use ($param) {
+
+                $reporte = Despachos::where('fecha', $param)->with('orden','orden.cliente','orden.estilo','orden.calibre','orden.metraje','orden.color','orden.lugar', 'orden.referencia','orden.tenido','orden.secado','orden.tipoOrden')->get();
+
+             $data = [];
+                foreach ($reporte as $reporte) {
+                   $row = [];
+                   $row ["Date"]             = $reporte->fecha;
+                   $row ["Factory"]          = $reporte->orden->cliente->nombre;
+                   $row ["PO. Numero"]       = $reporte->orden->po;
+                   $row ["Style"]            = $reporte->orden->estilo->descripcion;
+                   $row ["Tipo de orden"]    = $reporte->orden->tipoOrden->descripcion;
+                   $row ["Calibre"]          = $reporte->orden->calibre->descripcion;
+                   $row ["MTRS"]             = $reporte->orden->metraje->descripcion;
+                   $row ["Color"]            = $reporte->orden->color->descripcion;
+                   $row ["QTY"]              = $reporte->orden->cantidad;
+                   $row ["U/Price"]          = ($reporte->orden->precio / $reporte->orden->cantidad);
+                   $row ["Lugar de entrega"] = $reporte->orden->lugar->descripcion;
+                   $row ["Fecha Entrega"]    = $reporte->orden->fecha_entrega;
+                   $row ["Env#"]             = $reporte->envio;
+                   $row ["QTY"]              = $reporte->orden->cantidad;
+                   $row ["Amount"]           = $reporte->orden->precio;
+
               
                    $data[] = $row;
                 } 

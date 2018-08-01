@@ -31,7 +31,11 @@ Route::group(['prefix' => 'ws'], function (){
 	Route::any 		('excel/compras', 			'ExcelController@reporteCompras');
 	Route::any 		('excel/movimientos', 		'ExcelController@reporteMovimientos');
 	Route::any 		('excel/inventarioColorantes','ExcelController@reporteInventarioColorantes');
+	Route::any 		('excel/despachos',			'ExcelController@reporteDespachos');
 	Route::any 		('excel/facturas',			'ExcelController@reporteFacturas');
+	Route::any 		('excel/muestras',			'ExcelController@reporteMuestras');
+	Route::get 		('excel/ordenesPorDia/{param}',	'ExcelController@reporteOrdenesPorDia');
+	Route::get 		('excel/despachosDiarios/{param}',	'ExcelController@reporteDespachosDiarios');
 	Route::any 		('reporte/fechas', 			'ExcelController@ordenesfechas');
 	Route::resource ('ordenes', 				'OrdenesController');
 	Route::resource ('movimientos', 			'MovimientosController');
@@ -39,6 +43,7 @@ Route::group(['prefix' => 'ws'], function (){
 	Route::get 		('estilos', 				'OrdenesController@estilos');
 	Route::get 		('calibres', 				'OrdenesController@calibres');
 	Route::get 		('metraje', 				'OrdenesController@metraje');
+	Route::get 		('tipoOrden', 				'OrdenesController@tipoOrden');
 	Route::get 		('colores', 				'OrdenesController@colores');
 	Route::get 		('referencias', 			'OrdenesController@referencias');
 	Route::get 		('lugares', 				'OrdenesController@lugares');
@@ -60,6 +65,10 @@ Route::group(['prefix' => 'ws'], function (){
 	Route::resource ('hilos', 					'CalibreController');
 	Route::resource ('colorantesInfo',			'ColoranteController');
 	Route::resource ('facturar',				'FacturasController');
+	Route::resource ('despacho',				'DespachosController');
+	Route::resource ('muestras',				'MuestrasController');
+	Route::get      ('ordenesPorDia/{param}',	'OrdenesController@ordenesPorDia');
+	Route::get      ('despachosDiarios/{param}','DespachosController@despachosDiarios');
 });
 
 Auth::routes();

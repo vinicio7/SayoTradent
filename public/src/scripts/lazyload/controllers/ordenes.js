@@ -62,6 +62,10 @@
                     $scope.estados = response.data.records;
                 });
 
+                OrdenesService.tipos().then(function(response){
+                    $scope.tipos = response.data.records;
+                });
+
                 
                
             }
