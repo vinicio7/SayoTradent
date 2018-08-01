@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Tenido;
+use App\Orden;
 
 class TenidoController extends Controller
 {
@@ -42,8 +43,18 @@ class TenidoController extends Controller
 						'id_orden'          => $request->input('id_orden'),
                         'cantidad'          => $request->input('cantidad'),
                         'receta'            => $request->input('receta'),
-						'estado_id'         =>$request->input('estado_id'),
-						'etapa_id'          =>$request->input('etapa_id'),
+						'estado_id'         => $request->input('estado_id'),
+						'etapa_id'          => $request->input('etapa_id'),
+
+						'fecha'				=> $request->input('fecha'),
+						'maquina'			=> $request->input('maquina'),
+						'operario'			=> $request->input('operario'),
+						'contenedor'		=> $request->input('contenedor'),
+						'kilos'				=> $request->input('kilos'),
+						'quesos'			=> $request->input('quesos'),
+						'hora_ingreso'		=> $request->input('hora_ingreso'),
+						'hora_salida'		=> $request->input('hora_salida'),
+
 					]);
 				if ($record) {
 					$this->status_code = 200;
@@ -103,16 +114,31 @@ class TenidoController extends Controller
 
 	public function update(Request $request, $id) {
 		try {
+            if ($request->input('fecha')) {
+            	$a = explode("T", $request->input('fecha'));
+            	$fecha = $a[0];
+            } else {
+            	$fecha = null;
+            }
             
-            $record = Tenido::find($id);
+            $record = Tenido::find($id);      
             if ($record) {
                 $record->cantidad             = $request->input('cantidad', $record->cantidad);
                 $record->receta               = $request->input('receta', $record->receta);
                 $record->estado_id  	      = $request->input('estado_id', $record->estado_id);
                 $record->etapa_id             = $request->input('etapa_id', $record->etapa_id);
+
+                $record->fecha             	  = $fecha;
+                $record->maquina              = $request->input('maquina', $record->maquina);
+                $record->operario  	      	  = $request->input('operario', $record->operario);
+                $record->contenedor           = $request->input('contenedor', $record->contenedor);
+                $record->kilos                = $request->input('kilos', $record->kilos);
+                $record->quesos               = $request->input('quesos', $record->quesos);
+                $record->hora_ingreso         = $request->input('hora_ingreso', $record->hora_ingreso);
+                $record->hora_salida          = $request->input('hora_salida', $record->hora_salida);
+
                 
-                
-                $record->save();
+                //$record->save();
                 if ($record->save()) {
                     $this->status_code  = 200;
                     $this->result       = true;
@@ -146,6 +172,36 @@ class TenidoController extends Controller
 			$this->result      = true;
 			$this->message     = 'Registros consultados correctamente';
 			$this->records     = $records;
+		} catch (\Exception $e) {
+			$this->status_code = 400;
+			$this->result      = false;
+			$this->message     = env('APP_DEBUG')?$e->getMessage():$this->message;
+		}finally{
+			$response = [
+				'result'  => $this->result,
+				'message' => $this->message,
+				'records' => $this->records,
+			];
+
+			return response()->json($response, $this->status_code);
+		}
+	}
+
+	public function destroy($id) {
+		try {
+			$record = Tenido::find($id);
+			$record2 = Orden::find($id);
+			if ($record) {
+				$record->estado_id = 2;
+				$record->save();
+				$record2->estado_prod = 1;
+				$record2->save();
+				$this->status_code = 200;
+				$this->result      = true;
+				$this->message     = 'Proceso terminado correctamente.';
+			} else {
+				throw new \Exception('El proceso no pudo ser encontrado.');
+			}
 		} catch (\Exception $e) {
 			$this->status_code = 400;
 			$this->result      = false;

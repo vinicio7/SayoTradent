@@ -9,9 +9,12 @@ class Enconado extends Model
     protected $table    = 'enconado';
 	// protected $fillable = ['usuario', 'clave', 'activado'];
     protected $fillable = ['id_orden', 
-                           'cantidad',
                            'estado_id',
                            'etapa_id',
+                           'linea',
+                           'maquina',
+                           'metros',
+                           'fecha'
                            ];
     public function orden()
     {

@@ -95,6 +95,8 @@
 
             // Function for sending data
             $scope.saveData = function (customer) {
+                var fecha = new Date(customer.fecha);
+                // console.log(fecha);
                 console.log(customer);
                 if ($scope.action == 'new') {
                     SecadoService.store(customer).then(
@@ -134,7 +136,8 @@
                     );
                 }
                 else if ($scope.action == 'delete') {
-                    SecadoService.destroy(customer.id).then(
+                    console.log(customer)
+                    SecadoService.destroy(customer.id_orden).then(
                         function successCallback(response) {
                             if (response.data.result) {
                                 MostarDatos();
@@ -168,10 +171,9 @@
             };
 
             $scope.modalEditOpen = function(data) {
-                console.log("llego");
                 $http({
                     method: 'GET',
-                    url:    WS_URL+'secado/'+data.id
+                    url:    WS_URL+'secado/'+data.secado.id
                 })
                 .then(function succesCallback (response) {
                     if( response.data.result ) {
@@ -194,6 +196,18 @@
                     windowClass: 'default'
                 });
             
+            };
+            $scope.modalStopOpen = function(data) {
+                $scope.registro = {};
+                $scope.action = 'delete'; 
+                $scope.registro.id_orden = data.id;
+                modal = $modal.open({
+                    templateUrl: 'views/bodega/modal_tenido.html',
+                    scope: $scope,
+                    size: 'md', 
+                    resolve: function() {},
+                    windowClass: 'default'
+                });
             };
 
             $scope.modalDeleteOpen = function(data) {

@@ -40,9 +40,13 @@ class EnconadoController extends Controller
 			if (!$validacion) {
 				$record = Enconado::create([
 						'id_orden'          => $request->input('id_orden'),
-                        'cantidad'          => $request->input('cantidad'),
+                        'tipo'          => $request->input('tipo'),
 						'estado_id'         =>$request->input('estado_id'),
 						'etapa_id'          =>$request->input('etapa_id'),
+						'fecha'          => date("Y-m-d", strtotime($request->input('fecha'))),
+						'linea'          =>$request->input('linea'),
+						'maquina'          =>$request->input('maquina'),
+						'metros'          =>$request->input('metros'),
 					]);
 				if ($record) {
 					$this->status_code = 200;
@@ -105,10 +109,13 @@ class EnconadoController extends Controller
             
             $record = Enconado::find($id);
             if ($record) {
-                $record->cantidad             = $request->input('cantidad', $record->cantidad);
+                // $record->tipo             = $request->input('tipo', $record->cantidad);
                 $record->estado_id  	      = $request->input('estado_id', $record->estado_id);
                 $record->etapa_id             = $request->input('etapa_id', $record->etapa_id);
-                
+                $record->fecha             = date("Y-m-d", strtotime($request->input('fecha')));
+                $record->linea             = $request->input('linea', $record->linea);
+                $record->maquina             = $request->input('maquina', $record->maquina);
+                $record->metros             = $request->input('metros', $record->metros);
                 
                 $record->save();
                 if ($record->save()) {

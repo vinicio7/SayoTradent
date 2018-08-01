@@ -34,6 +34,9 @@ Route::group(['prefix' => 'ws'], function (){
 	Route::any 		('excel/facturas',			'ExcelController@reporteFacturas');
 	Route::any 		('reporte/fechas', 			'ExcelController@ordenesfechas');
 	Route::resource ('ordenes', 				'OrdenesController');
+	Route::post 	('ordenes/tenido',			'OrdenesController@tenido');
+	Route::post 	('ordenes/secado',			'OrdenesController@secado');
+	Route::post 	('ordenes/enconado',		'OrdenesController@enconado');
 	Route::resource ('movimientos', 			'MovimientosController');
 	Route::get 		('cliente', 				'OrdenesController@cliente');
 	Route::get 		('estilos', 				'OrdenesController@estilos');

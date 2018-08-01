@@ -4,7 +4,7 @@ contactos_service.service('SecadoService', ['$http', 'WS_URL', function($http, W
     delete $http.defaults.headers.common['X-Requested-With'];
 
     this.index = function(params){
-        return $http.get(WS_URL+'secado');
+        return $http.post(WS_URL+'ordenes/secado');
     };
 
     this.store = function(params) {
@@ -20,7 +20,7 @@ contactos_service.service('SecadoService', ['$http', 'WS_URL', function($http, W
     };
 
     this.ordenes = function(params){
-        return $http.get(WS_URL+'filtro/teñido');
+        return $http.post(WS_URL+'ordenes/secado');
     };
    
 }]);

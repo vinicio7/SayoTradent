@@ -13,6 +13,14 @@ class Tenido extends Model
                            'receta',
                            'estado_id',
                            'etapa_id',
+                           'fecha',
+                           'maquina',
+                           'operario',
+                           'contenedor',
+                           'kilos',
+                           'quesos',
+                           'hora_ingreso',
+                           'hora_salida'
                            ];
     
     public function orden()

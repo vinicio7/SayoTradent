@@ -4,7 +4,7 @@
 
     angular.module('app.enconado', ['app.service.enconado'])
 
-        .controller('EnconadoController', ['$scope', '$filter', '$http', '$modal', '$interval', 'Enconado   Service','WS_URL', function($scope, $filter, $http, $modal, $timeout, EnconadoService,WS_URL)  {
+        .controller('EnconadoController', ['$scope', '$filter', '$http', '$modal', '$interval', 'EnconadoService','WS_URL', function($scope, $filter, $http, $modal, $timeout, EnconadoService,WS_URL)  {
            
             // General variables
             $scope.datas = [];
