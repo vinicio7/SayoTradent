@@ -62,6 +62,10 @@
                     $scope.estados = response.data.records;
                 });
 
+                OrdenesService.tipos().then(function(response){
+                    $scope.tipos = response.data.records;
+                });
+
                 
                
             }
@@ -158,6 +162,10 @@
                     var lugar = customer.id_lugar.indexOf(" -");
                     var id_lugar = customer.id_lugar.slice(0, lugar);
                     clone_customer.id_lugar = id_lugar;
+
+                    var tipoorden = customer.tipo.indexOf(" -");
+                    var id_tipoorden = customer.tipo.slice(0, tipoorden);
+                    clone_customer.tipo = id_tipoorden;
 
                     OrdenesService.store(clone_customer).then(
                         function successCallback(response) {

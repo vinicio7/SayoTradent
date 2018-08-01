@@ -155,10 +155,14 @@
 				name: "app.service.hilo",
 				files: ["scripts/lazyload/services/hilo.js"]
 			},
-		      {
-		        name: "app.service.cuentas",
-						files: ["scripts/lazyload/services/cuentas.js"]
-		      },
+	        {
+	        	name: "app.service.cuentas",
+				files: ["scripts/lazyload/services/cuentas.js"]
+	      	},
+	      	{
+	        	name: "app.service.reportes",
+				files: ["scripts/lazyload/services/reportes.js"]
+	      	},
 			]
 		})
 	}])
@@ -682,6 +686,71 @@
                 }]
 			}
 		});
+
+		//reportes
+
+		// registro
+		$routeProvider.when("/reportes/despacho", {
+			templateUrl: "views/reportes/reporteDespachos.html",
+			controller: "ReportesDespachosController",
+			resolve: {
+				 deps: ["$ocLazyLoad", function(a) {
+                    return a.load({
+                        name: 'app.reportesDespachos',
+                        files: ['scripts/lazyload/controllers/reportes/reporteDespachos.js']
+                    })
+                }]
+			}
+		});
+		$routeProvider.when("/reportes/muestra", {
+			templateUrl: "views/reportes/reporteMuestras.html",
+			controller: "ReportesMuestrasController",
+			resolve: {
+				 deps: ["$ocLazyLoad", function(a) {
+                    return a.load({
+                        name: 'app.reportesMuestras',
+                        files: ['scripts/lazyload/controllers/reportes/reporteMuestras.js']
+                    })
+                }]
+			}
+		});
+		$routeProvider.when("/reportes/dia", {
+			templateUrl: "views/reportes/reporteOrdenesPorDia.html",
+			controller: "ReportesOrdenesPorDiaController",
+			resolve: {
+				 deps: ["$ocLazyLoad", function(a) {
+                    return a.load({
+                        name: 'app.reportesOrdenesPorDia',
+                        files: ['scripts/lazyload/controllers/reportes/reporteOrdenesPorDia.js']
+                    })
+                }]
+			}
+		});
+		$routeProvider.when("/reportes/despachosdiarios", {
+			templateUrl: "views/reportes/reporteDespachosDiarios.html",
+			controller: "ReportesDespachosDiariosController",
+			resolve: {
+				 deps: ["$ocLazyLoad", function(a) {
+                    return a.load({
+                        name: 'app.reportesDespachosDiarios',
+                        files: ['scripts/lazyload/controllers/reportes/reporteDespachosDiarios.js']
+                    })
+                }]
+			}
+		});
+		$routeProvider.when("/reportes/cafta", {
+			templateUrl: "views/reportes/reporteControlOrdenCafta.html",
+			controller: "ReportesControlOrdenCaftaController",
+			resolve: {
+				 deps: ["$ocLazyLoad", function(a) {
+                    return a.load({
+                        name: 'app.reportesControlOrdenCafta',
+                        files: ['scripts/lazyload/controllers/reportes/reporteControlOrdenCafta.js']
+                    })
+                }]
+			}
+		});
+
 
 		// $routeProvider.when("/contactos", {
 		// 	templateUrl: "views/contactos/principal.html",

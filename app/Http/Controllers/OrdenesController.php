@@ -14,6 +14,7 @@ use App\Metraje;
 use App\Muestra;
 use App\Estados;
 use App\Despachos;
+use App\TipoOrden;
 use App\Http\Controllers\Controller;
 use Validator;
 
@@ -194,6 +195,29 @@ class OrdenesController extends Controller
     {
         try {
             $records           = Calibre::all();
+            $this->status_code = 200;
+            $this->result      = true;
+            $this->message     = 'Registros consultados correctamente';
+            $this->records     = $records;
+        } catch (\Exception $e) {
+            $this->status_code = 400;
+            $this->result      = false;
+            $this->message     = env('APP_DEBUG')?$e->getMessage():$this->message;
+        }finally{
+            $response = [
+                'result'  => $this->result,
+                'message' => $this->message,
+                'records' => $this->records,
+            ];
+
+            return response()->json($response, $this->status_code);
+        }
+    }
+
+    public function tipoOrden()
+    {
+        try {
+            $records           = TipoOrden::all();
             $this->status_code = 200;
             $this->result      = true;
             $this->message     = 'Registros consultados correctamente';
@@ -450,7 +474,7 @@ class OrdenesController extends Controller
                 'envio'       		=> $request->input('envio'),
                 'rechazo'           => $request->input('rechazo'),
                 'fecha_ok'          =>date("Y-m-d", strtotime($request->input('fecha_ok'))),
-                'id_estado'       	=> $request->input('id_estado'),
+                'id_estado'       	=> 1//$request->input('id_estado'),
                 ]);
             if ($record) {
                 $this->status_code  = 200;
@@ -567,4 +591,51 @@ class OrdenesController extends Controller
             return response()->json($response, $this->status_code);
         }
     }
+
+    public function ordenesPorDia($param)
+    {
+        try {
+            $records           = Orden::where('fecha_hora', $param)->with('cliente')->get();
+            $this->status_code = 200;
+            $this->result      = true;
+            $this->message     = 'Registros consultados correctamente';
+            $this->records     = $records;
+        } catch (\Exception $e) {
+            $this->status_code = 400;
+            $this->result      = false;
+            $this->message     = env('APP_DEBUG')?$e->getMessage():$this->message;
+        }finally{
+            $response = [
+                'result'  => $this->result,
+                'message' => $this->message,
+                'records' => $this->records,
+            ];
+
+            return response()->json($response, $this->status_code);
+        }
+    }
+
+    public function controlOrdenCafta($param, $param1)
+    {
+        try {
+            $records = Orden::whereBetween('fecha_hora', [$param, $param1])->where('tipo', 2)->with('cliente')->get();
+            $this->status_code = 200;
+            $this->result      = true;
+            $this->message     = 'Registros consultados correctamente';
+            $this->records     = $records;
+        } catch (\Exception $e) {
+            $this->status_code = 400;
+            $this->result      = false;
+            $this->message     = env('APP_DEBUG')?$e->getMessage():$this->message;
+        }finally{
+            $response = [
+                'result'  => $this->result,
+                'message' => $this->message,
+                'records' => $this->records,
+            ];
+
+            return response()->json($response, $this->status_code);
+        }
+    }
+
 }

@@ -78,7 +78,10 @@ class Orden extends Model
   {
       return $this->BelongsTo('App\Enconado','id');
   }
-   
+  public function tipoOrden()
+  {
+      return $this->hasOne('App\TipoOrden', 'id', 'tipo');
+  }
 
 
 }

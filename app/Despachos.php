@@ -13,4 +13,9 @@ class Despachos extends Model
                            'envio', 
                            'cantidad', 
                            ];
+
+   	public function orden()
+	    {
+	        return $this->hasOne('App\Orden', 'id', 'id_orden');
+	    }                          
 }
