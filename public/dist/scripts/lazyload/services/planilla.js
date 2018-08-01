@@ -11,6 +11,10 @@ contactos_service.service('PlanillaService', ['$http', 'WS_URL', function($http,
         return $http.post(WS_URL+'planilla', params);
     };
 
+    this.consultar = function(params) {
+        return $http.post(WS_URL+'consultar', params);
+    };
+
     this.update = function(params) {
         return $http.put(WS_URL+'planilla/' + params.id, params);
     };
