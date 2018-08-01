@@ -72,9 +72,13 @@
                 $scope.filteredData = $filter('orderBy')($scope.datas, rowName);
                 $scope.onOrderChange();
             };
-
+             function cargarModal(){
+             MovimientosService.cuentas().then(function(response){
+                    $scope.cuentas = response.data.records;
+                });
+         }
             MostarDatos();
-
+            cargarModal();
             // Function for toast
             function createToast (type, message) {
                 $scope.toasts.push({
@@ -90,7 +94,15 @@
 
             // Function for sending data
             $scope.saveData = function (customer) {
+                console.log(customer);
                 if ($scope.action == 'new') {
+                     var clone_customer = Object.assign({}, customer);
+                    var cuenta = customer.cuenta_id.indexOf(" -");
+                    var cuenta_id = customer.cuenta_id.slice(0, cuenta);
+                    console.log(clone_customer);
+                    console.log(cuenta);
+                    console.log(cuenta_id);
+                    clone_customer.cuenta_id = cuenta_id;
                     MovimientosService.store(customer).then(
                         function successCallback(response) {
                             if (response.data.result) {
@@ -149,6 +161,7 @@
             };   
             // Functions for modals
             $scope.modalCreateOpen = function() {
+                
                 $scope.movimiento = {};
                 $scope.action = 'new'; 
                 modal = $modal.open({
@@ -177,7 +190,7 @@
                 $scope.action = 'delete';
                 $scope.movimiento = data;
                 modal = $modal.open({
-                    templateUrl: 'views/administracion/modal_movimiento.html',
+                    templateUrl: 'views/administracion/modal_movimientos.html',
                     scope: $scope,
                     size: 'md',
                     resolve: function() {},

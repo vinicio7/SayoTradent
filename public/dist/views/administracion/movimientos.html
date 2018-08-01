@@ -70,7 +70,7 @@
                                 </div>
                             </th>
 
-                            <th>
+                         <!--    <th>
                                 Saldo 
                                 <div class="th">
                                     <i class="fa fa-caret-up icon-up"
@@ -80,6 +80,12 @@
                                         ng-click=" order('-phone') "
                                         ng-class="{active: row == '-phone'}"></i>
                                 </div>
+                            </th> -->
+                            <th>
+                                Balance Q.
+                            </th>
+                            <th>
+                                Balance $
                             </th>
                             <th>
                                 Editar
@@ -93,10 +99,15 @@
                         <tbody>
                             <tr ng-repeat="data in currentPageStores track by $index">
                                 <td>{{ $index + 1 }}</td>
-                                <td>{{ data.tipo_movimiento }}</td>
+                                <td>
+                                    <label ng-if="data.tipo_movimiento == 1"> Ingreso </label>
+                                    <label ng-if="data.tipo_movimiento == 2"> Egreso </label>
+                                </td>
                                 <td>{{ data.monto }}</td>
                                 <td>{{ data.descripcion }}</td>
-                                <td>{{ data.saldo }}</td>
+                                <!-- <td>{{ data.saldo }}</td> -->
+                                <td>{{ data.balanceQ }}</td>
+                                <td>{{ data.balance_D }}</td>
                                 <td>
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-info ion ion-edit" ng-click="modalEditOpen(data)" md-ink-ripple></button>
