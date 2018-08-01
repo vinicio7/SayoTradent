@@ -638,4 +638,27 @@ class OrdenesController extends Controller
         }
     }
 
+    public function estadoCuentaOrden($param, $param1)
+    {
+        try {
+            $records = Orden::whereBetween('fecha_hora', [$param, $param1])->orderBy('orden')->with('cliente')->get();
+            $this->status_code = 200;
+            $this->result      = true;
+            $this->message     = 'Registros consultados correctamente';
+            $this->records     = $records;
+        } catch (\Exception $e) {
+            $this->status_code = 400;
+            $this->result      = false;
+            $this->message     = env('APP_DEBUG')?$e->getMessage():$this->message;
+        }finally{
+            $response = [
+                'result'  => $this->result,
+                'message' => $this->message,
+                'records' => $this->records,
+            ];
+
+            return response()->json($response, $this->status_code);
+        }
+    }
+
 }

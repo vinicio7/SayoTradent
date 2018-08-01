@@ -838,6 +838,18 @@
                 }]
 			}
 		});
+		$routeProvider.when("/reportes/clientes", {
+			templateUrl: "views/reportes/reporteClientes.html",
+			controller: "ReportesClientesController",
+			resolve: {
+				 deps: ["$ocLazyLoad", function(a) {
+                    return a.load({
+                        name: 'app.reportesClientes',
+                        files: ['scripts/lazyload/controllers/reportes/reporteClientes.js']
+                    })
+                }]
+			}
+		});
 
 
 		// $routeProvider.when("/contactos", {

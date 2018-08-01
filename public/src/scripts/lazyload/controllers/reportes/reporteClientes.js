@@ -2,14 +2,12 @@
 {
     'use strict';
 
-    angular.module('app.reportesEstadoCuentaOrden', ['app.service.reportes'])
+    angular.module('app.reportesClientes', ['app.service.reportes'])
 
-        .controller('ReportesEstadoCuentaOrdenController', ['$scope', '$filter', '$http', '$modal', '$interval', 'ReportesService', function($scope, $filter, $http, $modal, $timeout, ReportesService)  {
+        .controller('ReportesClientesController', ['$scope', '$filter', '$http', '$modal', '$interval', 'ReportesService', function($scope, $filter, $http, $modal, $timeout, ReportesService)  {
            
             // General variables
             $scope.datas = [];
-            $scope.fechaInicio = new Date();
-            $scope.fechaFin = new Date();
             $scope.currentPageStores = [];
             $scope.searchKeywords = '';
             $scope.filteredData = [];
@@ -22,11 +20,8 @@
             var modal;
 
             // Function for load table
-            $scope.MostrarDatos = function() {
-                var dateinicio = $filter('date')($scope.fechaInicio,'yyyy-MM-dd');
-                var datefin = $filter('date')($scope.fechaFin,'yyyy-MM-dd');
-
-                ReportesService.estadoCuentaOrden(dateinicio, datefin).then(function(response) {
+            function MostarDatos() {
+                ReportesService.clientes().then(function(response) {
                     $scope.datas = response.data.records;
                     $scope.search();
                     $scope.select($scope.currentPage);
@@ -38,11 +33,9 @@
                
             }
 
-            $scope.estadoCuentaOrdenReporte = function(){ 
-                var dateinicio = $filter('date')($scope.fechaInicio,'yyyy-MM-dd');
-                var datefin = $filter('date')($scope.fechaFin,'yyyy-MM-dd');
+            $scope.despachosReporte = function(){ 
                
-                window.location="../ws/excel/estadoCuentaOrden/"+dateinicio+"/"+datefin;
+                window.location="../ws/excel/clientes";
                 createToast('success', '<strong>Éxito: </strong>'+'Reporte Creado Exitosamente');
                 $timeout( function(){ closeAlert(0); }, 3000);
             
@@ -89,7 +82,7 @@
                 $scope.onOrderChange();
             };
 
-            $scope.MostrarDatos();
+            MostarDatos();
             cargarModal();
 
             // Function for toast
