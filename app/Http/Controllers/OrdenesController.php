@@ -349,7 +349,7 @@ class OrdenesController extends Controller
                 'total_salida'       	=> '0',
                 'amount'                => '0',
                 'precio'       		    => $request->input('precio'),
-                'fecha_entrega'         =>date("Y-m-d", strtotime($request->input('fecha_entrega'))),
+                'fecha_entrega'         => date("Y-m-d", strtotime($request->input('fecha_entrega'))),
                 'id_referencias'       	=> $request->input('id_referencias'),
                 'id_lugar'       		=> $request->input('id_lugar'),
                 'facturado'             => false,
@@ -531,7 +531,7 @@ class OrdenesController extends Controller
         try {
             $record = Despachos::create([
                 
-                'fecha'       	    => date("Y-m-d", strtotime($request->input('fecha_hora'))),
+                'fecha'       	    => date("Y-m-d", strtotime($request->input('fecha'))),
                 'id_orden'       	=> $request->input('id_orden'),
                 'envio'       		=> $request->input('envio'),
                 'cantidad'          => $request->input('cantidad'),

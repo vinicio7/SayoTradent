@@ -71,6 +71,11 @@ Route::group(['prefix' => 'ws'], function (){
 	Route::resource ('hilos', 					'CalibreController');
 	Route::resource ('colorantesInfo',			'ColoranteController');
 	Route::resource ('facturar',				'FacturasController');
+
+	Route::resource ('metrajes', 				'MetrajeController');
+	Route::resource ('estilo', 				    'EstiloController');
+	Route::resource ('color', 				    'ColorController');
+
 	Route::resource ('despacho',				'DespachosController');
 	Route::resource ('muestras',				'MuestrasController');
 	Route::get      ('ordenesPorDia/{param}',	'OrdenesController@ordenesPorDia');

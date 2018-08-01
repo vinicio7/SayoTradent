@@ -155,6 +155,24 @@
 				name: "app.service.hilo",
 				files: ["scripts/lazyload/services/hilo.js"]
 			},
+
+			{
+				name: "app.service.calibres",
+				files: ["scripts/lazyload/services/calibres.js"]
+			},
+			{
+				name: "app.service.metraje",
+				files: ["scripts/lazyload/services/metraje.js"]
+			},
+			{
+				name: "app.service.estilo",
+				files: ["scripts/lazyload/services/estilo.js"]
+			},
+			{
+				name: "app.service.color",
+				files: ["scripts/lazyload/services/color.js"]
+			},
+
 	        {
 	        	name: "app.service.cuentas",
 				files: ["scripts/lazyload/services/cuentas.js"]
@@ -687,6 +705,19 @@
 			}
 		});
 
+
+		$routeProvider.when("/mantenimientos/calibre", {
+			templateUrl: "views/mantenimientos/calibre.html",
+			controller: "CalibresController",
+			resolve: {
+				 deps: ["$ocLazyLoad", function(a) {
+                    return a.load({
+						name: 'app.calibres',
+						files: ['scripts/lazyload/controllers/calibres.js']
+ })
+                }]
+			}
+		});
 		//reportes
 
 		// registro
@@ -698,7 +729,21 @@
                     return a.load({
                         name: 'app.reportesDespachos',
                         files: ['scripts/lazyload/controllers/reportes/reporteDespachos.js']
+
                     })
+                }]
+			}
+		});
+
+		$routeProvider.when("/mantenimientos/metraje", {
+			templateUrl: "views/mantenimientos/metrajes.html",
+			controller: "MetrajeController",
+			resolve: {
+				 deps: ["$ocLazyLoad", function(a) {
+                    return a.load({
+						name: 'app.metraje',
+						files: ['scripts/lazyload/controllers/metraje.js']
+ })
                 }]
 			}
 		});
@@ -710,7 +755,22 @@
                     return a.load({
                         name: 'app.reportesMuestras',
                         files: ['scripts/lazyload/controllers/reportes/reporteMuestras.js']
+
                     })
+                }]
+			}
+		});
+
+
+		$routeProvider.when("/mantenimientos/estilo", {
+			templateUrl: "views/mantenimientos/estilos.html",
+			controller: "EstiloController",
+			resolve: {
+				 deps: ["$ocLazyLoad", function(a) {
+                    return a.load({
+						name: 'app.estilo',
+						files: ['scripts/lazyload/controllers/estilo.js']
+ })
                 }]
 			}
 		});
@@ -722,7 +782,21 @@
                     return a.load({
                         name: 'app.reportesOrdenesPorDia',
                         files: ['scripts/lazyload/controllers/reportes/reporteOrdenesPorDia.js']
+
                     })
+                }]
+			}
+		});
+
+		$routeProvider.when("/mantenimientos/color", {
+			templateUrl: "views/mantenimientos/colores.html",
+			controller: "ColorController",
+			resolve: {
+				 deps: ["$ocLazyLoad", function(a) {
+                    return a.load({
+						name: 'app.color',
+						files: ['scripts/lazyload/controllers/color.js']
+ })
                 }]
 			}
 		});
@@ -734,10 +808,12 @@
                     return a.load({
                         name: 'app.reportesDespachosDiarios',
                         files: ['scripts/lazyload/controllers/reportes/reporteDespachosDiarios.js']
+
                     })
                 }]
 			}
 		});
+
 		$routeProvider.when("/reportes/cafta", {
 			templateUrl: "views/reportes/reporteControlOrdenCafta.html",
 			controller: "ReportesControlOrdenCaftaController",
