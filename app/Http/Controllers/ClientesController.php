@@ -43,7 +43,8 @@ class ClientesController extends Controller
                         'nit'           => $request->input('nit'),
                         'telefono'      => $request->input('telefono'),
                         'direccion'     => $request->input('direccion'),
-                        'credito'       => $request->input('credito'  ),
+						'credito'       => $request->input('credito'  ),
+						'tiempo_estimado'       => $request->input('tiempo_estimado'  ),
 					]);
 				if ($record) {
 					$this->status_code = 200;
@@ -106,12 +107,13 @@ class ClientesController extends Controller
             } else {
             $record = Clientes::find($id);
             if ($record) {
-                $record->nombre         = $request->input('nombre', $record->nombre);
-                $record->nit            = $request->input('nit', $record->nit);
-                $record->telefono       = $request->input('telefono', $record->telefono);
-                $record->direccion      = $request->input('direccion', $record->direccion);
-                $record->credito  	    = $request->input('credito', $record->credito);
-                
+                $record->nombre        		 	= $request->input('nombre', $record->nombre);
+                $record->nit            		= $request->input('nit', $record->nit);
+                $record->telefono       		= $request->input('telefono', $record->telefono);
+                $record->direccion      		= $request->input('direccion', $record->direccion);
+                $record->credito  	    		= $request->input('credito', $record->credito);
+				$record->tiempo_estimado  	    = $request->input('tiempo_estimado', $record->tiempo_estimado);
+
                 $record->save();
                 if ($record->save()) {
                     $this->status_code  = 200;

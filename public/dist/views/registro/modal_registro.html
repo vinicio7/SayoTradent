@@ -20,11 +20,11 @@
                         <input type="datetime-local" ng-model="registro.fecha_hora" class="form-control" required>
                     </div>
                     <div class="col-sm-4">
-                        <label>Empresa</label>
+                        <label>Clientes</label>
                         
                         <input class="form-control" name="browsers" list="browsers" ng-model="registro.id_empresa" >
                         <datalist  id="browsers">
-                            <option ng-repeat="item in empresas" value="{{item.id}} - {{item.descripcion}}"></option>
+                            <option ng-repeat="item in clientes" value="{{item.id}} - {{item.nombre}}"></option>
                         </datalist>
                     </div>
                     
@@ -55,7 +55,7 @@
                     </div>
                     
                     <div class="col-sm-4" style="margin-top: 10px;">
-                        <label>Metrage</label>
+                        <label>Metraje</label>
                         <input class="form-control" name="metrage" list="metrage" ng-model="registro.id_metraje" >
                         <datalist  id="metrage">
                             <option ng-repeat="item in metrajes" value="{{item.id}} - {{item.descripcion}}"></option>
@@ -103,7 +103,13 @@
                             <option ng-repeat="item in lugares" value="{{item.id}} - {{item.descripcion}}"></option>
                         </datalist>
                     </div>
-                    
+                    <div class="col-sm-4" style="margin-top: 10px;">
+                        <label>Estado</label>
+                        <select class="form-control" ng-model="datos.id_estado" >
+                            <option disabled="" >Seleccione una opción</option>
+                            <option ng-repeat="item in estados" value="{{item.id}}">{{item.descripcion}}</option>
+                        </select>
+                    </div>
 
                 </div>
                 <br>

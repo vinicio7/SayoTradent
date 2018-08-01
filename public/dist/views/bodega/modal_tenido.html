@@ -26,6 +26,10 @@
                             <option value="1">Primera</option>
                             <option value="2">Segunda</option>
                             <option value="3">Tercera</option>
+                            <option value="4">Cuarta</option>
+                            <option value="5">Quinta</option>
+                            <option value="6">Sexta</option>
+                            <option value="7">Septima</option>
                         </select>
                 </div>
             </div>
@@ -39,7 +43,47 @@
                     <input type="text" class="form-control" ng-model="registro.receta" required>
                 </div>
             </div>
-            
+            <div class="row form-group">
+                <div class="col-sm-6">
+                    <label>Fecha</label>
+                    <input type="date" class="form-control" ng-model="registro.fecha" required>
+                </div>
+                 <div class="col-sm-6">
+                    <label>Maquina</label>
+                    <input type="text" class="form-control" ng-model="registro.maquina" required>
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-sm-6">
+                    <label>Operario</label>
+                    <input type="text" class="form-control" ng-model="registro.operario" required>
+                </div>
+                 <div class="col-sm-6">
+                    <label>No. contenedor</label>
+                    <input type="text" class="form-control" ng-model="registro.contenedeor" required>
+                </div>
+            </div>
+             <div class="row form-group">
+                <div class="col-sm-6">
+                    <label>Kilos</label>
+                    <input type="text" class="form-control" ng-model="registro.kilos" required>
+                </div>
+                 <div class="col-sm-6">
+                    <label>Quesos</label>
+                    <input type="text" class="form-control" ng-model="registro.quesos" required>
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-sm-6">
+                    <label>Hora de ingreso</label>
+                    <input type="time" class="form-control" ng-model="registro.hora_ingreso" required>
+                </div>
+                 <div class="col-sm-6">
+                    <label>Hora de salida</label>
+                    <input type="time" class="form-control" ng-model="registro.hora_salida" required>
+                </div>
+            </div>
+
             <div class="row form-group">
                 <div class="col-sm-12 text-right">
                     <button class="btn btn-danger" ng-click="modalClose()">Cerrar</button>

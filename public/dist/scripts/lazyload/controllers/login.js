@@ -26,7 +26,7 @@
             $scope.toasts = [];
 
             if (localStorageService.get('usuario')) {
-                $window.location.href = './#/dashboard';
+                $window.location.href = './#/registro';
             }
 
             // Function for toast

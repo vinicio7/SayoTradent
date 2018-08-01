@@ -19,8 +19,8 @@ contactos_service.service('OrdenesService', ['$http', 'WS_URL', function($http, 
         return $http.delete(WS_URL+'ordenes/' + id);
     };
 
-    this.empresas = function(params){
-        return $http.get(WS_URL+'empresa');
+    this.clientes = function(params){
+        return $http.get(WS_URL+'clientes');
     };
 
     this.estilos = function(params){
@@ -61,6 +61,10 @@ contactos_service.service('OrdenesService', ['$http', 'WS_URL', function($http, 
 
     this.despachos = function(params){
         return $http.post(WS_URL+'despachos', params);
+    };
+
+    this.facturar = function(params){
+        return $http.post(WS_URL+'facturar', params);
     };
 
     this.show_despachos = function(id){
