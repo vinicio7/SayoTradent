@@ -750,6 +750,18 @@
                 }]
 			}
 		});
+		$routeProvider.when("/reportes/estados", {
+			templateUrl: "views/reportes/reporteEstadoCuentaOrden.html",
+			controller: "ReportesEstadoCuentaOrdenController",
+			resolve: {
+				 deps: ["$ocLazyLoad", function(a) {
+                    return a.load({
+                        name: 'app.reportesEstadoCuentaOrden',
+                        files: ['scripts/lazyload/controllers/reportes/reporteEstadoCuentaOrden.js']
+                    })
+                }]
+			}
+		});
 
 
 		// $routeProvider.when("/contactos", {
