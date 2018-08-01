@@ -70,15 +70,15 @@ class CalibreController extends Controller
     }
 
     public function show($id){
-        /*try {
-            $record = Colorante::find($id);
+       try {
+            $record = Calibre::find($id);
             if ($record) {
                 $this->status_code  = 200;
                 $this->result       = true;
-                $this->message      = 'Proceso de maseo consultado correctamente.';
+                $this->message      = 'El calibre no existe.';
                 $this->records      = $record;
             } else {
-                throw new \Exception('Proceso de maseo no encontrado.');
+                throw new \Exception('El calibre no existe.');
             }
         } 
         catch (\Exception $e) {
@@ -93,32 +93,27 @@ class CalibreController extends Controller
             ];
 
             return response()->json($response, $this->status_code);
-        }*/
+        }
     }
 
 
     public function update(Request $request, $id) {
-       /* try {
-            
-            $record = Colorante::find($id);
+        try {
+            $record = Calibre::find($id);
             if ($record) {
-                $record->cantidad             = $request->input('cantidad', $record->cantidad);
-                $record->estado_id            = $request->input('estado_id', $record->estado_id);
-                $record->etapa_id             = $request->input('etapa_id', $record->etapa_id);
-                
-                
+                $record->descripcion  = $request->input('descripcion', $record->descripcion);
                 $record->save();
                 if ($record->save()) {
                     $this->status_code  = 200;
                     $this->result       = true;
-                    $this->message      = 'Proceso de maseo actualizada correctamente.';
+                    $this->message      = 'Calibre actualizado correctamente.';
                     $this->records      = $record;
                 } else {
-                    throw new \Exception('El proceso de maseo no pudo ser actualizada.');
+                    throw new \Exception('El calibre no pudo ser actualizado.');
                 }
                 } else {
-                        $this->message = 'El proceso de maseo no existe.';
-                        throw new \Exception('El proceso de maseo no existe.');
+                        $this->message = 'El calibre a modificar no existe.';
+                        throw new \Exception('El calibre a modificar no existe.');
                 }
         } catch (\Exception $e) {
             $this->status_code = 400;
@@ -131,6 +126,33 @@ class CalibreController extends Controller
                 'records' => $this->records,
             ];
             return response()->json($response, $this->status_code);
-        }*/
+        }
+    }
+
+    public function destroy($id){
+        try {
+            $record = Calibre::find($id);
+            if ($record) {
+                $record->delete();
+                $this->status_code  = 200;
+                $this->result       = true;
+                $this->message      = 'Calibre eliminada correctamente';
+            } else {
+                throw new \Exception('El calibre no pudo ser encontrado');
+            }
+        } 
+        catch (\Exception $e) {
+            $this->status_code  = 400;
+            $this->result       = false;
+            $this->message      = env('APP_DEBUG') ? $e->getMessage() : $this->message;
+        } finally {
+            $response = [
+                'result'  => $this->result,
+                'message' => $this->message,
+                'records' => $this->records,
+            ];
+
+            return response()->json($response, $this->status_code);
+            }
     }
 }

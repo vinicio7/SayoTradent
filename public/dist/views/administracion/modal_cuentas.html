@@ -1,0 +1,36 @@
+<div class="modal-style">
+    <div class="modal-header clearfix">
+        <h4 ng-if="action == 'new'" class="modal-title">Nueva cuenta</h4>
+        <h4 ng-if="action == 'update'" class="modal-title">Editar cuenta</h4>
+        <h4 ng-if="action == 'delete'" class="modal-title">Eliminar cuenta</h4>
+        <span class="close ion ion-android-close" ng-click="modalClose()"></span>
+    </div>
+    <div class="modal-body">
+        <div class="row form-group" ng-if="action == 'delete'">
+            <h3>¿Está seguro de eliminar esta cuenta?</h3>
+        </div>
+        <form class="form-horizontal" name="form" ng-if="action != 'delete'" action="javascript:;" novalidate>
+            <div class="row form-group">
+                <div class="col-sm-4">
+                    <label>Nombre</label>
+                    <input type="text" class="form-control" ng-model="cuenta.nombre" required>
+                </div>
+               
+            </div>
+            
+            <div class="row form-group">
+                <div class="col-sm-12 text-right">
+                    <button class="btn btn-danger" ng-click="modalClose()">Cerrar</button>
+                    <button class="btn btn-success" ng-if="action == 'new'" ng-disabled="form.$invalid" ng-click="saveData(cuenta)">Registrar</button>
+                    <button class="btn btn-success" ng-if="action == 'update'" ng-disabled="form.$invalid" ng-click="saveData(cuenta)">Editar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="row form-group">
+        <div class="col-sm-11    text-right">
+            <button class="btn btn-success" ng-if="action == 'delete'" ng-click="modalClose()">Cerrar</button>
+            <button class="btn btn-danger"  ng-if="action == 'delete'" ng-click="saveData(cuenta)">Eliminar</button>
+        </div>
+    </div>
+</div>

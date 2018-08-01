@@ -421,5 +421,36 @@ class ExcelController extends Controller
       })->export('xls');
     }
 
+
+    public function reporteOrdenEstadoCuenta($param, $param1){
+        \Excel::create('OrdenesPorDia', function($excel) use ($param, $param1){
+             $excel->sheet('Datos', function($sheet) use ($param, $param1) {
+
+                $reporte = Orden::whereBetween('fecha_hora', [$param, $param1])->groupBy('id','orden','fecha_hora','id_empresa','po','id_estilo','descripcion','id_calibre','id_metraje','tipo','id_color','cantidad','balance','total_salida','amount','precio','fecha_entrega','id_referencias','id_lugar','facturado','created_at','updated_at')->with('cliente','estilo','calibre','metraje','color','lugar', 'referencia','tenido','secado','tipoOrden')->get();
+                 
+
+             $data = [];
+                foreach ($reporte as $reporte) {
+                   $row = [];
+                   $row ["Date"]             = $reporte->fecha_hora;
+                   $row ["Factory"]          = $reporte->cliente->nombre;
+                   $row ["PO. Numero"]       = $reporte->po;
+                   $row ["Style"]            = $reporte->estilo->descripcion;
+                   $row ["Tipo de orden"]    = $reporte->tipoOrden->descripcion;
+                   $row ["Calibre"]          = $reporte->calibre->descripcion;
+                   $row ["MTRS"]             = $reporte->metraje->descripcion;
+                   $row ["Color"]            = $reporte->color->descripcion;
+                   $row ["QTY"]              = $reporte->cantidad;
+                   $row ["U/Price"]          = ($reporte->precio / $reporte->cantidad);
+                   $row ["Amount"]           = $reporte->precio;
+                   $row ["Lugar de entrega"] = $reporte->lugar->descripcion;
+              
+                   $data[] = $row;
+                }  
+                // dd($data);
+          $sheet->fromArray($data);
+      });
+      })->export('xls');
+    }
 }
 

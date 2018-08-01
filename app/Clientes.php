@@ -10,6 +10,6 @@ class Clientes extends Model
 	// protected $fillable = ['usuario', 'clave', 'activado'];
     protected $fillable = ['nombre','nit', 
                            'telefono','direccion',
-                           'credito', 
+                           'credito', 'tiempo_estimado',
 						   ];
 }

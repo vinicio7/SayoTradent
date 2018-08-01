@@ -20,6 +20,7 @@ class Clientes extends Migration
             $table->Integer('telefono');
             $table->String('direccion');
             $table->decimal('credito', 8, 2);
+            $table->Integer('tiempo_estimado');
             $table->timestamps();
         });
     }

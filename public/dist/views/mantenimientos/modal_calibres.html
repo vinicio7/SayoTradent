@@ -1,0 +1,36 @@
+<div class="modal-style">
+    <div class="modal-header clearfix">
+        <h4 ng-if="action == 'new'" class="modal-title">Nuevo registro de calibre</h4>
+        <h4 ng-if="action == 'update'" class="modal-title">Editar calibre</h4>
+        <h4 ng-if="action == 'delete'" class="modal-title">Eliminar calibre</h4>
+        <span class="close ion ion-android-close" ng-click="modalClose()"></span>
+    </div>
+    <div class="modal-body">
+        <div class="row form-group" ng-if="action == 'delete'">
+            <h3>¿Está seguro de eliminar este registro?</h3>
+        </div>
+        <form class="form-horizontal" name="form" ng-if="action != 'delete'" action="javascript:;" novalidate>
+            <div class="row form-group">
+                <div class="col-sm-12">
+                    <label>Descripcion</label>
+                    <input type="text" ng-model="registro.descripcion" class="form-control" required>
+                </div>
+            </div>
+            <br>
+            <div class="row form-group">
+                <div class="col-sm-12 text-right">
+                    <button class="btn btn-danger" ng-click="modalClose()">Cerrar</button>
+                    <button class="btn btn-success" ng-if="action == 'new'" ng-click="saveData(registro)">Registrar</button>
+                    <button class="btn btn-success" ng-if="action == 'update'" ng-click="saveData(registro)">Editar</button>
+                </div>
+            </div>
+        </form>
+        <div class="row form-group">
+            <div class="col-sm-12 text-right">
+                <button class="btn btn-success" ng-if="action == 'delete'" ng-click="modalClose()">Cerrar</button>
+                <button class="btn btn-danger"  ng-if="action == 'delete'" ng-click="saveData(registro)">Eliminar</button>
+            </div>
+        </div>
+    </div>
+    
+</div>
