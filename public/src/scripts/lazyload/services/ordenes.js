@@ -47,6 +47,10 @@ contactos_service.service('OrdenesService', ['$http', 'WS_URL', function($http, 
         return $http.get(WS_URL+'lugares');
     };
 
+    this.tipos = function(params){
+        return $http.get(WS_URL+'tipoOrden');
+    };
+
     this.estados = function(params){
         return $http.get(WS_URL+'estados');
     };

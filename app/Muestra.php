@@ -20,4 +20,8 @@ class Muestra extends Model
     {
         return $this->hasOne('App\Estados', 'id', 'id_estado');
     }
+    public function orden()
+    {
+        return $this->hasOne('App\Orden', 'id', 'id_orden');
+    }
 }

@@ -111,5 +111,11 @@ class DatabaseSeeder extends Seeder
             'usuarios'              => '1',
             
         ]);
+        App\TipoOrden::create([
+            'descripcion'    => 'Normal'    
+        ]);
+        App\TipoOrden::create([
+            'descripcion'    => 'CAFTA'     
+        ]);
     }
 }

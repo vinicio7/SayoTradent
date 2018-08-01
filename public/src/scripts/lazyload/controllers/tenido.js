@@ -133,7 +133,8 @@
                     );
                 }
                 else if ($scope.action == 'delete') {
-                    TenidoService.destroy(customer.id).then(
+                    // console.log(customer);
+                    TenidoService.destroy(customer.id_orden).then(
                         function successCallback(response) {
                             if (response.data.result) {
                                 MostarDatos();
@@ -166,7 +167,25 @@
                 });
             };
 
+            $scope.modalStopOpen = function(data) {
+                $scope.registro = {};
+                $scope.action = 'delete'; 
+                $scope.registro.id_orden = data.id;
+                modal = $modal.open({
+                    templateUrl: 'views/bodega/modal_tenido.html',
+                    scope: $scope,
+                    size: 'md', 
+                    resolve: function() {},
+                    windowClass: 'default'
+                });
+            };
+
             $scope.modalEditOpen = function(data) {
+                console.log(data.tenido);
+                var date = data.tenido.fecha;
+                var newdate = date.split("-").reverse().join("/");
+                data.tenido.fecha = newdate;
+                console.log(data.tenido)
                 console.log("llego");
                 $http({
                     method: 'GET',

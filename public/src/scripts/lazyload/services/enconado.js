@@ -20,7 +20,7 @@ contactos_service.service('EnconadoService', ['$http', 'WS_URL', function($http,
     };
 
     this.ordenes = function(params){
-        return $http.get(WS_URL+'filtro/secado');
+        return $http.post(WS_URL+'ordenes/enconado');
     };
    
 }]);

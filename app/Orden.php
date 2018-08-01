@@ -26,7 +26,8 @@ class Orden extends Model
                            'fecha_entrega',
                            'id_referencias',
                            'id_lugar',
-                           'facturado'
+                           'facturado',
+                           'estado_prod'
 						   ];
 
   public function cliente()
@@ -66,13 +67,21 @@ class Orden extends Model
 
   public function tenido()
   {
-      return $this->hasOne('App\Tenido', 'id_orden', 'id');
+      return $this->BelongsTo('App\Tenido','id');
   }
   public function secado()
   {
-      return $this->hasOne('App\Secado', 'id_orden', 'id');
+      return $this->BelongsTo('App\Secado','id');
   }
-   
+
+  public function enconado()
+  {
+      return $this->BelongsTo('App\Enconado','id');
+  }
+  public function tipoOrden()
+  {
+      return $this->hasOne('App\TipoOrden', 'id', 'tipo');
+  }
 
 
 }

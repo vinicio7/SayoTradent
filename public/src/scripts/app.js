@@ -155,10 +155,7 @@
 				name: "app.service.hilo",
 				files: ["scripts/lazyload/services/hilo.js"]
 			},
-			{
-				name: "app.service.cuentas",
-				files: ["scripts/lazyload/services/cuentas.js"]
-			},
+
 			{
 				name: "app.service.calibres",
 				files: ["scripts/lazyload/services/calibres.js"]
@@ -175,6 +172,15 @@
 				name: "app.service.color",
 				files: ["scripts/lazyload/services/color.js"]
 			},
+
+	        {
+	        	name: "app.service.cuentas",
+				files: ["scripts/lazyload/services/cuentas.js"]
+	      	},
+	      	{
+	        	name: "app.service.reportes",
+				files: ["scripts/lazyload/services/reportes.js"]
+	      	},
 			]
 		})
 	}])
@@ -699,6 +705,7 @@
 			}
 		});
 
+
 		$routeProvider.when("/mantenimientos/calibre", {
 			templateUrl: "views/mantenimientos/calibre.html",
 			controller: "CalibresController",
@@ -707,6 +714,22 @@
                     return a.load({
 						name: 'app.calibres',
 						files: ['scripts/lazyload/controllers/calibres.js']
+ })
+                }]
+			}
+		});
+		//reportes
+
+		// registro
+		$routeProvider.when("/reportes/despacho", {
+			templateUrl: "views/reportes/reporteDespachos.html",
+			controller: "ReportesDespachosController",
+			resolve: {
+				 deps: ["$ocLazyLoad", function(a) {
+                    return a.load({
+                        name: 'app.reportesDespachos',
+                        files: ['scripts/lazyload/controllers/reportes/reporteDespachos.js']
+
                     })
                 }]
 			}
@@ -720,10 +743,24 @@
                     return a.load({
 						name: 'app.metraje',
 						files: ['scripts/lazyload/controllers/metraje.js']
+ })
+                }]
+			}
+		});
+		$routeProvider.when("/reportes/muestra", {
+			templateUrl: "views/reportes/reporteMuestras.html",
+			controller: "ReportesMuestrasController",
+			resolve: {
+				 deps: ["$ocLazyLoad", function(a) {
+                    return a.load({
+                        name: 'app.reportesMuestras',
+                        files: ['scripts/lazyload/controllers/reportes/reporteMuestras.js']
+
                     })
                 }]
 			}
 		});
+
 
 		$routeProvider.when("/mantenimientos/estilo", {
 			templateUrl: "views/mantenimientos/estilos.html",
@@ -733,6 +770,19 @@
                     return a.load({
 						name: 'app.estilo',
 						files: ['scripts/lazyload/controllers/estilo.js']
+ })
+                }]
+			}
+		});
+		$routeProvider.when("/reportes/dia", {
+			templateUrl: "views/reportes/reporteOrdenesPorDia.html",
+			controller: "ReportesOrdenesPorDiaController",
+			resolve: {
+				 deps: ["$ocLazyLoad", function(a) {
+                    return a.load({
+                        name: 'app.reportesOrdenesPorDia',
+                        files: ['scripts/lazyload/controllers/reportes/reporteOrdenesPorDia.js']
+
                     })
                 }]
 			}
@@ -746,10 +796,49 @@
                     return a.load({
 						name: 'app.color',
 						files: ['scripts/lazyload/controllers/color.js']
+ })
+                }]
+			}
+		});
+		$routeProvider.when("/reportes/despachosdiarios", {
+			templateUrl: "views/reportes/reporteDespachosDiarios.html",
+			controller: "ReportesDespachosDiariosController",
+			resolve: {
+				 deps: ["$ocLazyLoad", function(a) {
+                    return a.load({
+                        name: 'app.reportesDespachosDiarios',
+                        files: ['scripts/lazyload/controllers/reportes/reporteDespachosDiarios.js']
+
                     })
                 }]
 			}
 		});
+
+		$routeProvider.when("/reportes/cafta", {
+			templateUrl: "views/reportes/reporteControlOrdenCafta.html",
+			controller: "ReportesControlOrdenCaftaController",
+			resolve: {
+				 deps: ["$ocLazyLoad", function(a) {
+                    return a.load({
+                        name: 'app.reportesControlOrdenCafta',
+                        files: ['scripts/lazyload/controllers/reportes/reporteControlOrdenCafta.js']
+                    })
+                }]
+			}
+		});
+		$routeProvider.when("/reportes/estados", {
+			templateUrl: "views/reportes/reporteEstadoCuentaOrden.html",
+			controller: "ReportesEstadoCuentaOrdenController",
+			resolve: {
+				 deps: ["$ocLazyLoad", function(a) {
+                    return a.load({
+                        name: 'app.reportesEstadoCuentaOrden',
+                        files: ['scripts/lazyload/controllers/reportes/reporteEstadoCuentaOrden.js']
+                    })
+                }]
+			}
+		});
+
 
 		// $routeProvider.when("/contactos", {
 		// 	templateUrl: "views/contactos/principal.html",

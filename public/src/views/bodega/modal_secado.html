@@ -2,37 +2,36 @@
     <div class="modal-header clearfix">
         <h4 ng-if="action == 'new'" class="modal-title">Nuevo proceso de secado</h4>
         <h4 ng-if="action == 'update'" class="modal-title">Editar secado</h4>
-        <h4 ng-if="action == 'delete'" class="modal-title">Eliminar secado</h4>
+        <h4 ng-if="action == 'delete'" class="modal-title">Finalizar secado</h4>
         <span class="close ion ion-android-close" ng-click="modalClose()"></span>
     </div>
     <div class="modal-body">
         <div class="row form-group" ng-if="action == 'delete'">
-            <h3>¿Está seguro de eliminar este proveedor?</h3>
+            <h3>¿Está seguro de finalizar este proceso?</h3>
         </div>
         <form class="form-horizontal" name="form" ng-if="action != 'delete'" action="javascript:;" novalidate>
             <div class="row form-group">
                 <div class="col-sm-6">
                     <label>Estado</label>
                      <select class="form-control" ng-model="registro.estado_id" required>                  
-                            <option disabled>Selecciona una orden</option>
+                            <option disabled>Selecciona un estado</option>
                             <option value="1">Inicio</option>
                             <option value="2">Fin</option>
                         </select>
                 </div>
                 <div class="col-sm-6">
-                    <label>Etapa</label>
-                    <select class="form-control" ng-model="registro.etapa_id" required>                  
-                            <option disabled>Selecciona una orden</option>
-                            <option value="1">Primera</option>
-                            <option value="2">Segunda</option>
-                            <option value="3">Tercera</option>
+                    <label>Tipo</label>
+                    <select class="form-control" ng-model="registro.tipo" required>                  
+                            <option disabled>Selecciona un tipo</option>
+                            <option value="1">Vapor</option>
+                            <option value="2">Electrico</option>
                         </select>
                 </div>
             </div>
             <div class="row form-group">
                 <div class="col-sm-6">
-                    <label>Cantidad</label>
-                    <input type="text" class="form-control" ng-model="registro.cantidad" required>
+                    <label>Fecha</label>
+                    <input type="datetime-local" class="form-control" ng-model="registro.fecha" required>
                 </div>
                 
             </div>
