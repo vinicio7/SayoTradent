@@ -762,6 +762,18 @@
                 }]
 			}
 		});
+		$routeProvider.when("/reportes/consumo", {
+			templateUrl: "views/reportes/reporteEstadoCuentaConsumo.html",
+			controller: "ReportesEstadoCuentaConsumoController",
+			resolve: {
+				 deps: ["$ocLazyLoad", function(a) {
+                    return a.load({
+                        name: 'app.reportesEstadoCuentaConsumo',
+                        files: ['scripts/lazyload/controllers/reportes/reporteEstadoCuentaConsumo.js']
+                    })
+                }]
+			}
+		});
 		$routeProvider.when("/reportes/clientes", {
 			templateUrl: "views/reportes/reporteClientes.html",
 			controller: "ReportesClientesController",
