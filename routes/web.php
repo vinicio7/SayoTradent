@@ -36,6 +36,7 @@ Route::group(['prefix' => 'ws'], function (){
 	Route::any 		('excel/muestras',			'ExcelController@reporteMuestras');
 	Route::get 		('excel/ordenesPorDia/{param}',	'ExcelController@reporteOrdenesPorDia');
 	Route::get 		('excel/despachosDiarios/{param}',	'ExcelController@reporteDespachosDiarios');
+	Route::get 		('excel/controlOrdenCafta/{param}/{param1}', 'ExcelController@reporteControlOrdenCafta');
 	Route::any 		('reporte/fechas', 			'ExcelController@ordenesfechas');
 	Route::resource ('ordenes', 				'OrdenesController');
 	Route::resource ('movimientos', 			'MovimientosController');
@@ -69,6 +70,7 @@ Route::group(['prefix' => 'ws'], function (){
 	Route::resource ('muestras',				'MuestrasController');
 	Route::get      ('ordenesPorDia/{param}',	'OrdenesController@ordenesPorDia');
 	Route::get      ('despachosDiarios/{param}','DespachosController@despachosDiarios');
+	Route::get      ('controlOrdenCafta/{param}/{param1}','OrdenesController@controlOrdenCafta');
 });
 
 Auth::routes();

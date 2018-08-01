@@ -738,6 +738,18 @@
                 }]
 			}
 		});
+		$routeProvider.when("/reportes/cafta", {
+			templateUrl: "views/reportes/reporteControlOrdenCafta.html",
+			controller: "ReportesControlOrdenCaftaController",
+			resolve: {
+				 deps: ["$ocLazyLoad", function(a) {
+                    return a.load({
+                        name: 'app.reportesControlOrdenCafta',
+                        files: ['scripts/lazyload/controllers/reportes/reporteControlOrdenCafta.js']
+                    })
+                }]
+			}
+		});
 
 
 		// $routeProvider.when("/contactos", {
