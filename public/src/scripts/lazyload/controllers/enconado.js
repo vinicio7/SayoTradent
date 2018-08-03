@@ -134,7 +134,8 @@
                     );
                 }
                 else if ($scope.action == 'delete') {
-                    EnconadoService.destroy(customer.id).then(
+                    console.log(customer[0].orden.id);
+                    EnconadoService.destroy(customer[0].orden.id).then(
                         function successCallback(response) {
                             if (response.data.result) {
                                 MostarDatos();
@@ -155,6 +156,7 @@
             };   
             // Functions for modals
             $scope.modalCreateOpen = function(data) {
+
                 $scope.registro = {};
                 $scope.action = 'new'; 
                 $scope.registro.id_orden = data.id;
@@ -197,6 +199,24 @@
             };
 
             $scope.modalStopOpen = function(data) {
+
+                console.log(data);
+                $http({
+                    method: 'GET',
+                    url:    WS_URL+'buscar3/'+data.id
+                })
+                .then(function succesCallback (response) {
+                    if( response.data.result ) {
+                        data = response.data.records;
+                        $scope.registro = data;
+                        console.log($scope.registro);
+                    }
+                },
+                function errorCallback(response) {
+                    createToast('danger', '<strong>Error: </strong>'+response.data.message);
+                    $timeout( function(){ closeAlert(0); }, 3000);
+                })
+
                 $scope.registro = {};
                 $scope.action = 'delete'; 
                 $scope.registro.id_orden = data.id;
@@ -208,10 +228,11 @@
                     windowClass: 'default'
                 });
             };
-            
+
             $scope.modalDeleteOpen = function(data) {
+                
                 $scope.action = 'delete';
-                $scope.proveedor = data;
+                $scope.registro = data;
                 modal = $modal.open({
                     templateUrl: 'views/bodega/modal_enconado.html',
                     scope: $scope,

@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
 
         App\Clientes::create([
             'nombre'    => 'Pablo Gómez',
+            'tiempo_estimado' => '1',
             'nit'       => '28940316',
             'telefono'  => '48776611',
             'direccion' => 'Guatemala',
@@ -27,6 +28,7 @@ class DatabaseSeeder extends Seeder
         ]);
         App\Clientes::create([
             'nombre'    => 'Javier Gutiérrez',
+            'tiempo_estimado' => '5',
             'nit'       => '2823316',
             'telefono'  => '41236611',
             'direccion' => 'Guatemala',

@@ -25,6 +25,7 @@
             function MostarDatos() {
                 TenidoService.ordenes().then(function(response) {
                     $scope.datas = response.data.records;
+                    console.log($scope.datas);
                     $scope.search();
                     $scope.select($scope.currentPage);      
                 });
@@ -133,7 +134,9 @@
                     );
                 }
                 else if ($scope.action == 'delete') {
-                    TenidoService.destroy(customer.id).then(
+                    console.log("llego al delete");
+                    console.log(customer[0].orden.id);
+                    TenidoService.destroy(customer[0].orden.id).then(
                         function successCallback(response) {
                             if (response.data.result) {
                                 MostarDatos();
@@ -166,7 +169,41 @@
                 });
             };
 
+            $scope.modalStopOpen = function(data) {
+               console.log(data);
+                $http({
+                    method: 'GET',
+                    url:    WS_URL+'buscar/'+data.id
+                })
+                .then(function succesCallback (response) {
+                    if( response.data.result ) {
+                        data = response.data.records;
+                        $scope.registro = data;
+                    }
+                },
+                function errorCallback(response) {
+                    createToast('danger', '<strong>Error: </strong>'+response.data.message);
+                    $timeout( function(){ closeAlert(0); }, 3000);
+                })
+                
+                // $scope.registro = data;
+                // console.log($scope.registro);
+                $scope.action = 'delete'; 
+                modal = $modal.open({
+                    templateUrl: 'views/bodega/modal_tenido.html',
+                    scope: $scope,
+                    size: 'md', 
+                    resolve: function() {},
+                    windowClass: 'default'
+                });
+            };
+
             $scope.modalEditOpen = function(data) {
+                console.log(data.tenido);
+                var date = data.tenido.fecha;
+                var newdate = date.split("-").reverse().join("/");
+                data.tenido.fecha = newdate;
+                console.log(data.tenido)
                 console.log("llego");
                 $http({
                     method: 'GET',

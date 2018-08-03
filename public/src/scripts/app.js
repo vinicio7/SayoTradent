@@ -180,6 +180,10 @@
 	      	{
 	        	name: "app.service.reportes",
 				files: ["scripts/lazyload/services/reportes.js"]
+			  },
+			  {
+	        	name: "app.service.control",
+				files: ["scripts/lazyload/services/control.js"]
 	      	},
 	      	{
 	        	name: "app.service.facturar",

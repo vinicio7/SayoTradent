@@ -21,6 +21,7 @@ Route::group(['prefix' => 'ws'], function (){
 	Route::resource ('usuarios', 				'UsuariosController');
 	Route::any 		('login', 					'UsuariosController@login');
 	Route::resource ('planilla', 				'PlanillaController');
+	Route::any ('modificar/planilla', 		    'PlanillaController@modificar');
 	Route::resource ('proveedores', 			'ProveedoresController');
 	Route::resource ('clientes', 				'ClientesController');
     Route::resource ('cuentas', 				'CuentasController');
@@ -28,6 +29,7 @@ Route::group(['prefix' => 'ws'], function (){
 	Route::resource ('excel/usuarios', 			'ExcelController');
 	Route::any 		('excel/proveedores', 		'ExcelController@reporteProveedores');
 	Route::any 		('excel/clientes', 			'ExcelController@reporteClientes');
+	Route::any 		('excel/control', 			'ExcelController@reporteControl');
 	Route::any 		('excel/compras', 			'ExcelController@reporteCompras');
 	Route::any 		('excel/movimientos', 		'ExcelController@reporteMovimientos');
 	Route::any 		('excel/inventarioColorantes','ExcelController@reporteInventarioColorantes');
@@ -46,6 +48,8 @@ Route::group(['prefix' => 'ws'], function (){
 	Route::post 	('ordenes/maseo',			'OrdenesController@maseo');
 	Route::post 	('ordenes/secado',			'OrdenesController@secado');
 	Route::post 	('ordenes/enconado',		'OrdenesController@enconado');
+	Route::post 	('ordenes/maseo',		    'OrdenesController@maseo');
+	Route::post 	('ordenes/calidad',		    'OrdenesController@control_calidad');
 	Route::resource ('movimientos', 			'MovimientosController');
 	Route::get 		('cliente', 				'OrdenesController@cliente');
 	Route::get 		('estilos', 				'OrdenesController@estilos');
@@ -62,6 +66,10 @@ Route::group(['prefix' => 'ws'], function (){
 	Route::get 		('mostrar/despacho/{id}', 	'OrdenesController@mostrardespacho');
 	Route::resource ('tenido', 				    'TenidoController');
 	Route::get      ('filtro/teñido', 			'TenidoController@filtrotenido');
+	Route::get      ('buscar/{id}', 		    'TenidoController@buscar');
+	Route::get      ('buscar1/{id}', 		    'SecadoController@buscar');
+	Route::get      ('buscar2/{id}', 		    'EnconadoController@buscar');
+	Route::get      ('buscar3/{id}', 		    'MaseoController@buscar');
 	Route::resource ('secado', 				    'SecadoController');
 	Route::get      ('filtro/secado', 			'SecadoController@filtrosecado');
 	Route::resource ('enconado', 				'EnconadoController');
@@ -81,6 +89,10 @@ Route::group(['prefix' => 'ws'], function (){
 	Route::get      ('ordenesPorDia/{param}',	'OrdenesController@ordenesPorDia');
 	Route::get      ('despachosDiarios/{param}','DespachosController@despachosDiarios');
 	Route::get      ('controlOrdenCafta/{param}/{param1}','OrdenesController@controlOrdenCafta');
+
+	Route::resource ('control_calidada',				'ControlCalidadController');
+
+
 	Route::get      ('estadoCuentaOrden/{param}/{param1}','OrdenesController@estadoCuentaOrden');
 	Route::get      ('estadoCuentaConsumo/{param}/{param1}','OrdenesController@estadoCuentaConsumo');
 });

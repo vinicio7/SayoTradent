@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Enconado;
+use App\Orden;
 
 class EnconadoController extends Controller
 {
@@ -47,8 +48,12 @@ class EnconadoController extends Controller
 						'linea'          =>$request->input('linea'),
 						'maquina'          =>$request->input('maquina'),
 						'metros'          =>$request->input('metros'),
+						'hora_salida'          =>$request->input('hora_salida'),
 					]);
+			    $record2 = Orden::find($request->input('id_orden'));	
 				if ($record) {
+					$record2->id_estado = 1;
+					$record2->save();
 					$this->status_code = 200;
 					$this->result      = true;
 					$this->message     = 'Proceso de enconado creado correctamente.';
@@ -166,14 +171,36 @@ class EnconadoController extends Controller
 		}
 	}
 
+
+	public function buscar($id) {
+		try {
+			$records = Enconado::where('id_orden', $id)->with('orden')->get();
+			$this->status_code = 200;
+			$this->result      = true;
+			$this->message     = 'Registros consultados correctamente';
+			$this->records     = $records;
+		} catch (\Exception $e) {
+			$this->status_code = 400;
+			$this->result      = false;
+			$this->message     = env('APP_DEBUG')?$e->getMessage():$this->message;
+		}finally{
+			$response = [
+				'result'  => $this->result,
+				'message' => $this->message,
+				'records' => $this->records,
+			];
+
+			return response()->json($response, $this->status_code);
+		}
+	}
+
 	public function destroy($id) {
 		try {
-			$record = Secado::find($id);
+			// $record = Secado::find($id);
 			$record2 = Orden::find($id);
-			if ($record) {
-				$record->estado_id = 2;
-				$record->save();
+			if ($record2) {
 				$record2->estado_prod = 3;
+				$record2->id_estado = 4;
 				$record2->save();
 				$this->status_code = 200;
 				$this->result      = true;

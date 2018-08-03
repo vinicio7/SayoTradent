@@ -103,6 +103,7 @@
                     console.log(cuenta);
                     console.log(cuenta_id);
                     clone_customer.cuenta_id = cuenta_id;
+                    console.log(customer);
                     MovimientosService.store(customer).then(
                         function successCallback(response) {
                             if (response.data.result) {

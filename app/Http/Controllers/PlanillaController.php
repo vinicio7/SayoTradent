@@ -130,7 +130,7 @@ class PlanillaController extends Controller{
 
     public function show($id){
         try {
-            $record = Planilla::find($id);
+            $record = DetallePlanilla::find($id);
             if ($record) {
                 $this->status_code  = 200;
                 $this->result       = true;
@@ -212,10 +212,65 @@ class PlanillaController extends Controller{
         }
     }
 
+    public function modificar(Request $request, $id){
+        try {
+            $validacion = Planilla::find($id);
+            // dd($validacion);
+            if ($validacion) {
+                $new_record = (new DetallePlanilla)->create([
+                        'sueldo_ordinario'          => $request->input('sueldo_ordinario'),
+                        'id_planilla'               => $validacion->id,
+                        'mes'                       => $request->input('mes'),
+                        'quincena'                  => $request->input('quincena'),
+                        'dias_trabajados'           => $request->input('dias_trabajados'),
+                        'horas_ex_dia'              => $request->input('horas_ex_dia'),
+                        'horas_ex_noche'            => $request->input('horas_ex_noche'),
+                        // 'sueldo_base'               => $request->input('sueldo_base'),
+                        'sueldo_ex_dia'             => $request->input('sueldo_ex_dia'),
+                        'sueldo_ex_noche'           => $request->input('sueldo_ex_noche'),
+                        'total_ex'                  => $request->input('total_ex'),
+                        'bon_legal'                 => $request->input('bon_legal'),
+                        'bon_inc_base'              => $request->input('bon_inc_base'),
+                        'incentivo_pn'              => $request->input('incentivo_pn'),
+                        'incentivo_as'              => $request->input('incentivo_as'),
+                        'incentivo_pn1'             => $request->input('incentivo_pn1'),
+                        'incentivo_as1'             => $request->input('incentivo_as1'),
+                        'total_bn_inc'              => $request->input('total_bn_inc'),
+                        'total_ingresos'            => $request->input('total_ingresos'),
+                        'igss'                      => $request->input('igss'),
+                        'isr'                       => $request->input('isr'),
+                        'otros_descuentos'          => $request->input('otros_descuentos'),
+                        'total_descuentos'          => $request->input('total_descuentos'),
+                        'total'                     => $request->input('total'),
+                    ]);
+                    if ($new_record) {
+                        $this->status_code  = 200;
+                        $this->result       = true;
+                        $this->message      = 'Registro de  planilla actualizadp';
+                        $this->records      = $new_record;
+                    } else {
+                        throw new \Exception('El registro no pudo ser actualizado');
+                    }
+            } else {
+                throw new \Exception('El registro no pudo existe');
+            }
+        } catch (\Exception $e) {
+            $this->status_code  = 400;
+            $this->result       = false;
+            $this->message      = env('APP_DEBUG') ? $e->getMessage() : $this->message;
+        } finally {
+            $response = [
+                'result'  => $this->result,
+                'message' => $this->message,
+                'records' => $this->records,
+            ];
+            return response()->json($response, $this->status_code);
+        }
+    }
 
     public function destroy($id){
             try {
-                $record = Planilla::find($id);
+                $record = DetallePlanilla::find($id);
                 if ($record) {
                     $record->delete();
                     $this->status_code  = 200;

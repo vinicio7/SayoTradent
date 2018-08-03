@@ -4,7 +4,7 @@
 
     angular.module('app.planilla', ['app.service.planilla'])
 
-        .controller('PlanillaController', ['$scope', '$filter', '$http', '$modal', '$interval', 'PlanillaService', function($scope, $filter, $http, $modal, $timeout, PlanillaService)  {
+        .controller('PlanillaController', ['$scope', '$filter', '$http', '$modal', '$interval', 'PlanillaService','WS_URL', function($scope, $filter, $http, $modal, $timeout, PlanillaService,WS_URL)  {
            
             // General variables
             $scope.datas = [];
@@ -181,7 +181,6 @@
 
             // Function for sending data
             $scope.saveData = function (customer) {
-                console.log(customer);
                 if ($scope.action == 'new') {
                     PlanillaService.store(customer).then(
                         function successCallback(response) {
@@ -219,7 +218,26 @@
                         }
                     );
                 }
+                else if ($scope.action == 'detail') {
+                    PlanillaService.modificar(customer).then(
+                        function successCallback(response) {
+                            if (response.data.result) {
+                                modal.close();
+                                createToast('success', '<strong>Éxito: </strong>'+response.data.message);
+                                $timeout( function(){ closeAlert(0); }, 3000);
+                            } else {
+                                createToast('danger', '<strong>Error: </strong>'+response.data.message);
+                                $timeout( function(){ closeAlert(0); }, 3000);
+                            }
+                        },
+                        function errorCallback(response) {
+                            createToast('danger', '<strong>Error: </strong>'+response.data.message);
+                            $timeout( function(){ closeAlert(0); }, 3000);
+                        }
+                    );
+                }
                 else if ($scope.action == 'delete') {
+                    console.log(customer);
                     PlanillaService.destroy(customer.id).then(
                         function successCallback(response) {
                             if (response.data.result) {
@@ -270,8 +288,24 @@
 
 
             $scope.modalDetail = function(data){
+                console.log(data);
+                $http({
+                    method: 'GET',
+                    url:    WS_URL+'planilla/'+data.id
+                })
+                .then(function succesCallback (response) {
+                    if( response.data.result ) {
+                        data = response.data.records;
+                        $scope.planilla = response.data.records;
+                    }
+                },
+                function errorCallback(response) {
+                    createToast('danger', '<strong>Error: </strong>'+response.data.message);
+                    $timeout( function(){ closeAlert(0); }, 3000);
+                })
                 $scope.action = 'detail';
                 $scope.planilla = data;
+                console.log($scope.planilla);
                 modal = $modal.open({
                     templateUrl: 'views/administracion/modal_planilla.html',
                     scope: $scope,
@@ -282,6 +316,19 @@
                     windowClass: 'default'
                 });
             }
+
+            $scope.modalDeleteOpen = function(data) {
+                console.log(data);
+                $scope.action = 'delete';
+                $scope.planilla = data;
+                modal = $modal.open({
+                    templateUrl: 'views/administracion/modal_planilla.html',
+                    scope: $scope,
+                    size: 'md',
+                    resolve: function() {},
+                    windowClass: 'default'
+                });
+            };
 
             $scope.modalClose = function() {
                 modal.close();

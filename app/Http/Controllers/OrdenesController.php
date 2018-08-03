@@ -146,6 +146,56 @@ class OrdenesController extends Controller
         }
     }
 
+    public function maseo()
+    {
+        try {
+            // dd("lego");
+            $records           = Orden::with('cliente','estilo','calibre','metraje','color','referencia','lugar','tenido','secado','enconado')->where('estado_prod',3)->get();
+            // dd($records);
+            $this->status_code = 200;
+            $this->result      = true;
+            $this->message     = 'Registros consultados correctamente';
+            $this->records     = $records;
+        } catch (\Exception $e) {
+            $this->status_code = 400;
+            $this->result      = false;
+            $this->message     = env('APP_DEBUG')?$e->getMessage():$this->message;
+        }finally{
+            $response = [
+                'result'  => $this->result,
+                'message' => $this->message,
+                'records' => $this->records,
+            ];
+
+            return response()->json($response, $this->status_code);
+        }
+    }
+
+    public function control_calidad()
+    {
+        try {
+            // dd("lego");
+            $records           = Orden::with('cliente','estilo','calibre','metraje','color','referencia','lugar','tenido','secado','enconado')->where('estado_prod',4)->get();
+            // dd($records);
+            $this->status_code = 200;
+            $this->result      = true;
+            $this->message     = 'Registros consultados correctamente';
+            $this->records     = $records;
+        } catch (\Exception $e) {
+            $this->status_code = 400;
+            $this->result      = false;
+            $this->message     = env('APP_DEBUG')?$e->getMessage():$this->message;
+        }finally{
+            $response = [
+                'result'  => $this->result,
+                'message' => $this->message,
+                'records' => $this->records,
+            ];
+
+            return response()->json($response, $this->status_code);
+        }
+    }
+
     public function cliente()
     {
         try {
@@ -355,6 +405,7 @@ class OrdenesController extends Controller
 
     public function store(Request $request)
     {
+        
         try {
             $record = Orden::create([
                 'orden'                 => $request->input('orden'),
@@ -377,7 +428,7 @@ class OrdenesController extends Controller
                 'id_referencias'       	=> $request->input('id_referencias'),
                 'id_lugar'       		=> $request->input('id_lugar'),
                 'facturado'             => false,
-                'estado_prod'           => 0
+                'estado_prod'           => '0'
                 ]);
             if ($record) {
                 $this->status_code  = 200;

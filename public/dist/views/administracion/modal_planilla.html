@@ -1,43 +1,46 @@
 <div class="modal-style">
     <div class="modal-header clearfix">
         <h4 ng-if="action == 'new'" class="modal-title">Nuevo Registro</h4>
-        <h4 ng-if="action == 'update'" class="modal-title">Editar Usuario</h4>
-        <h4 ng-if="action == 'detail'" class="modal-title">Pago de Planilla</h4>
-        <h4 ng-if="action == 'delete'" class="modal-title">Eliminar Usuario</h4>
+        <h4 ng-if="action == 'update'" class="modal-title">Crear Pago</h4>
+        <h4 ng-if="action == 'detail'" class="modal-title">Editar Pago</h4>
+        <h4 ng-if="action == 'delete'" class="modal-title">Eliminar Pago</h4>
         <span class="close ion ion-android-close" ng-click="modalClose()"></span>
     </div>
     <div class="modal-body">
         <div class="row form-group" ng-if="action == 'delete'">
-            <h3>¿Está seguro de eliminar este Usuario?</h3>
+            <h3>¿Está seguro de eliminar este Pago?</h3>
         </div>
         <form class="form-horizontal" name="form" ng-if="action != 'delete'" action="javascript:;" novalidate>
             
             <!-- tabs registro info -->
             <div class="col-sm-12">
 				<tabset justified="true">
-					<tab heading="Informacion">
+					<tab heading="Informacion" >
 						<div class="clearfix">
                             <div class="row form-group">
                                 <div class="col-sm-4">
                                     <label>No. Empleado</label>
                                     <input type="text" class="form-control" ng-if="action == 'new'" ng-model="planilla.no_empleado" required>
                                     <input type="text" class="form-control" ng-if="action == 'update'" ng-model="planilla.no_empleado" disabled>
+                                    <input type="text" class="form-control" ng-if="action == 'detail'" ng-model="planilla.no_empleado" disabled>
                                 </div>
                                 <div class="col-sm-4">
                                     <label>Nombre</label>
                                     <input type="text" class="form-control" ng-if="action == 'new'"  ng-model="planilla.nombre" required>
                                     <input type="text" class="form-control" ng-if="action == 'update'" ng-model="planilla.nombre" disabled>
+                                    <input type="text" class="form-control" ng-if="action == 'detail'" ng-model="planilla.no_empleado" disabled>
                                 </div>
                                 <div class="col-sm-4">
                                     <label>Sueldo Base</label>
                                     <input type="text" class="form-control" ng-if="action == 'new'" ng-model="planilla.sueldo_base" required>
                                     <input type="text" class="form-control" ng-if="action == 'update'" ng-model="planilla.sueldo_base">
+                                    <input type="text" class="form-control" ng-if="action == 'detail'" ng-model="planilla.no_empleado" disabled>
                                 </div>
                             </div>
                         </div>
                     </tab>
                     
-					<tab heading="Datos" active="portfolio.active" ng-if="action == 'update'">
+					<tab heading="Datos" active="portfolio.active" ng-if="action != 'new' ">
                         <div class="clearfix">
                             <div class="row form-group">
                                 <div class="col-sm-4">
@@ -130,7 +133,7 @@
                         </div>
                     </tab>
 
-                    <tab heading="Calculos" active="about.active" ng-if="action == 'update'">
+                    <tab heading="Calculos" active="about.active" ng-if="action != 'new' ">
                         <div class="clearfix">
                             <div class="row form-group">
                                 <div class="col-sm-4">
