@@ -2,13 +2,14 @@
 {
     'use strict';
 
-    angular.module('app.reportesOrdenesPorDia', ['app.service.reportes'])
+    angular.module('app.reportesEstadoCuentaConsumo', ['app.service.reportes'])
 
-        .controller('ReportesOrdenesPorDiaController', ['$scope', '$filter', '$http', '$modal', '$interval', 'ReportesService', function($scope, $filter, $http, $modal, $timeout, ReportesService)  {
+        .controller('ReportesEstadoCuentaConsumoController', ['$scope', '$filter', '$http', '$modal', '$interval', 'ReportesService', function($scope, $filter, $http, $modal, $timeout, ReportesService)  {
            
             // General variables
             $scope.datas = [];
-            $scope.fechaFiltro = new Date();
+            $scope.fechaInicio = new Date();
+            $scope.fechaFin = new Date();
             $scope.currentPageStores = [];
             $scope.searchKeywords = '';
             $scope.filteredData = [];
@@ -22,9 +23,10 @@
 
             // Function for load table
             $scope.MostrarDatos = function() {
-                var date = $filter('date')($scope.fechaFiltro,'yyyy-MM-dd');
+                var dateinicio = $filter('date')($scope.fechaInicio,'yyyy-MM-dd');
+                var datefin = $filter('date')($scope.fechaFin,'yyyy-MM-dd');
 
-                ReportesService.ordenesPorDia(date).then(function(response) {
+                ReportesService.estadoCuentaConsumo(dateinicio, datefin).then(function(response) {
                     $scope.datas = response.data.records;
                     $scope.search();
                     $scope.select($scope.currentPage);
@@ -36,10 +38,11 @@
                
             }
 
-            $scope.ordenesPorDiaReporte = function(){ 
-                var date = $filter('date')($scope.fechaFiltro,'yyyy-MM-dd');
+            $scope.estadoCuentaConsumoReporte = function(){ 
+                var dateinicio = $filter('date')($scope.fechaInicio,'yyyy-MM-dd');
+                var datefin = $filter('date')($scope.fechaFin,'yyyy-MM-dd');
                
-                window.location="../ws/excel/ordenesPorDia/"+date;
+                window.location="../ws/excel/estadoCuentaConsumo/"+dateinicio+"/"+datefin;
                 createToast('success', '<strong>Éxito: </strong>'+'Reporte Creado Exitosamente');
                 $timeout( function(){ closeAlert(0); }, 3000);
             

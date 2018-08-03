@@ -185,6 +185,10 @@
 	        	name: "app.service.control",
 				files: ["scripts/lazyload/services/control.js"]
 	      	},
+	      	{
+	        	name: "app.service.facturar",
+				files: ["scripts/lazyload/services/facturar.js"]
+	      	},
 			]
 		})
 	}])
@@ -447,6 +451,19 @@
                     return a.load({
                         name: 'app.ordenes',
                         files: ['scripts/lazyload/controllers/ordenes.js']
+                    })
+                }]
+			}
+		});
+
+		$routeProvider.when("/facturar", {
+			templateUrl: "views/registro/facturar.html",
+			controller: "FacturarController",
+			resolve: {
+				 deps: ["$ocLazyLoad", function(a) {
+                    return a.load({
+                        name: 'app.facturar',
+                        files: ['scripts/lazyload/controllers/facturar.js']
                     })
                 }]
 			}
@@ -838,6 +855,18 @@
                     return a.load({
                         name: 'app.reportesEstadoCuentaOrden',
                         files: ['scripts/lazyload/controllers/reportes/reporteEstadoCuentaOrden.js']
+                    })
+                }]
+			}
+		});
+		$routeProvider.when("/reportes/consumo", {
+			templateUrl: "views/reportes/reporteEstadoCuentaConsumo.html",
+			controller: "ReportesEstadoCuentaConsumoController",
+			resolve: {
+				 deps: ["$ocLazyLoad", function(a) {
+                    return a.load({
+                        name: 'app.reportesEstadoCuentaConsumo',
+                        files: ['scripts/lazyload/controllers/reportes/reporteEstadoCuentaConsumo.js']
                     })
                 }]
 			}

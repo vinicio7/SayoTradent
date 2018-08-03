@@ -474,28 +474,83 @@ class ExcelController extends Controller
     }
 
 
-    public function reporteOrdenEstadoCuenta($param, $param1){
-        \Excel::create('OrdenesPorDia', function($excel) use ($param, $param1){
+    public function reporteEstadoCuentaOrden($param, $param1){
+        \Excel::create('EstadoCuentaOrden', function($excel) use ($param, $param1){
              $excel->sheet('Datos', function($sheet) use ($param, $param1) {
+                $sumQty = 0;
+                $sumAmount = 0;
 
-                $reporte = Orden::whereBetween('fecha_hora', [$param, $param1])->groupBy('id','orden','fecha_hora','id_empresa','po','id_estilo','descripcion','id_calibre','id_metraje','tipo','id_color','cantidad','balance','total_salida','amount','precio','fecha_entrega','id_referencias','id_lugar','facturado','created_at','updated_at')->with('cliente','estilo','calibre','metraje','color','lugar', 'referencia','tenido','secado','tipoOrden')->get();
-                 
+                $reporte = Despachos::whereHas('Orden', function ($q) use($param, $param1)
+                {
+                   $q->whereBetween('fecha_hora', [$param, $param1]);
+                })
+                  ->with('orden','orden.cliente','orden.estilo','orden.calibre','orden.metraje','orden.color','orden.lugar', 'orden.referencia','orden.tenido','orden.secado','orden.tipoOrden')
+                  ->get();
 
-             $data = [];
+                  foreach ($reporte as $reported) {
+                     $sumQty               += $reported->cantidad;
+                     $sumAmount            += $reported->orden->precio;
+                  }  
+
+                $data = [];
                 foreach ($reporte as $reporte) {
                    $row = [];
-                   $row ["Date"]             = $reporte->fecha_hora;
-                   $row ["Factory"]          = $reporte->cliente->nombre;
-                   $row ["PO. Numero"]       = $reporte->po;
-                   $row ["Style"]            = $reporte->estilo->descripcion;
-                   $row ["Tipo de orden"]    = $reporte->tipoOrden->descripcion;
-                   $row ["Calibre"]          = $reporte->calibre->descripcion;
-                   $row ["MTRS"]             = $reporte->metraje->descripcion;
-                   $row ["Color"]            = $reporte->color->descripcion;
-                   $row ["QTY"]              = $reporte->cantidad;
-                   $row ["U/Price"]          = ($reporte->precio / $reporte->cantidad);
-                   $row ["Amount"]           = $reporte->precio;
-                   $row ["Lugar de entrega"] = $reporte->lugar->descripcion;
+                   $row ["OrderDate"]             = $reporte->orden->fecha_hora;
+                   $row ["File"]                  = '1813143-01';
+                   $row ["PO"]                    = $reporte->orden->po;
+                   $row ["Description"]           = $reporte->orden->tipoOrden->descripcion;
+                   $row ["Calibre"]               = $reporte->orden->calibre->descripcion;
+                   $row ["Mts"]                   = $reporte->orden->metraje->descripcion;
+                   $row ["Color"]                 = $reporte->orden->color->descripcion;
+                   $row ["ORD. QTY"]              = $reporte->orden->cantidad;
+                   $row ["U/Price"]               = ($reporte->orden->precio / $reporte->orden->cantidad);
+                   $row ["S.date"]                = $reporte->fecha;
+                   $row ["Saler"]                 = $reporte->envio;
+                   $row ["S.Qty"]                 = $reporte->cantidad;
+                   $row ["Sum.Qty"]               = $sumQty;
+                   $row ["Balance"]               = 0;
+                   $row ["S.Amount"]              = $sumAmount;
+              
+                   $data[] = $row;
+                }  
+                // dd($data);
+          $sheet->fromArray($data);
+      });
+      })->export('xls');
+    }
+
+    public function reporteEstadoCuentaConsumo($param, $param1){
+        \Excel::create('EstadoCuentaConsumo', function($excel) use ($param, $param1){
+             $excel->sheet('Datos', function($sheet) use ($param, $param1) {
+                $sumQty = 0;
+                $sumAmount = 0;
+
+                $reporte = Despachos::whereHas('Orden', function ($q) use($param, $param1)
+                {
+                   $q->whereBetween('fecha_hora', [$param, $param1]);
+                })
+                  ->with('orden','orden.cliente','orden.estilo','orden.calibre','orden.metraje','orden.color','orden.lugar', 'orden.referencia','orden.tenido','orden.secado','orden.tipoOrden')
+                  ->get();
+
+                $data = [];
+                foreach ($reporte as $reporte) {
+                   $row = [];
+                   $row ["OrderDate"]             = $reporte->orden->fecha_hora;
+                   $row ["Customer"]              = $reporte->orden->cliente->nombre;
+                   $row ["PO"]                    = $reporte->orden->po;
+                   $row ["Style"]                 = $reporte->orden->estilo->descripcion;
+                   $row ["Description"]           = $reporte->orden->tipoOrden->descripcion;
+                   $row ["Calibre"]               = $reporte->orden->calibre->descripcion;
+                   $row ["Mts"]                   = $reporte->orden->metraje->descripcion;
+                   $row ["Color"]                 = $reporte->orden->color->descripcion;
+                   $row ["ORD. QTY"]              = $reporte->orden->cantidad;
+                   $row ["U/Price"]               = ($reporte->orden->precio / $reporte->orden->cantidad);
+                   $row ["S.date"]                = $reporte->fecha;
+                   $row ["Saler"]                 = $reporte->envio;
+                   $row ["S.Qty"]                 = $reporte->cantidad;
+                   $row ["Sum.Qty"]               = $reporte->cantidad;
+                   $row ["Balance"]               = 0;
+                   $row ["S.Amount"]              = $reporte->orden->precio;
               
                    $data[] = $row;
                 }  

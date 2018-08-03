@@ -29,7 +29,7 @@ class OrdenesController extends Controller
     public function index()
     {
         try {
-            $records           = Orden::with('cliente','estilo','calibre','metraje','color','referencia','lugar','tenido','secado')->get();
+            $records           = Orden::with('cliente','estilo','calibre','metraje','color','referencia','lugar','tenido','secado','estado')->orderBy('created_at','DESC')->get();
             $this->status_code = 200;
             $this->result      = true;
             $this->message     = 'Registros consultados correctamente';
@@ -580,6 +580,12 @@ class OrdenesController extends Controller
     {
         // dd($request);
         try {
+            $record2                 = Orden::find($request->input('id_orden'));
+            if ($record2) {
+                if ($request->input('cantidad') > $record2->balance ) {
+                    throw new \Exception('La cantidad no puede ser mayor al balance');
+                }  
+            }
             $record = Despachos::create([
                 
                 'fecha'       	    => date("Y-m-d", strtotime($request->input('fecha'))),
@@ -589,12 +595,11 @@ class OrdenesController extends Controller
                
                 ]);
             if ($record) {
-                $record                 = Orden::find($request->input('id_orden'));
-                $record->total_salida   = $record->total_salida + $request->input('cantidad');
-                $record->balance        = $record->balance - $record->total_salida;
-                $record->amount         = $record->precio * $record->total_salida;
+                $record2->total_salida   = $record2->total_salida + $request->input('cantidad');
+                $record2->balance        = $record2->cantidad - $record2->total_salida;
+                $record2->amount         = $record2->precio * $record2->total_salida;
                 
-                $record->save();
+                $record2->save();
                 $this->status_code      = 200;
                 $this->result           = true;
                 $this->message          = 'Registro de despacho creado correctamente';
@@ -646,7 +651,7 @@ class OrdenesController extends Controller
     public function ordenesPorDia($param)
     {
         try {
-            $records           = Orden::where('fecha_hora', $param)->with('cliente')->get();
+            $records           = Orden::where('fecha_hora', $param)->with('cliente','color','estilo','calibre')->get();
             $this->status_code = 200;
             $this->result      = true;
             $this->message     = 'Registros consultados correctamente';
@@ -669,7 +674,7 @@ class OrdenesController extends Controller
     public function controlOrdenCafta($param, $param1)
     {
         try {
-            $records = Orden::whereBetween('fecha_hora', [$param, $param1])->where('tipo', 2)->with('cliente')->get();
+            $records = Orden::whereBetween('fecha_hora', [$param, $param1])->where('tipo', 2)->with('cliente','color','calibre','estilo')->get();
             $this->status_code = 200;
             $this->result      = true;
             $this->message     = 'Registros consultados correctamente';
@@ -693,6 +698,29 @@ class OrdenesController extends Controller
     {
         try {
             $records = Orden::whereBetween('fecha_hora', [$param, $param1])->orderBy('orden')->with('cliente')->get();
+            $this->status_code = 200;
+            $this->result      = true;
+            $this->message     = 'Registros consultados correctamente';
+            $this->records     = $records;
+        } catch (\Exception $e) {
+            $this->status_code = 400;
+            $this->result      = false;
+            $this->message     = env('APP_DEBUG')?$e->getMessage():$this->message;
+        }finally{
+            $response = [
+                'result'  => $this->result,
+                'message' => $this->message,
+                'records' => $this->records,
+            ];
+
+            return response()->json($response, $this->status_code);
+        }
+    }
+
+    public function estadoCuentaConsumo($param, $param1)
+    {
+        try {
+            $records = Orden::whereBetween('fecha_hora', [$param, $param1])->orderBy('orden')->with('cliente','estilo','tipoOrden')->get();
             $this->status_code = 200;
             $this->result      = true;
             $this->message     = 'Registros consultados correctamente';

@@ -3,10 +3,22 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="panel panel-default table-responsive panel-hovered mb20"  >
-                        <div class="panel-heading"><h4>Reporte de clientes</h4></div>
+                        <div class="panel-heading"><h4>Estado de cuenta por consumo</h4></div>
                         <div class="panel-body">
                             <div class="row">
-                                <button ng-click="despachosReporte()" type="button" class="btn btn-info btn-rounded"> <i class="fa fa-file-excel-o"></i>&nbsp;Excel</button>
+                                <div class="col-sm-3">
+                                    <label>Fecha Inicio</label>
+                                    <input type="date" class="form-control" ng-model="fechaInicio" required>
+                                </div>
+                                <div class="col-sm-3">
+                                    <label>Fecha Fin</label>
+                                    <input type="date" class="form-control" ng-model="fechaFin" required>
+                                </div>
+                                <div class="col-sm-2">
+                                    <button ng-click="MostrarDatos()" type="button" class="btn btn-info btn-rounded"> <i class="fa fa-file-excel-o"></i>&nbsp;Filtrar</button>
+                                    <button ng-click="estadoCuentaConsumoReporte()" type="button" class="btn btn-info btn-rounded"> <i class="fa fa-file-excel-o"></i>&nbsp;Excel</button>
+                                </div>
+                                
                             </div>
                             <br>
                             <div class="row">
@@ -27,31 +39,18 @@
                         <table class="table table-bordered table-striped">
                             <thead>
                             <tr>
+                                <th>Fecha
+                                    <div class="th">
+                                        <i class="fa fa-caret-up icon-up"
+                                           ng-click=" order('id') "
+                                           ng-class="{active: row == 'id'}"></i>
+                                        <i class="fa fa-caret-down icon-down"
+                                           ng-click=" order('-id') "
+                                           ng-class="{active: row == '-id'}"></i>
+                                    </div>
+                                </th>
                                 <th>
                                     Nombre 
-                                    <div class="th">
-                                        <i class="fa fa-caret-up icon-up"
-                                            ng-click=" order('nombre') "
-                                            ng-class="{active: row == 'nombre'}"></i>
-                                        <i class="fa fa-caret-down icon-down"
-                                            ng-click=" order('-nombre') "
-                                            ng-class="{active: row == '-nombre'}"></i>
-                                    </div>
-                                </th>
-                                <th>
-                                    Nit
-                                    <div class="th">
-                                        <i class="fa fa-caret-up icon-up"
-                                            ng-click=" order('nit') "
-                                            ng-class="{active: row == 'nit'}"></i>
-                                        <i class="fa fa-caret-down icon-down"
-                                            ng-click=" order('-nit') "
-                                            ng-class="{active: row == '-nit'}"></i>
-                                    </div>
-                                </th>
-
-                                <th>
-                                    Teléfono
                                     <div class="th">
                                         <i class="fa fa-caret-up icon-up"
                                             ng-click=" order('phone') "
@@ -62,41 +61,60 @@
                                     </div>
                                 </th>
                                 <th>
-                                    Dirección
+                                    Orden 
                                     <div class="th">
                                         <i class="fa fa-caret-up icon-up"
-                                            ng-click=" order('direccion') "
-                                            ng-class="{active: row == 'direccion'}"></i>
+                                            ng-click=" order('orden') "
+                                            ng-class="{active: row == 'orden'}"></i>
                                         <i class="fa fa-caret-down icon-down"
-                                            ng-click=" order('-direccion') "
-                                            ng-class="{active: row == '-direccion'}"></i>
+                                            ng-click=" order('-orden') "
+                                            ng-class="{active: row == '-orden'}"></i>
                                     </div>
                                 </th>
                                 <th>
-                                    Crédito
+                                    Po
                                     <div class="th">
                                         <i class="fa fa-caret-up icon-up"
-                                            ng-click=" order('credito') "
-                                            ng-class="{active: row == 'credito'}"></i>
+                                            ng-click=" order('phone') "
+                                            ng-class="{active: row == 'phone'}"></i>
                                         <i class="fa fa-caret-down icon-down"
-                                            ng-click=" order('-credito') "
-                                            ng-class="{active: row == '-credito'}"></i>
+                                            ng-click=" order('-phone') "
+                                            ng-class="{active: row == '-phone'}"></i>
+                                    </div>
+                                </th>
+
+                                <th>
+                                    Estilo
+                                    <div class="th">
+                                        <i class="fa fa-caret-up icon-up"
+                                            ng-click=" order('phone') "
+                                            ng-class="{active: row == 'phone'}"></i>
+                                        <i class="fa fa-caret-down icon-down"
+                                            ng-click=" order('-phone') "
+                                            ng-class="{active: row == '-phone'}"></i>
+                                    </div>
+                                </th>
+                                <th>
+                                    Tipo Orden
+                                    <div class="th">
+                                        <i class="fa fa-caret-up icon-up"
+                                            ng-click=" order('phone') "
+                                            ng-class="{active: row == 'phone'}"></i>
+                                        <i class="fa fa-caret-down icon-down"
+                                            ng-click=" order('-phone') "
+                                            ng-class="{active: row == '-phone'}"></i>
                                     </div>
                                 </th>
                             </tr>
                             </thead>
                             <tbody>
                                 <tr ng-repeat="data in currentPageStores track by $index">
-                                    <td>{{ data.nombre }}</td>
-                                    <td>{{ data.nit }}</td>
-                                    <td>{{ data.telefono }}</td>
-                                    <td>{{ data.direccion }}</td>
-                                    <td>{{ data.credito }}</td>
-                                    <!--<td>
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-info ion ion-edit" ng-click="modalEditOpen(data)" md-ink-ripple></button>
-                                        </div>
-                                    </td>-->
+                                    <td>{{ data.fecha_hora }}</td>
+                                    <td>{{ data.cliente.nombre }}</td>
+                                    <td>{{ data.orden }}</td>
+                                    <td>{{ data.po }}</td>
+                                    <td>{{ data.estilo.descripcion }}</td>
+                                    <td>{{ data.tipo_orden.descripcion }}</td>
                                 </tr>
                             </tbody>
                         </table>

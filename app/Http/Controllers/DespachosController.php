@@ -16,7 +16,7 @@ class DespachosController extends Controller
     public function index()
     {
         try {
-            $records           = Despachos::with('orden', 'orden.cliente')->get();
+            $records           = Despachos::with('orden', 'orden.cliente', 'orden.estilo','orden.color','orden.calibre')->get();
             $this->status_code = 200;
             $this->result      = true;
             $this->message     = 'Registros consultados correctamente';
@@ -99,7 +99,7 @@ class DespachosController extends Controller
     public function despachosDiarios($param)
     {
         try {
-            $records           = Despachos::where('fecha', $param)->with('orden', 'orden.cliente')->get();
+            $records           = Despachos::where('fecha', $param)->with('orden', 'orden.cliente', 'orden.color','orden.estilo', 'orden.calibre')->get();
             $this->status_code = 200;
             $this->result      = true;
             $this->message     = 'Registros consultados correctamente';

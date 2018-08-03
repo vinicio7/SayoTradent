@@ -20,7 +20,7 @@ class MuestrasController extends Controller
     public function index()
     {
         try {
-            $records           = Muestra::with('orden', 'orden.cliente')->get();
+            $records           = Muestra::with('orden', 'orden.cliente','orden.estilo','orden.color','orden.calibre')->get();
             $this->status_code = 200;
             $this->result      = true;
             $this->message     = 'Registros consultados correctamente';

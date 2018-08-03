@@ -27,7 +27,8 @@ class Orden extends Model
                            'id_referencias',
                            'id_lugar',
                            'facturado',
-                           'estado_prod'
+                           'estado_prod',
+                           'id_estado',
 						   ];
 
   public function cliente()
@@ -81,6 +82,10 @@ class Orden extends Model
   public function tipoOrden()
   {
       return $this->hasOne('App\TipoOrden', 'id', 'tipo');
+  }
+  public function estado()
+  {
+      return $this->hasOne('App\Estados', 'id', 'id_estado');
   }
 
 

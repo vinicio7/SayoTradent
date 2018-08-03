@@ -17,6 +17,7 @@
             $scope.currentPage = 1;
             $scope.positionModel = 'topRight';
             $scope.toasts = [];
+
             var modal;
 
             // Function for load table

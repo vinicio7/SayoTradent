@@ -166,7 +166,7 @@
                     var tipoorden = customer.tipo.indexOf(" -");
                     var id_tipoorden = customer.tipo.slice(0, tipoorden);
                     clone_customer.tipo = id_tipoorden;
-                    console.log(clone_customer);
+
                     OrdenesService.store(clone_customer).then(
                         function successCallback(response) {
                             if (response.data.result) {
@@ -249,7 +249,7 @@
                     OrdenesService.despachos(customer).then(
                         function successCallback(response) {
                             if (response.data.result) {
-                                MostarDatos();
+                                // MostarDatos();
                                 modal.close();
                                 createToast('success', '<strong>Éxito: </strong>'+response.data.message);
                                 $timeout( function(){ closeAlert(0); }, 3000);
