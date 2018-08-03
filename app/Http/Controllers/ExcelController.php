@@ -14,6 +14,7 @@ use App\Facturas;
 use App\Despachos;
 use App\Muestra;
 use Carbon\Carbon;
+use App\ControlCalidad;
 
     
 class ExcelController extends Controller
@@ -129,6 +130,35 @@ class ExcelController extends Controller
       })->export('xls');
     }
 
+    public function reporteControl(Request $request){
+        \Excel::create('Control de Calidad', function($excel) use ($request){
+             $excel->sheet('Datos', function($sheet) use ($request) {
+
+                $reporte = ControlCalidad::with('orden')->get();
+                // dd($reporte);
+
+             $data = [];
+                foreach ($reporte as $reporte) {
+                   $row = [];
+                   $row ["No. de orden"]         = $reporte->orden->orden;
+                   $row ["Inspector"]            = $reporte->inspector;
+                   $row ["Supervisor"]           = $reporte->supervisor;
+                   $row ["Cantidad de conos"]    = $reporte->cantidad_cajas;
+                   $row ["Lote"]                 = $reporte->lote;
+                   $row ["Cantidad revisada"]    = $reporte->cantidad_revisada;
+                   $row ["Aceptadas"]            = $reporte->aceptada;
+                   $row ["Rechazadas"]           = $reporte->rechazada;
+                   $row ["Solucion"]             = $reporte->solucion;
+                   $row ["Observacion"]          = $reporte->observaciones;
+              
+                   $data[] = $row;
+                } 
+
+          $sheet->fromArray($data);
+      });
+      })->export('xls');
+    }
+
     public function reporteCompras(Request $request){
         \Excel::create('Compras', function($excel) use ($request){
              $excel->sheet('Datos', function($sheet) use ($request) {
@@ -164,11 +194,33 @@ class ExcelController extends Controller
              $data = [];
                 foreach ($reporte as $reporte) {
                    $row = [];
-                   $row ["Tipo de Movimiento"]     = $reporte->tipo_movimiento;
+                    if ($reporte->tipo_movimiento==1) {
+                    $row ["Tipo de Movimiento"] = "Ingreso";
+                    } elseif ($reporte->tipo_movimiento==2){
+                        $row ["Tipo de Movimiento"] = "Egreso"; 
+                    }
+                   
                    $row ["Monto"]                  = $reporte->monto;
                    $row ["Descripción"]            = $reporte->descripcion;
-                   $row ["Saldo"]                  = $reporte->saldo;
-                   $row ["Fecha de Creación"]      = $reporte->created_at;
+                   $row ["Fecha"]                  = $reporte->fecha;
+                   $row ["No. de Cheque"]          = $reporte->no_cheque;
+                   $row ["Nombre"]                 = $reporte->nombre;
+
+                    if ($reporte->moneda==1) {
+                        $row ["Moneda"] = "Quetzales";
+                    } elseif ($reporte->moneda==2){
+                        $row ["Moneda"] = "EgreDolaresso"; 
+                    }
+
+                    if ($reporte->cobrado==1) {
+                        $row ["Cobrado"] = "Si";
+                    } elseif ($reporte->cobrado==2){
+                        $row ["Cobrado"] = "NO"; 
+                    }
+                 
+                   $row ["Balance Q"]              = $reporte->balanceQ;
+                   $row ["Balance D"]              = $reporte->balance_D;
+                   $row ["No. de Cuerta"]          = $reporte->cuenta_id;
               
                    $data[] = $row;
                 } 

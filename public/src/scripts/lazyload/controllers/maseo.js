@@ -134,7 +134,8 @@
                     );
                 }
                 else if ($scope.action == 'delete') {
-                    MaseoService.destroy(customer.id).then(
+                    console.log(customer[0].orden.id);
+                    MaseoService.destroy(customer[0].orden.id).then(
                         function successCallback(response) {
                             if (response.data.result) {
                                 MostarDatos();
@@ -194,6 +195,35 @@
                     windowClass: 'default'
                 });
             
+            };
+
+            $scope.modalStopOpen = function(data) {
+                console.log(data);
+                $http({
+                    method: 'GET',
+                    url:    WS_URL+'buscar3/'+data.id
+                })
+                .then(function succesCallback (response) {
+                    if( response.data.result ) {
+                        data = response.data.records;
+                        $scope.registro = data;
+                        console.log($scope.registro);
+                    }
+                },
+                function errorCallback(response) {
+                    createToast('danger', '<strong>Error: </strong>'+response.data.message);
+                    $timeout( function(){ closeAlert(0); }, 3000);
+                })
+                $scope.registro = {};
+                $scope.action = 'delete'; 
+                $scope.registro.id_orden = data.id;
+                modal = $modal.open({
+                    templateUrl: 'views/bodega/modal_maseo.html',
+                    scope: $scope,
+                    size: 'md', 
+                    resolve: function() {},
+                    windowClass: 'default'
+                });
             };
 
             $scope.modalDeleteOpen = function(data) {

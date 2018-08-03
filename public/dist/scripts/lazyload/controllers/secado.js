@@ -95,6 +95,8 @@
 
             // Function for sending data
             $scope.saveData = function (customer) {
+                var fecha = new Date(customer.fecha);
+                // console.log(fecha);
                 console.log(customer);
                 if ($scope.action == 'new') {
                     SecadoService.store(customer).then(
@@ -134,7 +136,8 @@
                     );
                 }
                 else if ($scope.action == 'delete') {
-                    SecadoService.destroy(customer.id).then(
+                    console.log(customer[0].orden.id);
+                    SecadoService.destroy(customer[0].orden.id).then(
                         function successCallback(response) {
                             if (response.data.result) {
                                 MostarDatos();
@@ -155,6 +158,7 @@
             };   
             // Functions for modals
             $scope.modalCreateOpen = function(data) {
+                console.log(data);
                 $scope.registro = {};
                 $scope.action = 'new'; 
                 $scope.registro.id_orden = data.id;
@@ -168,10 +172,10 @@
             };
 
             $scope.modalEditOpen = function(data) {
-                console.log("llego");
+                console.log(data);
                 $http({
                     method: 'GET',
-                    url:    WS_URL+'secado/'+data.id
+                    url:    WS_URL+'secado/'+data.secado.id
                 })
                 .then(function succesCallback (response) {
                     if( response.data.result ) {
@@ -194,6 +198,34 @@
                     windowClass: 'default'
                 });
             
+            };
+            $scope.modalStopOpen = function(data) {
+                console.log(data);
+                $http({
+                    method: 'GET',
+                    url:    WS_URL+'buscar1/'+data.id
+                })
+                .then(function succesCallback (response) {
+                    if( response.data.result ) {
+                        data = response.data.records;
+                        $scope.registro = data;
+                        console.log($scope.registro);
+                    }
+                },
+                function errorCallback(response) {
+                    createToast('danger', '<strong>Error: </strong>'+response.data.message);
+                    $timeout( function(){ closeAlert(0); }, 3000);
+                })
+                $scope.registro = {};
+                $scope.action = 'delete'; 
+                $scope.registro.id_orden = data.id;
+                modal = $modal.open({
+                    templateUrl: 'views/bodega/modal_tenido.html',
+                    scope: $scope,
+                    size: 'md', 
+                    resolve: function() {},
+                    windowClass: 'default'
+                });
             };
 
             $scope.modalDeleteOpen = function(data) {

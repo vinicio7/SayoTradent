@@ -45,8 +45,7 @@ class TenidoController extends Controller
                         'receta'            => $request->input('receta'),
 						'estado_id'         => $request->input('estado_id'),
 						'etapa_id'          => $request->input('etapa_id'),
-
-						'fecha'				=> $request->input('fecha'),
+						'fecha'				=>date("Y-m-d", strtotime($request->input('fecha'))),
 						'maquina'			=> $request->input('maquina'),
 						'operario'			=> $request->input('operario'),
 						'contenedor'		=> $request->input('contenedor'),
@@ -56,7 +55,10 @@ class TenidoController extends Controller
 						'hora_salida'		=> $request->input('hora_salida'),
 
 					]);
+					$record2 = Orden::find($request->input('id_orden'));
 				if ($record) {
+					$record2->id_estado = 1;
+					$record2->save();
 					$this->status_code = 200;
 					$this->result      = true;
 					$this->message     = 'Proceso de teñido creado correctamente.';
@@ -187,14 +189,39 @@ class TenidoController extends Controller
 		}
 	}
 
-	public function destroy($id) {
+	public function buscar($id) {
 		try {
-			$record = Tenido::find($id);
+			$records = Tenido::where('id_orden', $id)->with('orden')->get();
+			$this->status_code = 200;
+			$this->result      = true;
+			$this->message     = 'Registros consultados correctamente';
+			$this->records     = $records;
+		} catch (\Exception $e) {
+			$this->status_code = 400;
+			$this->result      = false;
+			$this->message     = env('APP_DEBUG')?$e->getMessage():$this->message;
+		}finally{
+			$response = [
+				'result'  => $this->result,
+				'message' => $this->message,
+				'records' => $this->records,
+			];
+
+			return response()->json($response, $this->status_code);
+		}
+	}
+
+	public function destroy($id) {
+		// dd($id);
+		try {
+			// $record = Tenido::find($id);
 			$record2 = Orden::find($id);
-			if ($record) {
-				$record->estado_id = 2;
-				$record->save();
+			// dd($record2);
+			if ($record2) {
+				// $record->estado_id = 2;
+				// $record->save();
 				$record2->estado_prod = 1;
+				$record2->id_estado = 2;
 				$record2->save();
 				$this->status_code = 200;
 				$this->result      = true;

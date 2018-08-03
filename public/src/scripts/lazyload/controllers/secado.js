@@ -136,8 +136,8 @@
                     );
                 }
                 else if ($scope.action == 'delete') {
-                    console.log(customer)
-                    SecadoService.destroy(customer.id_orden).then(
+                    console.log(customer[0].orden.id);
+                    SecadoService.destroy(customer[0].orden.id).then(
                         function successCallback(response) {
                             if (response.data.result) {
                                 MostarDatos();
@@ -158,6 +158,7 @@
             };   
             // Functions for modals
             $scope.modalCreateOpen = function(data) {
+                console.log(data);
                 $scope.registro = {};
                 $scope.action = 'new'; 
                 $scope.registro.id_orden = data.id;
@@ -171,6 +172,7 @@
             };
 
             $scope.modalEditOpen = function(data) {
+                console.log(data);
                 $http({
                     method: 'GET',
                     url:    WS_URL+'secado/'+data.secado.id
@@ -198,6 +200,22 @@
             
             };
             $scope.modalStopOpen = function(data) {
+                console.log(data);
+                $http({
+                    method: 'GET',
+                    url:    WS_URL+'buscar1/'+data.id
+                })
+                .then(function succesCallback (response) {
+                    if( response.data.result ) {
+                        data = response.data.records;
+                        $scope.registro = data;
+                        console.log($scope.registro);
+                    }
+                },
+                function errorCallback(response) {
+                    createToast('danger', '<strong>Error: </strong>'+response.data.message);
+                    $timeout( function(){ closeAlert(0); }, 3000);
+                })
                 $scope.registro = {};
                 $scope.action = 'delete'; 
                 $scope.registro.id_orden = data.id;

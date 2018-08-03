@@ -14,6 +14,7 @@ class Enconado extends Model
                            'linea',
                            'maquina',
                            'metros',
+                           'hora_salida',
                            'fecha'
                            ];
     public function orden()

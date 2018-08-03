@@ -56,30 +56,35 @@ class MovimientosController extends Controller
         }
     }
 	public function store(Request $request) {
-        // dd($request);
+       
 		try {
 			$cuenta = explode(" -", $request->input('cuenta_id'));
 			$fecha  = date_create($request->input('fecha'));
-			$ultimo = Movimientos::all()->last();
-			$balanceQ = 0;
-			$balance_D = 0;
-			if ($request->input('tipo_movimiento') == 1) {
-				if ($request->input('moneda') == 1) {
-					$balanceQ  = intval($ultimo->balanceQ)  + intval($request->input('monto')); 
-					$balance_D  = $ultimo->balance_D;
-				} else {
-					$balance_D = intval($ultimo->balance_D) + intval($request->input('monto')); 
-				    $balanceQ  = $ultimo->balanceQ;
-				}
-			} else {
-				if ($request->input('moneda') == 1) {
-					$balanceQ  = intval($ultimo->balanceQ)  - intval($request->input('monto')); 
-					$balance_D  = $ultimo->balance_D;
-				} else {
-					$balance_D = intval($ultimo->balance_D) - intval($request->input('monto')); 
-					$balanceQ  = $ultimo->balanceQ;
-				}
+			$ingreso = Movimientos::where('tipo_movimiento', 1)->get()->last();
+			$egreso = Movimientos::where('tipo_movimiento', 2)->get()->last();
+			// dd( $ingreso );
+			
+
+			if ($request->input('tipo_movimiento') == 1 && $request->input('moneda') == 1) {
+				$prueba = $ingreso->monto + $request->input('monto');
+				$balanceQ = $prueba - $egreso->monto;
+            }else if($request->input('tipo_movimiento') == 2 && $request->input('moneda') == 1){
+				$prueba = $egreso->monto + $request->input('monto');
+				$balanceQ = $ingreso->monto -  $prueba ;
+			}else{
+				$balanceQ = $ingreso->balanceQ ;
 			}
+
+			if ($request->input('tipo_movimiento') == 1 && $request->input('moneda') == 2) {
+				$prueba = $ingreso->monto + $request->input('monto');
+				$balanceD = $prueba - $egreso->monto;
+            }else if($request->input('tipo_movimiento') == 2 && $request->input('moneda') == 2){
+				$prueba = $egreso->monto + $request->input('monto');
+				$balanceD = $ingreso->monto -  $prueba ;
+			}else{
+				$balanceD = $ingreso->balance_D ;
+			}
+			
 			
             $record = Movimientos::create([
                     'tipo_movimiento'       => $request->input('tipo_movimiento'),
@@ -91,8 +96,8 @@ class MovimientosController extends Controller
                     'moneda'                => $request->input('moneda'),
                     'cobrado'    		    => $request->input('cobrado'),
                     'balanceQ'              => $balanceQ,
-                    'balance_D'             => $balance_D,
-                    'cuenta_id'               => $cuenta[0],
+                    'balance_D'             => $balanceD,
+                    'cuenta_id'             => $cuenta[0],
                      ]);
             if ($record) {
                 $this->status_code = 200;

@@ -25,6 +25,7 @@
             function MostarDatos() {
                 TenidoService.ordenes().then(function(response) {
                     $scope.datas = response.data.records;
+                    console.log($scope.datas);
                     $scope.search();
                     $scope.select($scope.currentPage);      
                 });
@@ -133,8 +134,9 @@
                     );
                 }
                 else if ($scope.action == 'delete') {
-                    // console.log(customer);
-                    TenidoService.destroy(customer.id_orden).then(
+                    console.log("llego al delete");
+                    console.log(customer[0].orden.id);
+                    TenidoService.destroy(customer[0].orden.id).then(
                         function successCallback(response) {
                             if (response.data.result) {
                                 MostarDatos();
@@ -168,9 +170,25 @@
             };
 
             $scope.modalStopOpen = function(data) {
-                $scope.registro = {};
+               console.log(data);
+                $http({
+                    method: 'GET',
+                    url:    WS_URL+'buscar/'+data.id
+                })
+                .then(function succesCallback (response) {
+                    if( response.data.result ) {
+                        data = response.data.records;
+                        $scope.registro = data;
+                    }
+                },
+                function errorCallback(response) {
+                    createToast('danger', '<strong>Error: </strong>'+response.data.message);
+                    $timeout( function(){ closeAlert(0); }, 3000);
+                })
+                
+                // $scope.registro = data;
+                // console.log($scope.registro);
                 $scope.action = 'delete'; 
-                $scope.registro.id_orden = data.id;
                 modal = $modal.open({
                     templateUrl: 'views/bodega/modal_tenido.html',
                     scope: $scope,

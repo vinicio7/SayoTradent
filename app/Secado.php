@@ -9,7 +9,12 @@ class Secado extends Model
     protected $table    = 'secado';
 	// protected $fillable = ['usuario', 'clave', 'activado'];
     protected $fillable = ['id_orden', 
-                           'tipo',
+                           'secador',
+                           'no_lote',
+                           'no_maquina',
+                           'hora_salida',
+                           'observaciones',
+                           'etapa_id',
                            'estado_id',
                            'fecha',
                            ];
