@@ -40,6 +40,7 @@ Route::group(['prefix' => 'ws'], function (){
 	Route::get 		('excel/estadoCuentaOrden/{param}/{param1}', 'ExcelController@reporteEstadoCuentaOrden');
 	Route::any 		('reporte/fechas', 			'ExcelController@ordenesfechas');
 	Route::resource ('ordenes', 				'OrdenesController');
+	Route::resource ('facturas', 				'FacturasController');
 	Route::post 	('ordenes/tenido',			'OrdenesController@tenido');
 	Route::post 	('ordenes/secado',			'OrdenesController@secado');
 	Route::post 	('ordenes/enconado',		'OrdenesController@enconado');

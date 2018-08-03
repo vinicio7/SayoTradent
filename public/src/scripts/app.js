@@ -181,6 +181,10 @@
 	        	name: "app.service.reportes",
 				files: ["scripts/lazyload/services/reportes.js"]
 	      	},
+	      	{
+	        	name: "app.service.facturar",
+				files: ["scripts/lazyload/services/facturar.js"]
+	      	},
 			]
 		})
 	}])
@@ -443,6 +447,19 @@
                     return a.load({
                         name: 'app.ordenes',
                         files: ['scripts/lazyload/controllers/ordenes.js']
+                    })
+                }]
+			}
+		});
+
+		$routeProvider.when("/facturar", {
+			templateUrl: "views/registro/facturar.html",
+			controller: "FacturarController",
+			resolve: {
+				 deps: ["$ocLazyLoad", function(a) {
+                    return a.load({
+                        name: 'app.facturar',
+                        files: ['scripts/lazyload/controllers/facturar.js']
                     })
                 }]
 			}

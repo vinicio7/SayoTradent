@@ -2,9 +2,9 @@
 {
     'use strict';
 
-    angular.module('app.ordenes', ['app.service.ordenes'])
+    angular.module('app.facturar', ['app.service.facturar'])
 
-        .controller('OrdenesController', ['$scope', '$filter', '$http', '$modal', '$interval', 'OrdenesService', function($scope, $filter, $http, $modal, $timeout, OrdenesService)  {
+        .controller('FacturarController', ['$scope', '$filter', '$http', '$modal', '$interval', 'FacturarService', function($scope, $filter, $http, $modal, $timeout, FacturarService)  {
            
             // General variables
             $scope.datas = [];
@@ -21,7 +21,7 @@
 
             // Function for load table
             function MostarDatos() {
-                OrdenesService.index().then(function(response) {
+                FacturarService.index().then(function(response) {
                     $scope.datas = response.data.records;
                     $scope.search();
                     $scope.select($scope.currentPage);
@@ -30,39 +30,39 @@
 
 
             function cargarModal(){
-                OrdenesService.clientes().then(function(response){
+                FacturarService.clientes().then(function(response){
                     $scope.clientes = response.data.records;
                 });
                 
-                OrdenesService.estilos().then(function(response){
+                FacturarService.estilos().then(function(response){
                     $scope.estilos = response.data.records;
                 });
 
-                OrdenesService.calibres().then(function(response){
+                FacturarService.calibres().then(function(response){
                     $scope.calibres = response.data.records;
                 });
 
-                OrdenesService.metrajes().then(function(response){
+                FacturarService.metrajes().then(function(response){
                     $scope.metrajes = response.data.records;
                 });
 
-                OrdenesService.colores().then(function(response){
+                FacturarService.colores().then(function(response){
                     $scope.colores = response.data.records;
                 });
 
-                OrdenesService.referencias().then(function(response){
+                FacturarService.referencias().then(function(response){
                     $scope.referencias = response.data.records;
                 });
 
-                OrdenesService.lugares().then(function(response){
+                FacturarService.lugares().then(function(response){
                     $scope.lugares = response.data.records;
                 });
 
-                OrdenesService.estados().then(function(response){
+                FacturarService.estados().then(function(response){
                     $scope.estados = response.data.records;
                 });
 
-                OrdenesService.tipos().then(function(response){
+                FacturarService.tipos().then(function(response){
                     $scope.tipos = response.data.records;
                 });
 
@@ -167,7 +167,7 @@
                     var id_tipoorden = customer.tipo.slice(0, tipoorden);
                     clone_customer.tipo = id_tipoorden;
 
-                    OrdenesService.store(clone_customer).then(
+                    FacturarService.store(clone_customer).then(
                         function successCallback(response) {
                             if (response.data.result) {
                                 MostarDatos();
@@ -186,7 +186,7 @@
                     );
                 }
                 else if ($scope.action == 'update') {
-                    OrdenesService.update(customer).then(
+                    FacturarService.update(customer).then(
                         function successCallback(response) {
                             if (response.data.result) {
                                 modal.close();
@@ -204,7 +204,7 @@
                     );
                 }
                 else if ($scope.action == 'delete') {
-                    OrdenesService.destroy(customer.id).then(
+                    FacturarService.destroy(customer.id).then(
                         function successCallback(response) {
                             if (response.data.result) {
                                 MostarDatos();
@@ -225,7 +225,7 @@
                 else if ($scope.action == 'muestra') {
                     customer.id_orden = $scope.id_muestra;
                     // console.log(customer);
-                    OrdenesService.muestra(customer).then(
+                    FacturarService.muestra(customer).then(
                         function successCallback(response) {
                             if (response.data.result) {
                                 // MostarDatos();
@@ -246,10 +246,10 @@
                 else if ($scope.action == 'despacho') {
                     customer.id_orden = $scope.id_despacho;
                     // console.log(customer);
-                    OrdenesService.despachos(customer).then(
+                    FacturarService.despachos(customer).then(
                         function successCallback(response) {
                             if (response.data.result) {
-                                MostarDatos();
+                                // MostarDatos();
                                 modal.close();
                                 createToast('success', '<strong>Éxito: </strong>'+response.data.message);
                                 $timeout( function(){ closeAlert(0); }, 3000);
@@ -271,8 +271,8 @@
                     customer.tipo_cambio = 7.43;
                     customer.factura_quetzales = customer.emision_dolares * customer.tipo_cambio;
                     customer.fecha = new Date();
-                    // console.log(customer);
-                    OrdenesService.facturar(customer).then(
+                    console.log(customer);
+                    FacturarService.facturar(customer).then(
                         function successCallback(response) {
                             if (response.data.result) {
                                MostarDatos();
@@ -356,7 +356,7 @@
                 $scope.action = 'muestra';
                 $scope.datos = {};
 
-                OrdenesService.show(data.id).then(function successCallback(response){
+                FacturarService.show(data.id).then(function successCallback(response){
                     $scope.prueba = response.data.records;
                 });
                 
@@ -374,7 +374,7 @@
                 $scope.action = 'despacho';
                 $scope.datos = {};
 
-                OrdenesService.show_despachos(data.id).then(function successCallback(response){
+                FacturarService.show_despachos(data.id).then(function successCallback(response){
                     $scope.prueba = response.data.records;
                 });
 
@@ -392,7 +392,7 @@
                 $scope.action = 'despacho';
                 $scope.datos = {};
 
-                OrdenesService.show_despachos(data.id).then(function successCallback(response){
+                FacturarService.show_despachos(data.id).then(function successCallback(response){
                     $scope.salida = response.data.records;
                     console.log($scope.salida);
                 });

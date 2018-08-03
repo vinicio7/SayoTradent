@@ -249,7 +249,7 @@
                     OrdenesService.despachos(customer).then(
                         function successCallback(response) {
                             if (response.data.result) {
-                                MostarDatos();
+                                // MostarDatos();
                                 modal.close();
                                 createToast('success', '<strong>Éxito: </strong>'+response.data.message);
                                 $timeout( function(){ closeAlert(0); }, 3000);

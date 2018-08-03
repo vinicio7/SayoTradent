@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Facturas;
 use App\Orden;
+use DB;
 
 class FacturasController extends Controller
 {
@@ -15,7 +16,34 @@ class FacturasController extends Controller
 
     public function index()
     {
+         try {
+            // $records           = Orden::with('cliente','estilo','calibre','metraje','color','referencia','lugar','tenido','secado','estado')->orderBy('created_at','DESC')->groupBy('orden')->get();
+            $records           = DB::table('ordenes')->select(DB::raw('SUM(balance) as balance,SUM(precio) as precio, orden'))->groupBy('orden')->where('balance','0')->get();
+            // dd($records);
+            $array = array();
+            foreach ($records as $item) {
+                $item2 =  Orden::with('cliente','estilo','calibre','metraje','color','referencia','lugar','tenido','secado','estado')->where('orden',$item->orden)->first();
+                $item2->precio_total = $item->precio;
+                array_push($array, $item2);
+            }
+            $news_records = $array;
+            $this->status_code = 200;
+            $this->result      = true;
+            $this->message     = 'Registros consultados correctamente';
+            $this->records     = $news_records;
+        } catch (\Exception $e) {
+            $this->status_code = 400;
+            $this->result      = false;
+            $this->message     = env('APP_DEBUG')?$e->getMessage():$this->message;
+        }finally{
+            $response = [
+                'result'  => $this->result,
+                'message' => $this->message,
+                'records' => $this->records,
+            ];
 
+            return response()->json($response, $this->status_code);
+        }
     }
     public function store(Request $request)
     {
@@ -33,7 +61,7 @@ class FacturasController extends Controller
             if ($record) {
 
             	$orden = Orden::find($request->input('orden_id'));
-
+                
                 if ($orden){
                 	$orden->facturado = true;
                     $orden->save();
