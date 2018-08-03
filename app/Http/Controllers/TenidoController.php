@@ -46,7 +46,7 @@ class TenidoController extends Controller
 						'estado_id'         => $request->input('estado_id'),
 						'etapa_id'          => $request->input('etapa_id'),
 
-						'fecha'				=> $request->input('fecha'),
+						'fecha'				=> date("Y-m-d", strtotime($request->input('fecha'))),
 						'maquina'			=> $request->input('maquina'),
 						'operario'			=> $request->input('operario'),
 						'contenedor'		=> $request->input('contenedor'),

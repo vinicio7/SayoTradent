@@ -78,6 +78,7 @@ class PlanillaController extends Controller{
                     $record = (new Planilla)->create([
                         'no_empleado'               => $request->input('no_empleado'),
                         'nombre'       			    => $request->input('nombre'),
+                        'calcular_bono'             => $request->input('calcular_bono'),
                         // 'dias_trabajados'           => $request->input('dias_trabajados'),
                         // 'horas_ex_dia'          	=> $request->input('horas_ex_dia'),
                         // 'horas_ex_noche'          	=> $request->input('horas_ex_noche'),

@@ -165,4 +165,34 @@ class EnconadoController extends Controller
 			return response()->json($response, $this->status_code);
 		}
 	}
+
+	public function destroy($id) {
+		try {
+			$record = Secado::find($id);
+			$record2 = Orden::find($id);
+			if ($record) {
+				$record->estado_id = 2;
+				$record->save();
+				$record2->estado_prod = 3;
+				$record2->save();
+				$this->status_code = 200;
+				$this->result      = true;
+				$this->message     = 'Proceso terminado correctamente.';
+			} else {
+				throw new \Exception('El proceso no pudo ser encontrado.');
+			}
+		} catch (\Exception $e) {
+			$this->status_code = 400;
+			$this->result      = false;
+			$this->message     = env('APP_DEBUG')?$e->getMessage():$this->message;
+		}finally{
+			$response = [
+				'result'  => $this->result,
+				'message' => $this->message,
+				'records' => $this->records,
+			];
+
+			return response()->json($response, $this->status_code);
+		}
+	}
 }

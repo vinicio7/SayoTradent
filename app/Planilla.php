@@ -9,7 +9,8 @@ class Planilla extends Model
     protected $table    = 'planillas';
     protected $fillable = ['no_empleado',
                            'nombre', 
-                           'sueldo_base'
+                           'sueldo_base',
+                           'calcular_bono'
 						   ];
 
 	public function detalle()

@@ -196,6 +196,19 @@
             
             };
 
+            $scope.modalStopOpen = function(data) {
+                $scope.registro = {};
+                $scope.action = 'delete'; 
+                $scope.registro.id_orden = data.id;
+                modal = $modal.open({
+                    templateUrl: 'views/bodega/modal_tenido.html',
+                    scope: $scope,
+                    size: 'md', 
+                    resolve: function() {},
+                    windowClass: 'default'
+                });
+            };
+            
             $scope.modalDeleteOpen = function(data) {
                 $scope.action = 'delete';
                 $scope.proveedor = data;
