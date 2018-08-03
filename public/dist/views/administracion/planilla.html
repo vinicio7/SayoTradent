@@ -72,6 +72,12 @@
                             <th>
                                 Pagos
                             </th>
+                            <th>
+                                Editar
+                            </th>
+                            <th>
+                                Eliminar
+                            </th>
                             
                         </tr>
                         </thead>
@@ -85,7 +91,16 @@
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-primary fa fa-list-ul  " ng-click="modalEditOpen(data)" md-ink-ripple></button>
                                     </div>
-    
+                                    
+                                </td>
+                                <td>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-primary fa fa-list-ul  " ng-click="modalDetail(data)" md-ink-ripple></button>
+                                    </div>
+                                    
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-danger ion ion-trash-a" ng-click="modalDeleteOpen(data)" md-ink-ripple></button>
                                 </td>
                             </tr>
                         </tbody>

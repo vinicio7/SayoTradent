@@ -10,31 +10,60 @@
             <h3>¿Está seguro de finalizar este proceso?</h3>
         </div>
         <form class="form-horizontal" name="form" ng-if="action != 'delete'" action="javascript:;" novalidate>
-            <div class="row form-group">
-                <div class="col-sm-6">
-                    <label>Estado</label>
-                     <select class="form-control" ng-model="registro.estado_id" required>                  
-                            <option disabled>Selecciona un estado</option>
-                            <option value="1">Inicio</option>
-                            <option value="2">Fin</option>
-                        </select>
-                </div>
-                <div class="col-sm-6">
-                    <label>Tipo</label>
-                    <select class="form-control" ng-model="registro.tipo" required>                  
-                            <option disabled>Selecciona un tipo</option>
-                            <option value="1">Vapor</option>
-                            <option value="2">Electrico</option>
-                        </select>
-                </div>
-            </div>
-            <div class="row form-group">
-                <div class="col-sm-6">
-                    <label>Fecha</label>
-                    <input type="datetime-local" class="form-control" ng-model="registro.fecha" required>
-                </div>
-                
-            </div>
+                <div class="row form-group">
+                        <div class="col-sm-6">
+                            <label>Estado</label>
+                             <select class="form-control" ng-model="registro.estado_id" required>                  
+                                    <option disabled>Selecciona un estado</option>
+                                    <option value="1">Inicio</option>
+                                    <option value="2">Fin</option>
+                                </select>
+                        </div>
+                        <div class="col-sm-6">
+                            <label>Etapa</label>
+                            <select class="form-control" ng-model="registro.etapa_id" required>                  
+                                    <option disabled>Selecciona una etapa</option>
+                                    <option value="1">Primera</option>
+                                    <option value="2">Segunda</option>
+                                    <option value="3">Tercera</option>
+                                    <option value="4">Cuarta</option>
+                                    <option value="5">Quinta</option>
+                                    <option value="6">Sexta</option>
+                                    <option value="7">Septima</option>
+                                </select>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-sm-6">
+                            <label>Secador</label>
+                            <input type="text" class="form-control" ng-model="registro.secador" required>
+                        </div>
+                         <div class="col-sm-6">
+                            <label>No. Lote</label>
+                            <input type="text" class="form-control" ng-model="registro.no_lote" required>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-sm-6">
+                            <label>No. de maquina</label>
+                            <input type="text" class="form-control" ng-model="registro.no_maquina" required>
+                        </div>
+                         <div class="col-sm-6">
+                            <label>Hora de Salida</label>
+                            <input type="time" class="form-control" ng-model="registro.hora_salida" required>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-sm-6">
+                            <label>Observaciones</label>
+                            <input type="text" class="form-control" ng-model="registro.observaciones" required>
+                        </div>
+                         <div class="col-sm-6">
+                            <label>Fecha</label>
+                            <input type="date" class="form-control" ng-model="registro.contenedor" required>
+                        </div>
+                    </div>
+                    
             
             <div class="row form-group">
                 <div class="col-sm-12 text-right">

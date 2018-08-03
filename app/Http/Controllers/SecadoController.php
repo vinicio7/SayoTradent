@@ -39,12 +39,20 @@ class SecadoController extends Controller
 			$validacion = Secado::where("id_orden", $request->input('id_orden'))->first();
 			if (!$validacion) {
 				$record = Secado::create([
-						'id_orden'       => $request->input('id_orden'),
-                        'tipo'           => $request->input('tipo'),
+						'id_orden'          => $request->input('id_orden'),
+                        'secador'           => $request->input('secador'),
+						'no_lote'           =>$request->input('no_lote'),
+						'no_maquina'        =>$request->input('no_maquina'),
+						'hora_salida'       =>$request->input('hora_salida'),
+						'observaciones'     =>$request->input('observaciones'),
+						'etapa_id'          =>$request->input('etapa_id'),
 						'estado_id'         =>$request->input('estado_id'),
-						'fecha'          => date("Y-m-d", strtotime($request->input('fecha'))),
+						'fecha'             => date("Y-m-d", strtotime($request->input('fecha'))),
 					]);
-				if ($record) {
+					$record2 = Orden::find($request->input('id_orden'));
+				if ($record) { 
+					$record2->id_estado = 1;
+					$record2->save();
 					$this->status_code = 200;
 					$this->result      = true;
 					$this->message     = 'Proceso de secado creado correctamente.';
@@ -160,14 +168,37 @@ class SecadoController extends Controller
 		}
 	}
 
+	public function buscar($id) {
+		try {
+			$records = Secado::where('id_orden', $id)->with('orden')->get();
+			$this->status_code = 200;
+			$this->result      = true;
+			$this->message     = 'Registros consultados correctamente';
+			$this->records     = $records;
+		} catch (\Exception $e) {
+			$this->status_code = 400;
+			$this->result      = false;
+			$this->message     = env('APP_DEBUG')?$e->getMessage():$this->message;
+		}finally{
+			$response = [
+				'result'  => $this->result,
+				'message' => $this->message,
+				'records' => $this->records,
+			];
+
+			return response()->json($response, $this->status_code);
+		}
+	}
+
 	public function destroy($id) {
 		try {
-			$record = Secado::find($id);
+			// $record = Secado::find($id);
 			$record2 = Orden::find($id);
-			if ($record) {
-				$record->estado_id = 2;
-				$record->save();
+			if ($record2) {
+				// $record->estado_id = 2;
+				// $record->save();
 				$record2->estado_prod = 2;
+				$record2->id_estado = 3;
 				$record2->save();
 				$this->status_code = 200;
 				$this->result      = true;

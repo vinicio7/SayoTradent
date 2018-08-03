@@ -53,7 +53,21 @@
                                         ng-class="{active: row == '-phone'}"></i>
                                 </div>
                             </th>
-
+                            <th>
+                                    Estilo
+                                </th>
+                                <th>
+                                    Calibre
+                                </th>
+                                <th>
+                                    Metraje
+                                </th>
+                                <th>
+                                    Tipo
+                                </th>
+                                <th>
+                                    Color
+                                </th>
                             <th>
                                  Estado
                                 <div class="th">
@@ -80,21 +94,35 @@
                         <tbody>
                             <tr ng-repeat="data in currentPageStores track by $index">
                                 <td>{{ $index + 1 }}</td>
-                                <td>{{ data.orden.orden }}</td>
-                                <td>{{ data.maseo.created_at }}</td>
+                                <td>{{ data.orden }}</td>
+                                <td>{{ data.enconado.fecha }}</td>
+                                <td>{{ data.estilo.descripcion }}</td>
+                                    <td>{{ data.calibre.descripcion }}</td>
+                                    <td>{{ data.metraje.descripcion }}</td>
+                                    <td>
+                                        <label ng-if="data.tipo == 1">
+                                            Normal
+                                        </label>
+                                        <label ng-if="data.tipo == 2">
+                                            Cafta
+                                        </label>
+                                    </td>
+                                    <td>{{ data.color.descripcion }}</td>
                                 <td>
-                                    <label ng-if="data.maseo.estado_id == 1">Inicio</label>
-                                    <label ng-if="data.maseo.estado_id == 2">Fin</label>
-                                    <label ng-if="data.maseo.estado_id != 1 && data.maseo.estado_id != 2">Sin estado</label>
+                                    <label ng-if="data.enconado.estado_id == 1">Inicio</label>
+                                    <label ng-if="data.enconado.estado_id == 2">Fin</label>
+                                    <label ng-if="data.enconado.estado_id != 1 && data.enconado.estado_id != 2">Sin iniciar</label>
                                 </td>
                                 <td>
-                                    <div class="btn-group">
+                                    <div class="btn-group" ng-if="data.id_estado == 4">
                                         <button type="button" class="btn btn-primary fa fa-list-ul" ng-click="modalCreateOpen(data)" md-ink-ripple></button>
+                                    </div>  
+                                    <div class="btn-group" ng-if="data.id_estado != 4">
+                                        <button type="button" class="btn btn-danger fa fa-list-ul" ng-click="modalStopOpen(data)" md-ink-ripple></button>
                                     </div>
-    
                                 </td>
                                 <td>
-                                    <button type="button" class="btn btn-info ion ion-edit" ng-click="modalEditOpen(data)" md-ink-ripple></button>
+                                    <button type="button" class="btn btn-info ion ion-edit" ng-click="modalEditOpen(data)" ng-if="data.id_estado == 1" md-ink-ripple></button>
                                 </td>
                             </tr>
                         </tbody>

@@ -20,7 +20,7 @@ contactos_service.service('TenidoService', ['$http', 'WS_URL', function($http, W
     };
 
     this.ordenes = function(params){
-        return $http.get(WS_URL+'ordenes');
+        return $http.post(WS_URL+'ordenes/tenido');
     };
     
 

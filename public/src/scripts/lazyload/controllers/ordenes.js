@@ -166,7 +166,7 @@
                     var tipoorden = customer.tipo.indexOf(" -");
                     var id_tipoorden = customer.tipo.slice(0, tipoorden);
                     clone_customer.tipo = id_tipoorden;
-
+                    console.log(clone_customer);
                     OrdenesService.store(clone_customer).then(
                         function successCallback(response) {
                             if (response.data.result) {

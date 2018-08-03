@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Maseo;
+use App\Orden;
 
 class MaseoController extends Controller
 {
@@ -43,8 +44,18 @@ class MaseoController extends Controller
                         'cantidad'          => $request->input('cantidad'),
 						'estado_id'         =>$request->input('estado_id'),
 						'etapa_id'          =>$request->input('etapa_id'),
+						'tipo_calibre'      =>$request->input('tipo_calibre'),
+						'peso'          	=>$request->input('peso'),
+						'lote'          	=>$request->input('lote'),
+						'conos_grandes'     =>$request->input('conos_grandes'),
+						'quesos'           	=>$request->input('quesos'),
+						'kilos'          	=>$request->input('kilos'),
+
 					]);
+					$record2 = Orden::find($request->input('id_orden'));
 				if ($record) {
+					$record2->id_estado = 1;
+					$record2->save();
 					$this->status_code = 200;
 					$this->result      = true;
 					$this->message     = 'Proceso de maseo creado correctamente.';
@@ -99,6 +110,27 @@ class MaseoController extends Controller
         }
     }
 
+	public function buscar($id) {
+		try {
+			$records = Maseo::where('id_orden', $id)->with('orden')->get();
+			$this->status_code = 200;
+			$this->result      = true;
+			$this->message     = 'Registros consultados correctamente';
+			$this->records     = $records;
+		} catch (\Exception $e) {
+			$this->status_code = 400;
+			$this->result      = false;
+			$this->message     = env('APP_DEBUG')?$e->getMessage():$this->message;
+		}finally{
+			$response = [
+				'result'  => $this->result,
+				'message' => $this->message,
+				'records' => $this->records,
+			];
+
+			return response()->json($response, $this->status_code);
+		}
+	}
 
 	public function update(Request $request, $id) {
 		try {
@@ -133,6 +165,37 @@ class MaseoController extends Controller
 				'message' => $this->message,
 				'records' => $this->records,
 			];
+			return response()->json($response, $this->status_code);
+		}
+	}
+
+	public function destroy($id) {
+		try {
+			// $record = Secado::find($id);
+			$record2 = Orden::find($id);
+			if ($record2) {
+				// $record->estado_id = 2;
+				// $record->save();
+				$record2->estado_prod = 4;
+				$record2->id_estado = 5;
+				$record2->save();
+				$this->status_code = 200;
+				$this->result      = true;
+				$this->message     = 'Proceso terminado correctamente.';
+			} else {
+				throw new \Exception('El proceso no pudo ser encontrado.');
+			}
+		} catch (\Exception $e) {
+			$this->status_code = 400;
+			$this->result      = false;
+			$this->message     = env('APP_DEBUG')?$e->getMessage():$this->message;
+		}finally{
+			$response = [
+				'result'  => $this->result,
+				'message' => $this->message,
+				'records' => $this->records,
+			];
+
 			return response()->json($response, $this->status_code);
 		}
 	}

@@ -23,5 +23,9 @@ contactos_service.service('PlanillaService', ['$http', 'WS_URL', function($http,
         return $http.delete(WS_URL+'planilla/' + id);
     };
 
+    this.modificar = function(params) {
+        return $http.put(WS_URL+'modificar/planilla/' + params.id, params);
+    };
+
    
 }]);

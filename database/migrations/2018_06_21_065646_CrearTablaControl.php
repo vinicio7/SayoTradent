@@ -15,11 +15,16 @@ class CrearTablaControl extends Migration
     {
         Schema::create('control_calidad', function (Blueprint $table) {
             $table->increments('id');
-            $table->Integer('id_orden');
-            $table->Date('fecha_inicio');
-            $table->Date('fecha_fin');
-            $table->text('minuta');
-            $table->Integer('tipo');
+            $table->text('id_orden');
+            $table->text('inspector');
+            $table->text('supervisor');
+            $table->text('cantidad_cajas');
+            $table->text('lote');
+            $table->text('cantidad_revisada');
+            $table->text('aceptada');
+            $table->text('rechazada');
+            $table->text('solucion');
+            $table->text('observaciones');
             $table->timestamps();
         });
     }

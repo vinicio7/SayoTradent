@@ -63,11 +63,10 @@
                     </div>
                     <div class="col-sm-4" style="margin-top: 10px;">
                         <label>Tipo</label>
-                        <select class="form-control" ng-model="registro.tipo" required>                  
-                            <option disabled>Selecciona un tipo</option>
-                            <option value="1">Normal</option>
-                            <option value="2">CAFTA</option>
-                        </select>
+                        <input class="form-control" name="tipo" list="tipo" ng-model="registro.tipo" >
+                        <datalist  id="tipo">
+                            <option ng-repeat="item in tipos" value="{{item.id}} - {{item.descripcion}}"></option>
+                        </datalist>
                     </div>
                     <div class="col-sm-4" style="margin-top: 10px;">
                         <label>Color</label>
@@ -105,7 +104,7 @@
                     </div>
                     <div class="col-sm-4" style="margin-top: 10px;">
                         <label>Estado</label>
-                        <select class="form-control" ng-model="datos.id_estado" >
+                        <select class="form-control" ng-model="registro.id_estado" >
                             <option disabled="" >Seleccione una opción</option>
                             <option ng-repeat="item in estados" value="{{item.id}}">{{item.descripcion}}</option>
                         </select>
