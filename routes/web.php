@@ -43,6 +43,7 @@ Route::group(['prefix' => 'ws'], function (){
 	Route::resource ('ordenes', 				'OrdenesController');
 	Route::resource ('facturas', 				'FacturasController');
 	Route::post 	('ordenes/tenido',			'OrdenesController@tenido');
+	Route::post 	('ordenes/maseo',			'OrdenesController@maseo');
 	Route::post 	('ordenes/secado',			'OrdenesController@secado');
 	Route::post 	('ordenes/enconado',		'OrdenesController@enconado');
 	Route::resource ('movimientos', 			'MovimientosController');

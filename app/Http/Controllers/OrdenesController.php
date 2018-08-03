@@ -73,6 +73,30 @@ class OrdenesController extends Controller
         }
     }
 
+    public function maseo()
+    {
+        try {
+            // dd("lego");
+            $records           = Orden::with('cliente','estilo','calibre','metraje','color','referencia','lugar','tenido','secado')->where('estado_prod',3)->get();
+            $this->status_code = 200;
+            $this->result      = true;
+            $this->message     = 'Registros consultados correctamente';
+            $this->records     = $records;
+        } catch (\Exception $e) {
+            $this->status_code = 400;
+            $this->result      = false;
+            $this->message     = env('APP_DEBUG')?$e->getMessage():$this->message;
+        }finally{
+            $response = [
+                'result'  => $this->result,
+                'message' => $this->message,
+                'records' => $this->records,
+            ];
+
+            return response()->json($response, $this->status_code);
+        }
+    }
+
     public function secado()
     {
         try {

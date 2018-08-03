@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Maseo;
+use App\Orden;
 
 class MaseoController extends Controller
 {
@@ -14,7 +15,7 @@ class MaseoController extends Controller
 
     public function index() {
 		try {
-			$records           = Maseo::all();
+			$records           = Orden::where('estado_prod',3)->get();
 			$this->status_code = 200;
 			$this->result      = true;
 			$this->message     = 'Registros consultados correctamente';

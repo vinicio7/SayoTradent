@@ -29,7 +29,9 @@
                             <div class="col-sm-12 text-right">
                                 <br>
                                 <button class="btn btn-danger" ng-click="modalClose()">Cerrar</button>
-                                <button class="btn btn-success" ng-if="action == 'facturar'"  ng-click="saveData(datos)">Registrar</button>
+                                <!-- <button class="btn btn-success" ng-if="action == 'facturar'"  ng-click="saveData(datos)">Registrar</button>ç -->
+                                <button class="btn btn-success" ng-if="action == 'facturar'"   ng-click="saveData(datos)"> <a href="../images/formato.xlsx" download style="color:white;">Facturar</a></button>
+
                                 <button class="btn btn-success" ng-if="action == 'update'" ng-disabled="form.$invalid" ng-click="saveData(datos)">Editar</button>
                             </div>
                         </div>

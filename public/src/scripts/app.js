@@ -752,6 +752,20 @@
 			}
 		});
 
+		$routeProvider.when("/reportes/facturascafta", {
+			templateUrl: "views/registro/facturar2.html",
+			controller: "FacturarController",
+			resolve: {
+				 deps: ["$ocLazyLoad", function(a) {
+                    return a.load({
+                        name: 'app.facturar',
+                        files: ['scripts/lazyload/controllers/facturar.js']
+                    })
+                }]
+			}
+		});
+
+
 		$routeProvider.when("/mantenimientos/metraje", {
 			templateUrl: "views/mantenimientos/metrajes.html",
 			controller: "MetrajeController",

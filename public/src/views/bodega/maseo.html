@@ -80,7 +80,7 @@
                         <tbody>
                             <tr ng-repeat="data in currentPageStores track by $index">
                                 <td>{{ $index + 1 }}</td>
-                                <td>{{ data.orden.orden }}</td>
+                                <td>{{ data.orden }}</td>
                                 <td>{{ data.maseo.created_at }}</td>
                                 <td>
                                     <label ng-if="data.maseo.estado_id == 1">Inicio</label>

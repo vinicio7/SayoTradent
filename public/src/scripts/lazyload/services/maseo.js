@@ -20,7 +20,7 @@ contactos_service.service('MaseoService', ['$http', 'WS_URL', function($http, WS
     };
 
     this.ordenes = function(params){
-        return $http.get(WS_URL+'filtro/devanado');
+        return $http.post(WS_URL+'ordenes/maseo');
     };
    
 }]);
