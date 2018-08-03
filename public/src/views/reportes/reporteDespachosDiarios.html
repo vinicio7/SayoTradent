@@ -59,6 +59,17 @@
                                     </div>
                                 </th>
                                 <th>
+                                    Orden
+                                    <div class="th">
+                                        <i class="fa fa-caret-up icon-up"
+                                            ng-click=" order('orden') "
+                                            ng-class="{active: row == 'orden'}"></i>
+                                        <i class="fa fa-caret-down icon-down"
+                                            ng-click=" order('-orden') "
+                                            ng-class="{active: row == '-orden'}"></i>
+                                    </div>
+                                </th>
+                                <th>
                                     Po
                                     <div class="th">
                                         <i class="fa fa-caret-up icon-up"
@@ -69,7 +80,28 @@
                                             ng-class="{active: row == '-phone'}"></i>
                                     </div>
                                 </th>
-
+                                <th>
+                                    Color
+                                    <div class="th">
+                                        <i class="fa fa-caret-up icon-up"
+                                            ng-click=" order('color') "
+                                            ng-class="{active: row == 'color'}"></i>
+                                        <i class="fa fa-caret-down icon-down"
+                                            ng-click=" order('-color') "
+                                            ng-class="{active: row == '-color'}"></i>
+                                    </div>
+                                </th>
+                                <th>
+                                    Estilo
+                                    <div class="th">
+                                        <i class="fa fa-caret-up icon-up"
+                                            ng-click=" order('estilo') "
+                                            ng-class="{active: row == 'estilo'}"></i>
+                                        <i class="fa fa-caret-down icon-down"
+                                            ng-click=" order('-estilo') "
+                                            ng-class="{active: row == '-estilo'}"></i>
+                                    </div>
+                                </th>
                                 <th>
                                     Cantidad
                                     <div class="th">
@@ -98,7 +130,10 @@
                                 <tr ng-repeat="data in currentPageStores track by $index">
                                     <td>{{ data.fecha }}</td>
                                     <td>{{ data.orden.cliente.nombre }}</td>
+                                    <td>{{ data.orden.orden }}</td>
                                     <td>{{ data.orden.po }}</td>
+                                    <td>{{ data.orden.color.descripcion }}</td>
+                                    <td>{{ data.orden.estilo.descripcion }}</td>
                                     <td>{{ data.orden.cantidad }}</td>
                                     <td>{{ data.orden.amount }}</td>
                                     <td>

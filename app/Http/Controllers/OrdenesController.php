@@ -595,7 +595,7 @@ class OrdenesController extends Controller
     public function ordenesPorDia($param)
     {
         try {
-            $records           = Orden::where('fecha_hora', $param)->with('cliente')->get();
+            $records           = Orden::where('fecha_hora', $param)->with('cliente','color','estilo','calibre')->get();
             $this->status_code = 200;
             $this->result      = true;
             $this->message     = 'Registros consultados correctamente';
@@ -618,7 +618,7 @@ class OrdenesController extends Controller
     public function controlOrdenCafta($param, $param1)
     {
         try {
-            $records = Orden::whereBetween('fecha_hora', [$param, $param1])->where('tipo', 2)->with('cliente')->get();
+            $records = Orden::whereBetween('fecha_hora', [$param, $param1])->where('tipo', 2)->with('cliente','color','calibre','estilo')->get();
             $this->status_code = 200;
             $this->result      = true;
             $this->message     = 'Registros consultados correctamente';
