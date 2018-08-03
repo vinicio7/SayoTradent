@@ -171,6 +171,7 @@ class EnconadoController extends Controller
 		}
 	}
 
+
 	public function buscar($id) {
 		try {
 			$records = Enconado::where('id_orden', $id)->with('orden')->get();
@@ -198,8 +199,6 @@ class EnconadoController extends Controller
 			// $record = Secado::find($id);
 			$record2 = Orden::find($id);
 			if ($record2) {
-				// $record->estado_id = 2;
-				// $record->save();
 				$record2->estado_prod = 3;
 				$record2->id_estado = 4;
 				$record2->save();
