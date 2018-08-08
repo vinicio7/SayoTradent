@@ -95,6 +95,7 @@ Route::group(['prefix' => 'ws'], function (){
 
 	Route::get      ('estadoCuentaOrden/{param}/{param1}','OrdenesController@estadoCuentaOrden');
 	Route::get      ('estadoCuentaConsumo/{param}/{param1}','OrdenesController@estadoCuentaConsumo');
+	Route::get 		('consultarOrden/{id}',				'OrdenesController@consultarOrden');
 });
 
 Auth::routes();

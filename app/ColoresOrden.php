@@ -19,6 +19,9 @@ class ColoresOrden extends Model
                            'referencia',
                            'lugar',
                            'id_estado',
+                           'sub_total',
+                           'precio',
+
 						   ];
 
 

@@ -74,4 +74,8 @@ contactos_service.service('OrdenesService', ['$http', 'WS_URL', function($http, 
     this.show_despachos = function(id){
         return $http.get(WS_URL+'mostrar/despacho/'+id);
     };
+
+    this.consultarOrden = function(id){
+        return $http.get(WS_URL+'consultarOrden/'+id);
+    };
 }]);

@@ -38,5 +38,8 @@ class Orden extends Model
   {
       return $this->BelongsTo('App\Enconado','id');
   }
+  // public function colores_orden(){
+  //   return $this->hasMany('ColoresOrden','id_orden','orden');
+  // }
 
 }

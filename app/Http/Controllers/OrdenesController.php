@@ -50,6 +50,35 @@ class OrdenesController extends Controller
         }
     }
 
+    public function consultarOrden($id){
+        try {
+            $records           = Orden::where('orden',$id)->with('cliente')->first();
+            if ($records) {
+                $records2 = ColoresOrden::where('id_orden',$records->orden)->with('calibre','metraje','tipoOrden','color')->get();
+                // $var = $records->fecha_hora;
+                // $date = str_replace('-', '/', $var);
+                // $records->fecha_hora = date('d/m/Y', strtotime($date));
+                $records->colores_orden = $records2;
+            }
+            $this->status_code = 200;
+            $this->result      = true;
+            $this->message     = 'Registros consultados correctamente';
+            $this->records     = $records;
+        } catch (\Exception $e) {
+            $this->status_code = 400;
+            $this->result      = false;
+            $this->message     = env('APP_DEBUG')?$e->getMessage():$this->message;
+        }finally{
+            $response = [
+                'result'  => $this->result,
+                'message' => $this->message,
+                'records' => $this->records,
+            ];
+
+            return response()->json($response, $this->status_code);
+        }
+    }
+
     public function tenido()
     {
         try {
@@ -405,9 +434,22 @@ class OrdenesController extends Controller
     }
 
     public function store(Request $request)
-    {
-        
+    {   
         try {
+            $record = Orden::create([
+                'orden'             =>  $request->input('orden'),
+                'fecha_hora'        =>  date("Y-m-d", strtotime($request->input('fecha_hora'))), 
+                'id_empresa'        =>  $request->input('id_empresa'),
+                'balance'           =>  $request->input('cantidad'),
+                'total_salida'      =>  0,
+                'precio_total'      =>  0.0,
+                'amount'            =>  0,
+                'cantidad_total'    =>  0,
+                'facturado'         =>  false,
+                'estado_prod'       =>  0,
+                'hora'              =>  date('h:i:s', strtotime($request->input('fecha_hora')))
+            ]);
+
             $record = Orden::create([
                 'orden'                 => $request->input('orden'),
                 'id_estado'             => $request->input('id_estado'),
@@ -430,14 +472,40 @@ class OrdenesController extends Controller
                 'id_lugar'       		=> $request->input('id_lugar'),
                 'facturado'             => false,
                 'estado_prod'           => '0'
-                ]);
+            ]);
             if ($record) {
+                $a = json_decode($request->input('colores_orden'));
+                $b = 0;
+                $c = 0;
+                foreach ($a as $item) {
+                    $record2 = ColoresOrden::create([
+                        'id_orden'      =>  $record->orden,
+                        'po'            =>  $item->po,
+                        'estilo'        =>  $item->estilo,
+                        'descripcion'   =>  $item->descripcion, 
+                        'id_calibre'    =>  $item->id_calibre,
+                        'id_metraje'    =>  $item->id_metraje,
+                        'tipo'          =>  $item->tipo,
+                        'id_color'      =>  $item->id_color,
+                        'cantidad'      =>  $item->cantidad,
+                        'referencia'    =>  $item->referencia,
+                        'lugar'         =>  $item->lugar,
+                        'id_estado'     =>  $item->id_estado,
+                        'sub_total'     =>  $item->sub_total,
+                    ]);
+                    $b = $b + $record2->cantidad;
+                    $c = $c + $record2->sub_total;
+                }
+                $record->amount = $b;
+                $record->balance = $b;
+                $record->precio_total = $c;
+                $record->save();
                 $this->status_code  = 200;
                 $this->result       = true;
-                $this->message      = 'Registro de  planilla creado correctamente';
+                $this->message      = 'Registro de  orden creada correctamente';
                 $this->records      = $record;
             } else {
-                throw new \Exception('El registro de planill no pudo ser creado');
+                throw new \Exception('El registro no pudo ser creado');
             }
         } catch (\Exception $e) {
             $this->status_code  = 400;

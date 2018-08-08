@@ -141,7 +141,9 @@
                             <tbody>
                                 <tr ng-repeat="data in currentPageStores track by $index">
                                     <td>{{ $index + 1 }}</td>
-                                    <td><a href="">{{ data.id_orden }}</a></td>
+                                    <td>
+                                         <button type="button" class="btn btn-success" ng-click="modalInfo(data)"  md-ink-ripple>{{ data.id_orden }}</button>
+                                    </td>
                                     <td>{{ data.descripcion }}</td>
                                     <td>{{ data.orden.cliente.nombre }}</td>
                                     <td>{{ data.estado.descripcion }}</td>

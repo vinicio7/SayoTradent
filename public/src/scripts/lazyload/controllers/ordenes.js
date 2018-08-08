@@ -227,9 +227,9 @@
                     var id_empresa = customer.id_empresa.slice(0, index);
                     clone_customer.id_empresa = id_empresa;
 
-                    var estilo = customer.id_estilo.indexOf(" -");
-                    var id_estilo = customer.id_estilo.slice(0, estilo);
-                    clone_customer.id_estilo = id_estilo;
+                    // var estilo = customer.id_estilo.indexOf(" -");
+                    // var id_estilo = customer.id_estilo.slice(0, estilo);
+                    // clone_customer.id_estilo = id_estilo;
 
                     var calibres = customer.id_calibre.indexOf(" -");
                     var id_calibre = customer.id_calibre.slice(0, calibres);
@@ -255,6 +255,7 @@
                     var id_tipoorden = customer.tipo.slice(0, tipoorden);
                     clone_customer.tipo = id_tipoorden;
                     console.log(clone_customer);
+                    clone_customer.colores_orden = JSON.stringify($scope.colores_orden);
                     OrdenesService.store(clone_customer).then(
                         function successCallback(response) {
                             if (response.data.result) {
@@ -399,6 +400,43 @@
                     resolve: function() {},
                     windowClass: 'default'
                 });
+            };
+
+            $scope.modalInfo = function(customer) { 
+                // console.log(customer);
+                OrdenesService.consultarOrden(customer.id_orden).then(
+                    function successCallback(response) {
+                        if (response.data.result) {
+                            console.log(response.data.records);
+                            $scope.action = "update";
+                            $scope.registro = response.data.records;
+                            $scope.colores_orden = response.data.records.colores_orden;
+
+                            var date = response.data.records.fecha_hora;
+                            var newdate = date.split("-").reverse().join("/"); 
+                            $scope.registro.fecha_hora = newdate;
+                            console.log(newdate);
+                            modal = $modal.open({
+                                templateUrl: 'views/registro/modal_registro.html',
+                                scope: $scope,
+                                size: 'lg', 
+                                backdrop: 'static',
+                                keyboard: false,
+                                resolve: function() {},
+                                windowClass: 'default'
+                            });
+                            createToast('success', '<strong>Éxito: </strong>'+response.data.message);
+                            $timeout( function(){ closeAlert(0); }, 3000);
+                        } else {
+                            createToast('danger', '<strong>Error: </strong>'+response.data.message);
+                            $timeout( function(){ closeAlert(0); }, 3000);
+                        }
+                    },
+                    function errorCallback(response) {
+                        createToast('danger', '<strong>Error: </strong>'+response.data.message);
+                        $timeout( function(){ closeAlert(0); }, 3000);
+                    }
+                );
             };
 
             $scope.modalEditOpen = function(data) {

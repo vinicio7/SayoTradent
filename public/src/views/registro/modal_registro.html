@@ -35,7 +35,7 @@
                         </div>
                     </tab>
                     <tab heading="Colores">
-                        <div class="row form-group">
+                        <div class="row form-group" ng-if="action == 'new'">
                             <div class="col-sm-3" style="margin-top: 10px;">
                                 <label>PO</label>
                                 <input type="text" ng-model="registro.po" class="form-control" required>
@@ -104,7 +104,7 @@
                                 </select>
                             </div>
                             <div class="col-sm-3" style="margin-top: 30px; float: right;">
-                                <button class="btn btn-success" ng-click="saveColor(registro)" style="margin-left: 100px;font-size: 14px;font-family: tahoma;font-weight: bold"> + Añadir</button>
+                                <button class="btn btn-success" ng-click="saveColor(registro)" ng-if="action == 'new'" style="margin-left: 100px;font-size: 14px;font-family: tahoma;font-weight: bold"> + Añadir</button>
                             </div>
                         </div>
                         <div style="overflow-x:scroll;">
@@ -128,7 +128,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="item in colores_mostrar">
+                                    <tr ng-repeat="item in colores_mostrar" ng-if="action == 'new'">
                                         <td>{{ item.po }}</td>
                                         <td>{{ item.estilo }}</td>
                                         <td>{{ item.descripcion }}</td>
@@ -161,6 +161,40 @@
                                         <td>
                                              <button type="button" class="btn btn-danger ion ion-trash-a" ng-click="eliminarColor(item)" md-ink-ripple></button>
                                         </td>
+                                    </tr>
+                                    <tr ng-repeat="item in colores_orden" ng-if="action != 'new'">
+                                        <td>{{ item.po }}</td>
+                                        <td>{{ item.estilo }}</td>
+                                        <td>{{ item.descripcion }}</td>
+                                        <td>{{ item.calibre.descripcion }}</td>
+                                        <td>{{ item.metraje.descripcion }}</td>
+                                        <td>{{ item.tipo_orden.descripcion }}</td>
+                                        <td>{{ item.color.descripcion }}</td>
+                                        <td>{{ item.cantidad }}</td>
+                                        <td>{{ item.precio }}</td>
+                                        <td>{{ item.sub_total}}</td>
+                                        <td>{{ item.referencia }}</td>
+                                        <td>{{ item.lugar }}</td>
+                                        <td>
+                                            <label ng-if="item.id_estado == '1'">
+                                                Y CFM
+                                            </label>
+                                            <label ng-if="item.id_estado == '2'">
+                                                Y IN
+                                            </label>
+                                            <label ng-if="item.id_estado == '3'">
+                                                Y YET
+                                            </label>
+                                            <label ng-if="item.id_estado == '4'">
+                                                O ENT
+                                            </label>
+                                            <label ng-if="item.id_estado == '5'">
+                                                Y REJ
+                                            </label>
+                                        </td>
+                                        <!-- <td>
+                                             <button type="button" class="btn btn-danger ion ion-trash-a" ng-click="eliminarColor(item)" md-ink-ripple></button>
+                                        </td> -->
                                     </tr>
                                 </tbody>
                             </table>
