@@ -10,7 +10,7 @@
                             "oc.lazyLoad",
                             "ui.bootstrap",
                             "angular-loading-bar",
-                            "FBAngular",
+                            // "FBAngular",
                             "app.ctrls",
                             "app.directives",
                             "app.ui.ctrls",
