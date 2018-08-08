@@ -8,13 +8,14 @@ class ColoresOrden extends Model
 {
     protected $table    = 'colores_orden';
     protected $fillable = ['id_orden',
+                          'color',
                            'po',
                            'estilo',
                            'descripcion', 
                            'id_calibre',
                            'id_metraje',
                            'tipo',
-                           'id_color',
+                           'color',
                            'cantidad',
                            'referencia',
                            'lugar',
@@ -39,10 +40,10 @@ class ColoresOrden extends Model
       return $this->hasOne('App\Metraje', 'id', 'id_metraje');
   }
 
-  public function color()
-  {
-      return $this->hasOne('App\Color', 'id', 'id_color');
-  }
+  // public function color()
+  // {
+  //     return $this->hasOne('App\Color', 'id', 'id_color');
+  // }
 
   public function referencia()
   {

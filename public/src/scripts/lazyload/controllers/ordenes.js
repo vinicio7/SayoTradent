@@ -19,8 +19,11 @@
             $scope.toasts = [];
             $scope.colores_orden = [];
             $scope.colores_mostrar = [];
+            $scope.cantidad = 0;
+            $scope.total_conos = 0;
             var modal;
             var contador = 0;
+            $scope.total = 0;
             // Function for load table
             function MostarDatos() {
                 OrdenesService.index().then(function(response) {
@@ -50,6 +53,7 @@
 
                 OrdenesService.colores().then(function(response){
                     $scope.colores = response.data.records;
+                    console.log($scope.colores);
                 });
 
                 OrdenesService.referencias().then(function(response){
@@ -70,6 +74,10 @@
 
                 
                
+            }
+
+            $scope.borrarColor = function(){
+                $scope.registro.color = "";
             }
 
             $scope.facturasReporte = function(){ 
@@ -134,6 +142,10 @@
             }
 
             $scope.eliminarColor = function (customer){
+                var resta = parseFloat($scope.total) - parseFloat(customer.sub_total);
+                var contador = parseInt( $scope.total_conos) - parseInt(customer.cantidad);
+                $scope.total_conos = contador;
+                $scope.total = resta;
                 $scope.colores_mostrar.splice(customer.id, 1);
                 $scope.colores_orden.splice(customer.id, 1);
                 console.log($scope.colores_mostrar);
@@ -155,10 +167,10 @@
                 var tipo = customer.tipo.slice(0, ca);
                 color_solo.tipo = tipo;
 
-                var ca = customer.id_color.indexOf(" -");
-                var id_color = customer.id_color.slice(0, ca);
-                color_solo.id_color = id_color;
-
+                // var ca = customer.id_color.indexOf(" -");
+                // var id_color = customer.id_color.slice(0, ca);
+                // color_solo.id_color = id_color;
+                color_solo.color = customer.color;
                 color_solo.id = contador;
                 color_solo.po = customer.po;
                 color_solo.estilo = customer.estilo;
@@ -180,7 +192,7 @@
                 color_mostrar.calibre = calibre;
                 color_mostrar.metraje = metraje
                 color_mostrar.tipo = tipo;
-                color_mostrar.color = color;
+                color_mostrar.color = customer.color;
 
                 var ca = customer.id_calibre.indexOf("-");
                 var id_calibre = customer.id_calibre.slice(ca+1, customer.id_calibre.length);
@@ -194,9 +206,9 @@
                 var tipo = customer.tipo.slice(ca+1, customer.tipo.length);
                 color_mostrar.tipo.nombre = tipo;
 
-                var ca = customer.id_color.indexOf("-");
-                var id_color = customer.id_color.slice(ca+1, customer.id_color.length);
-                color_mostrar.color.nombre = id_color;
+                // var ca = customer.id_color.indexOf("-");
+                // var id_color = customer.id_color.slice(ca+1, customer.id_color.length);
+                // color_mostrar.color.nombre = id_color;
 
                 color_mostrar.id = contador;
                 color_mostrar.po = customer.po;
@@ -213,11 +225,17 @@
                 // console.log(color_solo);
                 $scope.colores_orden.push(color_solo);
                 contador = contador + 1;
+                var suma = parseFloat($scope.total) + parseFloat(customer.sub_total);
+                $scope.total = suma.toFixed(2);
+                var contador = parseInt( $scope.total_conos) + parseInt(customer.cantidad);
+                $scope.total_conos = contador;
 
             }
             $scope.calcular = function(){
                 console.log("entro a calcular");
-                $scope.registro.sub_total = parseFloat($scope.registro.precio) * parseFloat($scope.registro.cantidad);
+                var suma = $scope.registro.sub_total = parseFloat($scope.registro.precio) * parseFloat($scope.registro.cantidad);
+                console.log(suma);
+                $scope.registro.sub_total = suma.toFixed(2);
             }
             // Function for sending data
             $scope.saveData = function (customer) {
@@ -239,9 +257,9 @@
                     var id_metraje = customer.id_metraje.slice(0, metraje);
                     clone_customer.id_metraje = id_metraje;
 
-                    var color = customer.id_color.indexOf(" -");
-                    var id_color = customer.id_color.slice(0, color);
-                    clone_customer.id_color = id_color;
+                    // var color = customer.id_color.indexOf(" -");
+                    // var id_color = customer.id_color.slice(0, color);
+                    // clone_customer.id_color = id_color;
 
                     // var referencia = customer.id_referencias.indexOf(" -");
                     // var id_referencias = customer.id_referencias.slice(0, referencia);
@@ -256,6 +274,7 @@
                     clone_customer.tipo = id_tipoorden;
                     console.log(clone_customer);
                     clone_customer.colores_orden = JSON.stringify($scope.colores_orden);
+                    clone_customer.total = $scope.total;
                     OrdenesService.store(clone_customer).then(
                         function successCallback(response) {
                             if (response.data.result) {

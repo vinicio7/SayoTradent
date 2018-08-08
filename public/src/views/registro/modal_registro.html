@@ -45,6 +45,13 @@
                                 <input class="form-control" name="estilo" ng-model="registro.estilo" type="text">
                             </div>
                             <div class="col-sm-3" style="margin-top: 10px;">
+                                <label>Tipo</label>
+                                <input class="form-control" name="tipo" list="tipo" ng-model="registro.tipo" >
+                                <datalist  id="tipo">
+                                    <option ng-repeat="item in tipos" value="{{item.id}} - {{item.descripcion}}"></option>
+                                </datalist>
+                            </div>
+                            <div class="col-sm-3" style="margin-top: 10px;">
                                 <label>Descripcion</label>
                                 <input type="text" ng-model="registro.descripcion" class="form-control" required>
                             </div>
@@ -63,18 +70,16 @@
                                 </datalist>
                             </div>
                             <div class="col-sm-3" style="margin-top: 10px;">
-                                <label>Tipo</label>
-                                <input class="form-control" name="tipo" list="tipo" ng-model="registro.tipo" >
-                                <datalist  id="tipo">
-                                    <option ng-repeat="item in tipos" value="{{item.id}} - {{item.descripcion}}"></option>
-                                </datalist>
-                            </div>
-                            <div class="col-sm-3" style="margin-top: 10px;">
                                 <label>Color</label>
-                                <input class="form-control" name="color" list="color" ng-model="registro.id_color" >
-                                <datalist  id="color">
-                                    <option ng-repeat="item in colores" value="{{item.id}} - {{item.descripcion}}"></option>
+                                <input class="form-control" name="color" ng-focus="borrarColor()" list="color" ng-model="registro.color">
+                                 <datalist  id="color">
+                                    <option ng-repeat="item in colores" value="{{ item.descripcion }}"></option>
                                 </datalist>
+
+                                <!-- <input class="form-control" name="browsers" list="browsers" ng-model="registro.id_empresa" >
+                                <datalist  id="browsers">
+                                    <option ng-repeat="item in clientes" value="{{item.id}} - {{item.nombre}}"></option>
+                                </datalist> -->
                             </div>
                             <div class="col-sm-3" style="margin-top: 10px;">
                                 <label>Cantidad</label>
@@ -82,11 +87,11 @@
                             </div>
                             <div class="col-sm-3" style="margin-top: 10px;">
                                 <label>Precio</label>
-                                <input type="number" ng-model="registro.precio" min="0" ng-change="calcular()" class="form-control" required>
+                                <input type="number" ng-model="registro.precio" min="0.00" ng-change="calcular()" class="form-control" required>
                             </div>
                             <div class="col-sm-3" style="margin-top: 10px;">
                                 <label>Sub total</label>
-                                <input type="number" ng-model="registro.sub_total" min="0" class="form-control" required disabled>
+                                <input type="text" ng-model="registro.sub_total" min="0.00" class="form-control" required disabled>
                             </div>
                             <div class="col-sm-3" style="margin-top: 10px;">
                                 <label>Referencia</label>
@@ -124,6 +129,7 @@
                                         <td>Referencia</td>
                                         <td>Lugar de entrega</td>
                                         <td>Estado</td>
+                                        <td>Editar</td>
                                         <td>Eliminar</td>
                                     </tr>
                                 </thead>
@@ -135,7 +141,7 @@
                                         <td>{{ item.calibre.nombre }}</td>
                                         <td>{{ item.metraje.nombre }}</td>
                                         <td>{{ item.tipo.nombre }}</td>
-                                        <td>{{ item.color.nombre }}</td>
+                                        <td>{{ item.color }}</td>
                                         <td>{{ item.cantidad }}</td>
                                         <td>{{ item.precio }}</td>
                                         <td>{{ item.sub_total}}</td>
@@ -157,6 +163,9 @@
                                             <label ng-if="item.id_estado == '5'">
                                                 Y REJ
                                             </label>
+                                        </td>
+                                        <td>
+                                             <button type="button" class="btn btn-primary ion ion-edit" ng-click="editarColor(item)" md-ink-ripple></button>
                                         </td>
                                         <td>
                                              <button type="button" class="btn btn-danger ion ion-trash-a" ng-click="eliminarColor(item)" md-ink-ripple></button>
@@ -169,7 +178,7 @@
                                         <td>{{ item.calibre.descripcion }}</td>
                                         <td>{{ item.metraje.descripcion }}</td>
                                         <td>{{ item.tipo_orden.descripcion }}</td>
-                                        <td>{{ item.color.descripcion }}</td>
+                                        <td>{{ item.color }}</td>
                                         <td>{{ item.cantidad }}</td>
                                         <td>{{ item.precio }}</td>
                                         <td>{{ item.sub_total}}</td>
@@ -192,12 +201,18 @@
                                                 Y REJ
                                             </label>
                                         </td>
-                                        <!-- <td>
+                                       <!--  <td>
+                                             <button type="button" class="btn btn-primary ion ion-edit" ng-click="editarColor(item)" md-ink-ripple></button>
+                                        </td>
+                                        <td>
                                              <button type="button" class="btn btn-danger ion ion-trash-a" ng-click="eliminarColor(item)" md-ink-ripple></button>
                                         </td> -->
                                     </tr>
                                 </tbody>
                             </table>
+                            <label style="font-family: tahoma; font-weight: bold;font-size: 20px;">TOTAL: $.{{total}}</label>
+
+                            <label style="font-family: tahoma; font-weight: bold;font-size: 20px; margin-left: 30px;">CONOS: {{total_conos}}</label>
                         </div>
                     </tab>
                     <!-- <tab heading="Lista de colores">

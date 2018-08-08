@@ -30,7 +30,7 @@ class OrdenesController extends Controller
     public function index()
     {
         try {
-            $records           = ColoresOrden::with('orden','calibre','metraje','color','referencia','lugar','estado','orden.cliente')->orderBy('created_at','DESC')->get();
+            $records           = ColoresOrden::with('orden','calibre','metraje','referencia','lugar','estado','orden.cliente')->orderBy('created_at','DESC')->get();
             $this->status_code = 200;
             $this->result      = true;
             $this->message     = 'Registros consultados correctamente';
@@ -54,7 +54,7 @@ class OrdenesController extends Controller
         try {
             $records           = Orden::where('orden',$id)->with('cliente')->first();
             if ($records) {
-                $records2 = ColoresOrden::where('id_orden',$records->orden)->with('calibre','metraje','tipoOrden','color')->get();
+                $records2 = ColoresOrden::where('id_orden',$records->orden)->with('calibre','metraje','tipoOrden')->get();
                 // $var = $records->fecha_hora;
                 // $date = str_replace('-', '/', $var);
                 // $records->fecha_hora = date('d/m/Y', strtotime($date));
@@ -442,43 +442,44 @@ class OrdenesController extends Controller
                 'id_empresa'        =>  $request->input('id_empresa'),
                 'balance'           =>  $request->input('cantidad'),
                 'total_salida'      =>  0,
-                'precio_total'      =>  0.0,
-                'amount'            =>  0,
+                'precio_total'      =>  $request->input('total'),
+                'amount'            =>  $request->input('total'),
                 'cantidad_total'    =>  0,
                 'facturado'         =>  false,
                 'estado_prod'       =>  0,
                 'hora'              =>  date('h:i:s', strtotime($request->input('fecha_hora')))
             ]);
 
-            $record = Orden::create([
-                'orden'                 => $request->input('orden'),
-                'id_estado'             => $request->input('id_estado'),
-                'fecha_hora'       	    => date("Y-m-d", strtotime($request->input('fecha_hora'))),
-                'id_empresa'       		=> $request->input('id_empresa'),
-                'po'          		    => $request->input('po'),
-                'id_estilo'          	=> $request->input('id_estilo'),
-                'descripcion'       	=> $request->input('descripcion'),
-                'id_calibre'       		=> $request->input('id_calibre'),
-                'id_metraje'            => $request->input('id_metraje'),
-                'tipo'                  => $request->input('tipo'),
-                'id_color'              => $request->input('id_color'),
-                'cantidad'       		=> $request->input('cantidad'),
-                'balance'       		=> $request->input('cantidad'),
-                'total_salida'       	=> '0',
-                'amount'                => '0',
-                'precio'       		    => $request->input('precio'),
-                'fecha_entrega'         => date("Y-m-d", strtotime($request->input('fecha_entrega'))),
-                'id_referencias'       	=> $request->input('id_referencias'),
-                'id_lugar'       		=> $request->input('id_lugar'),
-                'facturado'             => false,
-                'estado_prod'           => '0'
-            ]);
+            // $record = Orden::create([
+            //     'orden'                 => $request->input('orden'),
+            //     'id_estado'             => $request->input('id_estado'),
+            //     'fecha_hora'       	    => date("Y-m-d", strtotime($request->input('fecha_hora'))),
+            //     'id_empresa'       		=> $request->input('id_empresa'),
+            //     'po'          		    => $request->input('po'),
+            //     'id_estilo'          	=> $request->input('id_estilo'),
+            //     'descripcion'       	=> $request->input('descripcion'),
+            //     'id_calibre'       		=> $request->input('id_calibre'),
+            //     'id_metraje'            => $request->input('id_metraje'),
+            //     'tipo'                  => $request->input('tipo'),
+            //     'color'                 => $request->input('color'),
+            //     'cantidad'       		=> $request->input('cantidad'),
+            //     'balance'       		=> $request->input('cantidad'),
+            //     'total_salida'       	=> '0',
+            //     'amount'                => '0',
+            //     'precio'       		    => $request->input('precio'),
+            //     'fecha_entrega'         => date("Y-m-d", strtotime($request->input('fecha_entrega'))),
+            //     'id_referencias'       	=> $request->input('id_referencias'),
+            //     'id_lugar'       		=> $request->input('id_lugar'),
+            //     'facturado'             => false,
+            //     'estado_prod'           => '0'
+            // ]);
             if ($record) {
                 $a = json_decode($request->input('colores_orden'));
                 $b = 0;
                 $c = 0;
                 foreach ($a as $item) {
                     $record2 = ColoresOrden::create([
+
                         'id_orden'      =>  $record->orden,
                         'po'            =>  $item->po,
                         'estilo'        =>  $item->estilo,
@@ -486,19 +487,20 @@ class OrdenesController extends Controller
                         'id_calibre'    =>  $item->id_calibre,
                         'id_metraje'    =>  $item->id_metraje,
                         'tipo'          =>  $item->tipo,
-                        'id_color'      =>  $item->id_color,
+                        'color'         =>  $item->color,
                         'cantidad'      =>  $item->cantidad,
                         'referencia'    =>  $item->referencia,
                         'lugar'         =>  $item->lugar,
                         'id_estado'     =>  $item->id_estado,
                         'sub_total'     =>  $item->sub_total,
+                        'precio'        => $item->precio,
                     ]);
                     $b = $b + $record2->cantidad;
                     $c = $c + $record2->sub_total;
                 }
-                $record->amount = $b;
-                $record->balance = $b;
-                $record->precio_total = $c;
+                // $record->amount = $b;
+                // $record->balance = $b;
+                // $record->precio_total = $c;
                 $record->save();
                 $this->status_code  = 200;
                 $this->result       = true;
