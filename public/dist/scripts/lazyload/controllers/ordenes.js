@@ -17,8 +17,10 @@
             $scope.currentPage = 1;
             $scope.positionModel = 'topRight';
             $scope.toasts = [];
+            $scope.colores_orden = [];
+            $scope.colores_mostrar = [];
             var modal;
-
+            var contador = 0;
             // Function for load table
             function MostarDatos() {
                 OrdenesService.index().then(function(response) {
@@ -131,6 +133,92 @@
                 $scope.toasts.splice(index, 1);
             }
 
+            $scope.eliminarColor = function (customer){
+                $scope.colores_mostrar.splice(customer.id, 1);
+                $scope.colores_orden.splice(customer.id, 1);
+                console.log($scope.colores_mostrar);
+                console.log($scope.colores_orden);
+            }
+
+            $scope.saveColor = function (customer){
+                var color_solo = {};
+
+                var ca = customer.id_calibre.indexOf(" -");
+                var id_calibre = customer.id_calibre.slice(0, ca);
+                color_solo.id_calibre = id_calibre;
+
+                var ca = customer.id_metraje.indexOf(" -");
+                var id_metraje = customer.id_metraje.slice(0, ca);
+                color_solo.id_metraje= id_metraje;
+
+                var ca = customer.tipo.indexOf(" -");
+                var tipo = customer.tipo.slice(0, ca);
+                color_solo.tipo = tipo;
+
+                var ca = customer.id_color.indexOf(" -");
+                var id_color = customer.id_color.slice(0, ca);
+                color_solo.id_color = id_color;
+
+                color_solo.id = contador;
+                color_solo.po = customer.po;
+                color_solo.estilo = customer.estilo;
+                color_solo.descripcion = customer.descripcion;
+                color_solo.cantidad = customer.cantidad;
+                color_solo.precio = customer.precio;
+                color_solo.referencia = customer.referencia;
+                color_solo.lugar = customer.lugar;
+                color_solo.sub_total = customer.sub_total;
+                color_solo.id_estado = customer.id_estado;
+
+                var color_mostrar = new Object();
+                var calibre = new Object();
+                var metraje = new Object();
+                var tipo = new Object();
+                var color = new Object();
+                console.log(color_solo);
+
+                color_mostrar.calibre = calibre;
+                color_mostrar.metraje = metraje
+                color_mostrar.tipo = tipo;
+                color_mostrar.color = color;
+
+                var ca = customer.id_calibre.indexOf("-");
+                var id_calibre = customer.id_calibre.slice(ca+1, customer.id_calibre.length);
+                color_mostrar.calibre.nombre = id_calibre;
+
+                var ca = customer.id_metraje.indexOf("-");
+                var id_metraje = customer.id_metraje.slice(ca+1, customer.id_metraje.length);
+                color_mostrar.metraje.nombre = id_metraje;
+
+                var ca = customer.tipo.indexOf("-");
+                var tipo = customer.tipo.slice(ca+1, customer.tipo.length);
+                color_mostrar.tipo.nombre = tipo;
+
+                var ca = customer.id_color.indexOf("-");
+                var id_color = customer.id_color.slice(ca+1, customer.id_color.length);
+                color_mostrar.color.nombre = id_color;
+
+                color_mostrar.id = contador;
+                color_mostrar.po = customer.po;
+                color_mostrar.estilo = customer.estilo;
+                color_mostrar.descripcion = customer.descripcion;
+                color_mostrar.cantidad = customer.cantidad;
+                color_mostrar.precio = customer.precio;
+                color_mostrar.referencia = customer.referencia;
+                color_mostrar.lugar = customer.lugar;
+                color_mostrar.id_estado = customer.id_estado;
+                color_mostrar.sub_total = customer.sub_total;
+
+                $scope.colores_mostrar.push(color_mostrar);
+                // console.log(color_solo);
+                $scope.colores_orden.push(color_solo);
+                contador = contador + 1;
+
+            }
+            $scope.calcular = function(){
+                console.log("entro a calcular");
+                $scope.registro.sub_total = parseFloat($scope.registro.precio) * parseFloat($scope.registro.cantidad);
+            }
             // Function for sending data
             $scope.saveData = function (customer) {
                 if ($scope.action == 'new') {
@@ -155,13 +243,13 @@
                     var id_color = customer.id_color.slice(0, color);
                     clone_customer.id_color = id_color;
 
-                    var referencia = customer.id_referencias.indexOf(" -");
-                    var id_referencias = customer.id_referencias.slice(0, referencia);
-                    clone_customer.id_referencias = id_referencias;
+                    // var referencia = customer.id_referencias.indexOf(" -");
+                    // var id_referencias = customer.id_referencias.slice(0, referencia);
+                    // clone_customer.id_referencias = id_referencias;
 
-                    var lugar = customer.id_lugar.indexOf(" -");
-                    var id_lugar = customer.id_lugar.slice(0, lugar);
-                    clone_customer.id_lugar = id_lugar;
+                    // var lugar = customer.id_lugar.indexOf(" -");
+                    // var id_lugar = customer.id_lugar.slice(0, lugar);
+                    // clone_customer.id_lugar = id_lugar;
 
                     var tipoorden = customer.tipo.indexOf(" -");
                     var id_tipoorden = customer.tipo.slice(0, tipoorden);
@@ -249,7 +337,7 @@
                     OrdenesService.despachos(customer).then(
                         function successCallback(response) {
                             if (response.data.result) {
-                                // MostarDatos();
+                                MostarDatos();
                                 modal.close();
                                 createToast('success', '<strong>Éxito: </strong>'+response.data.message);
                                 $timeout( function(){ closeAlert(0); }, 3000);
@@ -387,6 +475,8 @@
                     windowClass: 'default'
                 });
             };
+
+
 
             $scope.modalEntregado = function(data) {
                 $scope.action = 'despacho';

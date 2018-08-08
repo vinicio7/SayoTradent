@@ -10,107 +10,172 @@
                 <h3>¿Está seguro de eliminar este Pedido?</h3>
             </div>
             <form class="form-horizontal" name="form" ng-if="action != 'delete'" action="javascript:;" novalidate>
-                <div class="row form-group">
-                    <div class="col-sm-4">
-                        <label>Orden</label>
-                        <input type="text" ng-model="registro.orden" class="form-control" required>
-                    </div>
-                    <div class="col-sm-4">
-                        <label>Fecha y Hora de Ingreso</label>
-                        <input type="datetime-local" ng-model="registro.fecha_hora" class="form-control" required>
-                    </div>
-                    <div class="col-sm-4">
-                        <label>Clientes</label>
-                        
-                        <input class="form-control" name="browsers" list="browsers" ng-model="registro.id_empresa" >
-                        <datalist  id="browsers">
-                            <option ng-repeat="item in clientes" value="{{item.id}} - {{item.nombre}}"></option>
-                        </datalist>
-                    </div>
-                    
-                    <div class="col-sm-4" style="margin-top: 10px;">
-                        <label>PO</label>
-                        <input type="text" ng-model="registro.po" class="form-control" required>
-                    </div>
-
-                    <div class="col-sm-4" style="margin-top: 10px;">
-                        <label>Estilo</label>
-                        <input class="form-control" name="estilo" list="estilo" ng-model="registro.id_estilo" >
-                        <datalist  id="estilo">
-                            <option ng-repeat="item in estilos" value="{{item.id}} - {{item.descripcion}}"></option>
-                        </datalist>
-                    </div>
-
-                    <div class="col-sm-4" style="margin-top: 10px;">
-                        <label>Descripcion</label>
-                        <input type="text" ng-model="registro.descripcion" class="form-control" required>
-                    </div>
-
-                    <div class="col-sm-4" style="margin-top: 10px;">
-                        <label>Calibre</label>
-                        <input class="form-control" name="calibre" list="calibre" ng-model="registro.id_calibre" >
-                        <datalist  id="calibre">
-                            <option ng-repeat="item in calibres" value="{{item.id}} - {{item.descripcion}}"></option>
-                        </datalist>
-                    </div>
-                    
-                    <div class="col-sm-4" style="margin-top: 10px;">
-                        <label>Metraje</label>
-                        <input class="form-control" name="metrage" list="metrage" ng-model="registro.id_metraje" >
-                        <datalist  id="metrage">
-                            <option ng-repeat="item in metrajes" value="{{item.id}} - {{item.descripcion}}"></option>
-                        </datalist>
-                    </div>
-                    <div class="col-sm-4" style="margin-top: 10px;">
-                        <label>Tipo</label>
-                        <input class="form-control" name="tipo" list="tipo" ng-model="registro.tipo" >
-                        <datalist  id="tipo">
-                            <option ng-repeat="item in tipos" value="{{item.id}} - {{item.descripcion}}"></option>
-                        </datalist>
-                    </div>
-                    <div class="col-sm-4" style="margin-top: 10px;">
-                        <label>Color</label>
-                        <input class="form-control" name="color" list="color" ng-model="registro.id_color" >
-                        <datalist  id="color">
-                            <option ng-repeat="item in colores" value="{{item.id}} - {{item.descripcion}}"></option>
-                        </datalist>
-                    </div>
-                    <div class="col-sm-4" style="margin-top: 10px;">
-                        <label>Cantidad</label>
-                        <input type="number" ng-model="registro.cantidad" class="form-control" required>
-                    </div>
-                    <div class="col-sm-4" style="margin-top: 10px;">
-                        <label>Precio</label>
-                        <input type="number" ng-model="registro.precio" min="1" class="form-control" required>
-                    </div>
-
-                    <div class="col-sm-4"  style="margin-top: 10px;">
-                        <label>Fecha de Entrega</label>
-                        <input type="datetime-local" ng-model="registro.fecha_entrega" class="form-control" required>
-                    </div>
-                    <div class="col-sm-4" style="margin-top: 10px;">
-                        <label>Referencia</label>
-                        <input class="form-control" name="referencia" list="referencia" ng-model="registro.id_referencias" >
-                        <datalist  id="referencia">
-                            <option ng-repeat="item in referencias" value="{{item.id}} - {{item.descripcion}}"></option>
-                        </datalist>
-                    </div>
-                    <div class="col-sm-4" style="margin-top: 10px;">
-                        <label>Lugar de entrega</label>
-                        <input class="form-control" name="entrega" list="entrega" ng-model="registro.id_lugar" >
-                        <datalist  id="entrega">
-                            <option ng-repeat="item in lugares" value="{{item.id}} - {{item.descripcion}}"></option>
-                        </datalist>
-                    </div>
-                    <div class="col-sm-4" style="margin-top: 10px;">
-                        <label>Estado</label>
-                        <select class="form-control" ng-model="registro.id_estado" >
-                            <option disabled="" >Seleccione una opción</option>
-                            <option ng-repeat="item in estados" value="{{item.id}}">{{item.descripcion}}</option>
-                        </select>
-                    </div>
-
-                </div>
+                <tabset justified="true">
+                    <tab heading="Informacion">
+                        <div class="row form-group">
+                            <div class="col-sm-4">
+                                <label>Orden</label>
+                                <input type="text" ng-model="registro.orden" class="form-control" required>
+                            </div>
+                            <div class="col-sm-4">
+                                <label>Fecha</label>
+                                <input type="date" ng-model="registro.fecha_hora" class="form-control" required>
+                            </div>
+                            <div class="col-sm-4">
+                                <label>Hora</label>
+                                <input type="time" ng-model="registro.hora" class="form-control" required>
+                            </div>
+                            <div class="col-sm-4" style="margin-top: 10px;">
+                                <label>Cliente</label>
+                                <input class="form-control" name="browsers" list="browsers" ng-model="registro.id_empresa" >
+                                <datalist  id="browsers">
+                                    <option ng-repeat="item in clientes" value="{{item.id}} - {{item.nombre}}"></option>
+                                </datalist>
+                            </div>
+                        </div>
+                    </tab>
+                    <tab heading="Colores">
+                        <div class="row form-group">
+                            <div class="col-sm-3" style="margin-top: 10px;">
+                                <label>PO</label>
+                                <input type="text" ng-model="registro.po" class="form-control" required>
+                            </div>
+                            <div class="col-sm-3" style="margin-top: 10px;">
+                                <label>Estilo</label>
+                                <input class="form-control" name="estilo" ng-model="registro.estilo" type="text">
+                            </div>
+                            <div class="col-sm-3" style="margin-top: 10px;">
+                                <label>Descripcion</label>
+                                <input type="text" ng-model="registro.descripcion" class="form-control" required>
+                            </div>
+                            <div class="col-sm-3" style="margin-top: 10px;">
+                                <label>Calibre</label>
+                                <input class="form-control" name="calibre" list="calibre" ng-model="registro.id_calibre" >
+                                <datalist  id="calibre">
+                                    <option ng-repeat="item in calibres" value="{{item.id}} - {{item.descripcion}}"></option>
+                                </datalist>
+                            </div>
+                            <div class="col-sm-3" style="margin-top: 10px;">
+                                <label>Metraje</label>
+                                <input class="form-control" name="metrage" list="metrage" ng-model="registro.id_metraje" >
+                                <datalist  id="metrage">
+                                    <option ng-repeat="item in metrajes" value="{{item.id}} - {{item.descripcion}}"></option>
+                                </datalist>
+                            </div>
+                            <div class="col-sm-3" style="margin-top: 10px;">
+                                <label>Tipo</label>
+                                <input class="form-control" name="tipo" list="tipo" ng-model="registro.tipo" >
+                                <datalist  id="tipo">
+                                    <option ng-repeat="item in tipos" value="{{item.id}} - {{item.descripcion}}"></option>
+                                </datalist>
+                            </div>
+                            <div class="col-sm-3" style="margin-top: 10px;">
+                                <label>Color</label>
+                                <input class="form-control" name="color" list="color" ng-model="registro.id_color" >
+                                <datalist  id="color">
+                                    <option ng-repeat="item in colores" value="{{item.id}} - {{item.descripcion}}"></option>
+                                </datalist>
+                            </div>
+                            <div class="col-sm-3" style="margin-top: 10px;">
+                                <label>Cantidad</label>
+                                <input type="number" ng-model="registro.cantidad" ng-change="calcular()" class="form-control" min="0" required>
+                            </div>
+                            <div class="col-sm-3" style="margin-top: 10px;">
+                                <label>Precio</label>
+                                <input type="number" ng-model="registro.precio" min="0" ng-change="calcular()" class="form-control" required>
+                            </div>
+                            <div class="col-sm-3" style="margin-top: 10px;">
+                                <label>Sub total</label>
+                                <input type="number" ng-model="registro.sub_total" min="0" class="form-control" required disabled>
+                            </div>
+                            <div class="col-sm-3" style="margin-top: 10px;">
+                                <label>Referencia</label>
+                                <input class="form-control" name="referencia" ng-model="registro.referencia" type="text" >
+                            </div>
+                            <div class="col-sm-3" style="margin-top: 10px;">
+                                <label>Lugar de entrega</label>
+                                <input class="form-control" name="entrega" ng-model="registro.lugar" type="text">
+                            </div>
+                            <div class="col-sm-3" style="margin-top: 10px;">
+                                <label>Estado</label>
+                                <select class="form-control" ng-model="registro.id_estado" >
+                                    <option disabled="" >Seleccione una opción</option>
+                                    <option ng-repeat="item in estados" value="{{item.id}}">{{item.descripcion}}</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-3" style="margin-top: 30px; float: right;">
+                                <button class="btn btn-success" ng-click="saveColor(registro)" style="margin-left: 100px;font-size: 14px;font-family: tahoma;font-weight: bold"> + Añadir</button>
+                            </div>
+                        </div>
+                        <div style="overflow-x:scroll;">
+                            <table class="table table-bordered table-striped">
+                                <thead> 
+                                    <tr>
+                                        <td>PO</td>
+                                        <td>Estilo</td>
+                                        <td>Descripcion</td>
+                                        <td>Calibre</td>
+                                        <td>Metraje</td>
+                                        <td>Tipo</td>
+                                        <td>Color</td>
+                                        <td>Cantidad</td>
+                                        <td>Precio</td>
+                                        <td>Sub total</td>
+                                        <td>Referencia</td>
+                                        <td>Lugar de entrega</td>
+                                        <td>Estado</td>
+                                        <td>Eliminar</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in colores_mostrar">
+                                        <td>{{ item.po }}</td>
+                                        <td>{{ item.estilo }}</td>
+                                        <td>{{ item.descripcion }}</td>
+                                        <td>{{ item.calibre.nombre }}</td>
+                                        <td>{{ item.metraje.nombre }}</td>
+                                        <td>{{ item.tipo.nombre }}</td>
+                                        <td>{{ item.color.nombre }}</td>
+                                        <td>{{ item.cantidad }}</td>
+                                        <td>{{ item.precio }}</td>
+                                        <td>{{ item.sub_total}}</td>
+                                        <td>{{ item.referencia }}</td>
+                                        <td>{{ item.lugar }}</td>
+                                        <td>
+                                            <label ng-if="item.id_estado == '1'">
+                                                Y CFM
+                                            </label>
+                                            <label ng-if="item.id_estado == '2'">
+                                                Y IN
+                                            </label>
+                                            <label ng-if="item.id_estado == '3'">
+                                                Y YET
+                                            </label>
+                                            <label ng-if="item.id_estado == '4'">
+                                                O ENT
+                                            </label>
+                                            <label ng-if="item.id_estado == '5'">
+                                                Y REJ
+                                            </label>
+                                        </td>
+                                        <td>
+                                             <button type="button" class="btn btn-danger ion ion-trash-a" ng-click="eliminarColor(item)" md-ink-ripple></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </tab>
+                    <!-- <tab heading="Lista de colores">
+                        <div class="row form-group" ng-show="tabItem == 'Principal'">
+                           
+                            <div class="col-sm-12 text-right">
+                                <button class=" btn btn-danger" ng-click="modalClose()">Cerrar</button>
+                                <button class="btn btn-success" ng-click="openItem('Detalles')"    ng-class="tabItem == 'Detalles' ? 'active' : ''">Nuevo Evento</button>
+                            </div>
+                        </div>
+                    </tab> -->
+                </tabset>
                 <br>
                 <div class="row form-group">
                     <div class="col-sm-12 text-right">

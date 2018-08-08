@@ -20,7 +20,7 @@ contactos_service.service('ControlService', ['$http', 'WS_URL', function($http, 
     };
 
     this.ordenes = function(params){
-        return $http.post(WS_URL+'ordenes/calidad');
+        return $http.get(WS_URL+'calidad');
     };
    
 }]);

@@ -199,6 +199,7 @@
             };
 
             $scope.modalStopOpen = function(data) {
+
                 console.log(data);
                 $http({
                     method: 'GET',
@@ -215,6 +216,7 @@
                     createToast('danger', '<strong>Error: </strong>'+response.data.message);
                     $timeout( function(){ closeAlert(0); }, 3000);
                 })
+
                 $scope.registro = {};
                 $scope.action = 'delete'; 
                 $scope.registro.id_orden = data.id;

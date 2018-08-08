@@ -60,6 +60,39 @@
                                     </div>
                                 </th>
                                 <th>
+                                    Po
+                                    <div class="th">
+                                        <i class="fa fa-caret-up icon-up"
+                                            ng-click=" order('po') "
+                                            ng-class="{active: row == 'po'}"></i>
+                                        <i class="fa fa-caret-down icon-down"
+                                            ng-click=" order('-po') "
+                                            ng-class="{active: row == '-po'}"></i>
+                                    </div>
+                                </th>
+                                <th>
+                                    Color
+                                    <div class="th">
+                                        <i class="fa fa-caret-up icon-up"
+                                            ng-click=" order('color') "
+                                            ng-class="{active: row == 'color'}"></i>
+                                        <i class="fa fa-caret-down icon-down"
+                                            ng-click=" order('-color') "
+                                            ng-class="{active: row == '-color'}"></i>
+                                    </div>
+                                </th>
+                                <th>
+                                    Estilo
+                                    <div class="th">
+                                        <i class="fa fa-caret-up icon-up"
+                                            ng-click=" order('estilo') "
+                                            ng-class="{active: row == 'estilo'}"></i>
+                                        <i class="fa fa-caret-down icon-down"
+                                            ng-click=" order('-estilo') "
+                                            ng-class="{active: row == '-estilo'}"></i>
+                                    </div>
+                                </th>
+                                <th>
                                     Envío
                                     <div class="th">
                                         <i class="fa fa-caret-up icon-up"
@@ -100,14 +133,17 @@
                                     <td>{{ data.fecha_hora }}</td>
                                     <td>{{ data.orden.cliente.nombre}}</td>
                                     <td>{{ data.orden.orden }}</td>
+                                    <td>{{ data.orden.po }}</td>
+                                    <td>{{ data.orden.color.descripcion }}</td>
+                                    <td>{{ data.orden.estilo.descripcion }}</td>
                                     <td>{{ data.envio }}</td>
                                     <td>{{ data.rechazo }}</td>
                                     <td>{{ data.fecha_ok }}</td>
-                                    <td>
+                                    <!-- <td>
                                         <div class="btn-group">
                                             <button type="button" class="btn btn-info ion ion-edit" ng-click="modalEditOpen(data)" md-ink-ripple></button>
                                         </div>
-                                    </td>
+                                    </td> -->
                                 </tr>
                             </tbody>
                         </table>

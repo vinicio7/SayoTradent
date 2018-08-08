@@ -38,4 +38,16 @@ contactos_service.service('ReportesService', ['$http', 'WS_URL', function($http,
     this.controlOrdenCafta = function(params, params1){
         return $http.get(WS_URL+'controlOrdenCafta/' + params + '/' + params1);
     };
+
+    this.estadoCuentaOrden = function(params, params1){
+        return $http.get(WS_URL+'estadoCuentaOrden/' + params + '/' + params1);
+    };
+
+    this.estadoCuentaConsumo = function(params, params1){
+        return $http.get(WS_URL+'estadoCuentaConsumo/' + params + '/' + params1);
+    };
+
+    this.clientes = function(params){
+        return $http.get(WS_URL+'clientes', params);
+    };
 }]);

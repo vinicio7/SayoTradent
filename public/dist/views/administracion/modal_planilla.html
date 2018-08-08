@@ -36,6 +36,11 @@
                                     <input type="text" class="form-control" ng-if="action == 'update'" ng-model="planilla.sueldo_base">
                                     <input type="text" class="form-control" ng-if="action == 'detail'" ng-model="planilla.no_empleado" disabled>
                                 </div>
+                                <div class="col-sm-4" style="margin-top: 5px;">
+                                    <label>Calcular Bonificacion</label>
+                                    <input type="text" class="form-control" ng-if="action == 'new'" ng-model="planilla.calcular_bono" required>
+                                    <input type="text" class="form-control" ng-if="action == 'update'" ng-model="planilla.calcular_bono">
+                                </div>
                             </div>
                         </div>
                     </tab>

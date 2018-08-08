@@ -134,9 +134,9 @@
                     );
                 }
                 else if ($scope.action == 'delete') {
-                    console.log("llego al delete");
-                    console.log(customer[0].orden.id);
-                    TenidoService.destroy(customer[0].orden.id).then(
+                    console.log(customer);
+                    // console.log(customer[0].orden.id);
+                    TenidoService.destroy(customer[0].orden).then(
                         function successCallback(response) {
                             if (response.data.result) {
                                 MostarDatos();

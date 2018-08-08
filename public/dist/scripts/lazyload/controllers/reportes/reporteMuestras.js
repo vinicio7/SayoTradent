@@ -23,6 +23,7 @@
             function MostarDatos() {
                 ReportesService.muestras().then(function(response) {
                     $scope.datas = response.data.records;
+                    console.log($scope.datas);
                     $scope.search();
                     $scope.select($scope.currentPage);
                 });

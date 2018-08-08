@@ -12,9 +12,11 @@
                                 </div>
                                 <div class="col-sm-2">
                                     <button ng-click="MostrarDatos()" type="button" class="btn btn-info btn-rounded"> <i class="fa fa-file-excel-o"></i>&nbsp;Filtrar</button>
+                                    
+                                </div>
+                                <div class="col-sm">
                                     <button ng-click="ordenesPorDiaReporte()" type="button" class="btn btn-info btn-rounded"> <i class="fa fa-file-excel-o"></i>&nbsp;Excel</button>
                                 </div>
-                                
                             </div>
                             <br>
                             <div class="row">
@@ -67,7 +69,28 @@
                                             ng-class="{active: row == '-phone'}"></i>
                                     </div>
                                 </th>
-
+                                <th>
+                                    Color
+                                    <div class="th">
+                                        <i class="fa fa-caret-up icon-up"
+                                            ng-click=" order('phone') "
+                                            ng-class="{active: row == 'phone'}"></i>
+                                        <i class="fa fa-caret-down icon-down"
+                                            ng-click=" order('-phone') "
+                                            ng-class="{active: row == '-phone'}"></i>
+                                    </div>
+                                </th>
+                                <th>
+                                    Estilo
+                                    <div class="th">
+                                        <i class="fa fa-caret-up icon-up"
+                                            ng-click=" order('phone') "
+                                            ng-class="{active: row == 'phone'}"></i>
+                                        <i class="fa fa-caret-down icon-down"
+                                            ng-click=" order('-phone') "
+                                            ng-class="{active: row == '-phone'}"></i>
+                                    </div>
+                                </th>
                                 <th>
                                     Cantidad
                                     <div class="th">
@@ -97,6 +120,8 @@
                                     <td>{{ data.fecha_hora }}</td>
                                     <td>{{ data.cliente.nombre }}</td>
                                     <td>{{ data.po }}</td>
+                                    <td>{{ data.color.descripcion }}</td>
+                                    <td>{{ data.estilo.descripcion }}</td>
                                     <td>{{ data.cantidad }}</td>
                                     <td>{{ data.amount }}</td>
                                 </tr>

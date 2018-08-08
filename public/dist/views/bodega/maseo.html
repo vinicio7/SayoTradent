@@ -95,19 +95,7 @@
                             <tr ng-repeat="data in currentPageStores track by $index">
                                 <td>{{ $index + 1 }}</td>
                                 <td>{{ data.orden }}</td>
-                                <td>{{ data.enconado.fecha }}</td>
-                                <td>{{ data.estilo.descripcion }}</td>
-                                    <td>{{ data.calibre.descripcion }}</td>
-                                    <td>{{ data.metraje.descripcion }}</td>
-                                    <td>
-                                        <label ng-if="data.tipo == 1">
-                                            Normal
-                                        </label>
-                                        <label ng-if="data.tipo == 2">
-                                            Cafta
-                                        </label>
-                                    </td>
-                                    <td>{{ data.color.descripcion }}</td>
+                                <td>{{ data.maseo.created_at }}</td>
                                 <td>
                                     <label ng-if="data.enconado.estado_id == 1">Inicio</label>
                                     <label ng-if="data.enconado.estado_id == 2">Fin</label>

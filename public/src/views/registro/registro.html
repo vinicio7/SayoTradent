@@ -135,18 +135,18 @@
                                 <th>Muestra</th> 
                                 <th>Despacho</th>
                                 <th>Editar</th>
-                                <th>Duplicar</th>
+                                <!-- <th>Duplicar</th> -->
                             </tr>
                             </thead>
                             <tbody>
                                 <tr ng-repeat="data in currentPageStores track by $index">
                                     <td>{{ $index + 1 }}</td>
-                                    <td>{{ data.orden }}</td>
+                                    <td><a href="">{{ data.id_orden }}</a></td>
                                     <td>{{ data.descripcion }}</td>
-                                    <td>{{ data.cliente.nombre }}</td>
+                                    <td>{{ data.orden.cliente.nombre }}</td>
                                     <td>{{ data.estado.descripcion }}</td>
                                     <td>{{ data.po }}</td>
-                                    <td>{{ data.estilo.descripcion }}</td>
+                                    <td>{{ data.estilo }}</td>
                                     <td>{{ data.calibre.descripcion }}</td>
                                     <td>{{ data.metraje.descripcion }}</td>
                                     <td>
@@ -158,10 +158,9 @@
                                         </label>
                                     </td>
                                     <td>{{ data.color.descripcion }}</td>
-
-                                    <td>{{ data.fecha_hora }}</td> 
-                                    <td>{{ data.total_salida }}</td> 
-                                    <td>{{ data.balance }}</td> 
+                                    <td>{{ data.orden.fecha_hora}} {{ data.orden.hora}}</td> 
+                                    <td>{{ data.orden.total_salida }}</td> 
+                                    <td>{{ data.orden.balance }}</td> 
                                     <td>{{ data.cantidad }}</td>       
 
                                     <td>
@@ -179,11 +178,11 @@
                                             <button type="button" class="btn btn-info ion ion-edit" ng-click="modalEditOpen(data)" md-ink-ripple></button>
                                         </div>
                                     </td>
-                                     <td>
+                                    <!--  <td>
                                         <div class="btn-group">
                                             <button type="button" class="btn btn-warning ion ion-plus" ng-click="ModalDuplicar(data)" md-ink-ripple></button>
                                         </div>
-                                    </td>
+                                    </td> -->
                                   <!--   <td>
                                         <div ng-if="data.facturado == 0" class="btn-group">
                                             <button type="button" class="btn btn-info ion ion-document" ng-click="modalFacturar(data)" md-ink-ripple></button>

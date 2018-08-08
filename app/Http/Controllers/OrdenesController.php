@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\ColoresOrden;
 use App\Orden;
 use App\Cliente;
 use App\Estilo;
@@ -29,7 +30,7 @@ class OrdenesController extends Controller
     public function index()
     {
         try {
-            $records           = Orden::with('cliente','estilo','calibre','metraje','color','referencia','lugar','tenido','secado','estado')->orderBy('created_at','DESC')->get();
+            $records           = ColoresOrden::with('orden','calibre','metraje','color','referencia','lugar','estado','orden.cliente')->orderBy('created_at','DESC')->get();
             $this->status_code = 200;
             $this->result      = true;
             $this->message     = 'Registros consultados correctamente';
@@ -73,29 +74,29 @@ class OrdenesController extends Controller
         }
     }
 
-    public function maseo()
-    {
-        try {
-            // dd("lego");
-            $records           = Orden::with('cliente','estilo','calibre','metraje','color','referencia','lugar','tenido','secado')->where('estado_prod',3)->get();
-            $this->status_code = 200;
-            $this->result      = true;
-            $this->message     = 'Registros consultados correctamente';
-            $this->records     = $records;
-        } catch (\Exception $e) {
-            $this->status_code = 400;
-            $this->result      = false;
-            $this->message     = env('APP_DEBUG')?$e->getMessage():$this->message;
-        }finally{
-            $response = [
-                'result'  => $this->result,
-                'message' => $this->message,
-                'records' => $this->records,
-            ];
+    // public function maseo()
+    // {
+    //     try {
+    //         // dd("lego");
+    //         $records           = Orden::with('cliente','estilo','calibre','metraje','color','referencia','lugar','tenido','secado')->where('estado_prod',3)->get();
+    //         $this->status_code = 200;
+    //         $this->result      = true;
+    //         $this->message     = 'Registros consultados correctamente';
+    //         $this->records     = $records;
+    //     } catch (\Exception $e) {
+    //         $this->status_code = 400;
+    //         $this->result      = false;
+    //         $this->message     = env('APP_DEBUG')?$e->getMessage():$this->message;
+    //     }finally{
+    //         $response = [
+    //             'result'  => $this->result,
+    //             'message' => $this->message,
+    //             'records' => $this->records,
+    //         ];
 
-            return response()->json($response, $this->status_code);
-        }
-    }
+    //         return response()->json($response, $this->status_code);
+    //     }
+    // }
 
     public function secado()
     {
@@ -171,11 +172,11 @@ class OrdenesController extends Controller
         }
     }
 
-    public function control_calidad()
+    public function control_calidad2()
     {
         try {
             // dd("lego");
-            $records           = Orden::with('cliente','estilo','calibre','metraje','color','referencia','lugar','tenido','secado','enconado')->where('estado_prod',4)->get();
+            $records           = Orden::with('cliente','estilo','calibre','metraje','color','referencia','lugar','tenido','secado','enconado')->where('estado_prod',3)->get();
             // dd($records);
             $this->status_code = 200;
             $this->result      = true;

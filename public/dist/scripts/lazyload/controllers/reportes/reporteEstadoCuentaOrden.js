@@ -26,7 +26,7 @@
                 var dateinicio = $filter('date')($scope.fechaInicio,'yyyy-MM-dd');
                 var datefin = $filter('date')($scope.fechaFin,'yyyy-MM-dd');
 
-                ReportesService.controlOrdenCafta(dateinicio, datefin).then(function(response) {
+                ReportesService.estadoCuentaOrden(dateinicio, datefin).then(function(response) {
                     $scope.datas = response.data.records;
                     $scope.search();
                     $scope.select($scope.currentPage);
@@ -38,11 +38,11 @@
                
             }
 
-            $scope.controlOrdenCaftaReporte = function(){ 
+            $scope.estadoCuentaOrdenReporte = function(){ 
                 var dateinicio = $filter('date')($scope.fechaInicio,'yyyy-MM-dd');
                 var datefin = $filter('date')($scope.fechaFin,'yyyy-MM-dd');
                
-                window.location="../ws/excel/controlOrdenCafta/"+dateinicio+"/"+datefin;
+                window.location="../ws/excel/estadoCuentaOrden/"+dateinicio+"/"+datefin;
                 createToast('success', '<strong>Éxito: </strong>'+'Reporte Creado Exitosamente');
                 $timeout( function(){ closeAlert(0); }, 3000);
             
