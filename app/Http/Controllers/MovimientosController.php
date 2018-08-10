@@ -20,15 +20,10 @@ class MovimientosController extends Controller
 			$records           = Movimientos::with('cuenta')->get();
 			$suma_quetzales    = DB::table('movimientos')->where('tipo_movimiento', 1)->where('moneda',1)->get()->sum('monto');
 			$suma_dolares	   = DB::table('movimientos')->where('tipo_movimiento', 1)->where('moneda',2)->get()->sum('monto');
-
 			$resta_quetzales    = DB::table('movimientos')->where('tipo_movimiento', 2)->where('moneda',1)->get()->sum('monto');
-
 			$resta_dolares      = DB::table('movimientos')->where('tipo_movimiento', 2)->where('moneda',2)->get()->sum('monto');
-			
 			$total_quetzales = $suma_quetzales - $resta_quetzales;
 			$total_dolares   = $suma_dolares   - $resta_dolares;
-
-
 			$this->status_code = 200;
 			$this->result      = true;
 			$this->message     = 'Registros consultados correctamente';
@@ -51,7 +46,60 @@ class MovimientosController extends Controller
 			return response()->json($response, $this->status_code);
 		}
 	}
-	 public function cuentas()
+
+	public function filtrar(Request $request) {
+		try {
+			$tipo 		  = $request->input('tipo');
+			$moneda 	  = $request->input('moneda');
+			$fecha_inicio = $request->input('fecha_inicio');
+			$fecha_fin    = $request->input('fecha_fin');
+			$cuenta    	  = $request->input('cuenta');
+			if (isset($tipo)) {
+				if ($tipo == 0) {
+					$records = Movimientos::with('cuenta')->get();
+				} else {
+					$records = Movimientos::where('tipo_movimiento',$request->input('tipo'))->with('cuenta')->get();
+				}
+			}
+			if (isset($moneda)) {
+				if ($moneda == 0) {
+					$records = Movimientos::wwhere('tipo_movimiento',$request->input('tipo'))->with('cuenta')->get();
+				} else {
+					$records = Movimientos::where('tipo_movimiento',$request->input('tipo'))->where('moneda',$request->input('moneda'))->with('cuenta')->get();
+				}
+			}
+			if (isset($fecha_fin)) {
+				$records = Movimientos::where('tipo_movimiento',$request->input('tipo'))->where('moneda',$request->input('moneda'))->whereBetween('fecha',[$fecha_inicio,$fecha_fin])->with('cuenta')->get();	
+			}
+			if (isset($cuenta)) {
+				if ($cuenta == 0) {
+					$records = Movimientos::where('tipo_movimiento',$request->input('tipo'))->where('moneda',$request->input('moneda'))->whereBetween('fecha',[$fecha_inicio,$fecha_fin])->with('cuenta')->get();	
+				} else {
+					$records = Movimientos::where('tipo_movimiento',$request->input('tipo'))->where('moneda',$request->input('moneda'))->whereBetween('fecha',[$fecha_inicio,$fecha_fin])->where('cuenta_id',$request->input('cuenta'))->with('cuenta')->get();	
+				}
+			}
+			$this->status_code = 200;
+			$this->result      = true;
+			$this->message     = 'Registros consultados correctamente';
+			$this->records     = $records;
+		} catch (\Exception $e) {
+			$this->status_code = 400;
+			$this->result      = false;
+			$this->message     = env('APP_DEBUG')?$e->getMessage():$this->message;
+		}finally{
+			$response = [
+				'result'  => $this->result,
+				'message' => $this->message,
+				'records' => $this->records,
+				'total_dolares' => $this->total_dolares,
+				'total_quetzales' => $this->total_quetzales,
+			];
+
+			return response()->json($response, $this->status_code);
+		}
+	}
+
+	public function cuentas()
     {
         try {
             $records           = Cuentas::all();

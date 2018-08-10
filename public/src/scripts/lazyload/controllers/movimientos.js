@@ -19,8 +19,55 @@
             $scope.toasts = [];
             $scope.balance_q = 0;
             $scope.balance_d = 0;
+            $scope.select_tipo = [];
+            $scope.select_moneda = [];
+            $scope.select_cuenta = [];
             var modal;
 
+            $scope.cambioMovimiento = function(registro) {
+                console.log(registro);
+                MovimientosService.filtrar(registro).then(function(response) {
+                    console.log(response.data.records);
+                    $scope.datas = response.data.records;
+                    $scope.search();
+                    $scope.select($scope.currentPage);
+                });
+            };
+
+            function cargarTipos(){
+                var tipo = {};
+                tipo.id = 1;
+                tipo.descripcion = "Ingreso";
+                $scope.select_tipo.push(tipo);
+                var tipo2 = {};
+                tipo2.id = 2;
+                tipo2.descripcion = "Egreso";
+                $scope.select_tipo.push(tipo2);
+                console.log($scope.select_tipo);
+            }
+
+            function cargarMonedas(){
+                var moneda = {};
+                moneda.id = 1;
+                moneda.descripcion = "Quetzales";
+                $scope.select_moneda.push(moneda);
+                var moneda2 = {};
+                moneda2.id = 2;
+                moneda2.descripcion = "Dolares";
+                $scope.select_moneda.push(moneda2);
+                console.log($scope.select_moneda);
+            }
+
+            function cargarCuentas(){
+                MovimientosService.cargarCuentas().then(function(response) {
+                    $scope.select_cuenta = response.data.records;
+                    console.log($scope.select_cuenta);
+                });
+            }
+
+            cargarCuentas();
+            cargarMonedas();
+            cargarTipos();
             // Function for load table
             function MostarDatos() {
                 MovimientosService.index().then(function(response) {
@@ -34,7 +81,7 @@
 
             $scope.redirect = function(){ 
                
-                window.location="../ws/excel/movimientos";
+                window.location="../ws/excel/movimientos?tipo="+$scope.movimiento.tipo+"&moneda="+$scope.movimiento.moneda+"&fecha_inicio="+$scope.movimiento.fecha_inicio+"&fecha_fin="+$scope.movimiento.fecha_fin+"&cuenta="+$scope.movimiento.cuenta;
                 createToast('success', '<strong>Éxito: </strong>'+'Reporte Creado Exitosamente');
                 $timeout( function(){ closeAlert(0); }, 3000);
             
