@@ -17,12 +17,16 @@
             $scope.currentPage = 1;
             $scope.positionModel = 'topRight';
             $scope.toasts = [];
+            $scope.balance_q = 0;
+            $scope.balance_d = 0;
             var modal;
 
             // Function for load table
             function MostarDatos() {
                 MovimientosService.index().then(function(response) {
                     $scope.datas = response.data.records;
+                    $scope.balance_d = response.data.total_dolares;
+                    $scope.balance_q = response.data.total_quetzales;
                     $scope.search();
                     $scope.select($scope.currentPage);
                 });
@@ -126,6 +130,7 @@
                     MovimientosService.update(customer).then(
                         function successCallback(response) {
                             if (response.data.result) {
+                                MostarDatos();
                                 modal.close();
                                 createToast('success', '<strong>Éxito: </strong>'+response.data.message);
                                 $timeout( function(){ closeAlert(0); }, 3000);

@@ -6,8 +6,14 @@
                     <div class="panel-heading"><h4>REGISTRO DE MOVIMIENTOS</h4></div>
                     <div class="panel-body">
                         <div class="row">
-                            <button type="button" class="btn btn-success btn-rounded" ng-click="modalCreateOpen()" md-ink-ripple><i class="fa fa-plus"></i> Ingreso</button>
-                            <button ng-click="redirect()" type="button" class="btn btn-info btn-rounded"> <i class="fa fa-file-excel-o"></i>&nbsp;Excel</button>
+                            <div class="col-md-4">
+                                <button type="button" class="btn btn-success btn-rounded" ng-click="modalCreateOpen()" md-ink-ripple><i class="fa fa-plus"></i> Ingreso</button>
+                                <button ng-click="redirect()" type="button" class="btn btn-info btn-rounded"> <i class="fa fa-file-excel-o"></i>&nbsp;Excel</button>
+                            </div>
+                            <div class="col-md-8" style="text-align: right;">
+                                <h3>Balance Quetzales <b>Q. {{ balance_q}}</b> &nbsp      Balance Dolares <b>$. {{ balance_d}}</b> </h3>
+                               
+                            </div>
                         </div>
                         <br>
                         <div class="row">
@@ -19,6 +25,9 @@
                                 </select>
                                 &nbsp;entradas
                             </div>
+                             <form class="form-horizontal right col-lg-4">
+                                <input type="text" class="form-control input-sm" placeholder="Escriba su búsqueda" data-ng-model="searchKeywords" data-ng-keyup="search()">
+                            </form>
                         </div>
                     </div>
                     <!-- data table -->
@@ -82,10 +91,13 @@
                                 </div>
                             </th> -->
                             <th>
-                                Balance Q.
+                                Fecha
                             </th>
                             <th>
-                                Balance $
+                                No. cheque
+                            </th>
+                            <th>
+                                Cuenta
                             </th>
                             <th>
                                 Editar
@@ -106,8 +118,9 @@
                                 <td>{{ data.monto }}</td>
                                 <td>{{ data.descripcion }}</td>
                                 <!-- <td>{{ data.saldo }}</td> -->
-                                <td>{{ data.balanceQ }}</td>
-                                <td>{{ data.balance_D }}</td>
+                                <td>{{ data.fecha }}</td>
+                                <td>{{ data.no_cheque }}</td>
+                                <td>{{ data.cuenta.nombre }}</td>
                                 <td>
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-info ion ion-edit" ng-click="modalEditOpen(data)" md-ink-ripple></button>

@@ -16,8 +16,12 @@ class Movimientos extends Model
                            'nombre',
                            'moneda',
                            'cobrado',
-    						           'balanceQ', 
-                           'balance_D',
+    						           // 'balanceQ', 
+                     //       'balance_D',
                            'cuenta_id',
 						   ];
+public function cuenta(){
+  return $this->hasOne('App\Cuentas', 'id','cuenta_id');
+}
+
 }
