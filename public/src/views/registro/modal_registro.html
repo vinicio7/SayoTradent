@@ -46,7 +46,7 @@
                             </div>
                             <div class="col-sm-3" style="margin-top: 10px;">
                                 <label>Tipo</label>
-                                <input class="form-control" name="tipo" list="tipo" ng-model="registro.tipo" >
+                                <input class="form-control" name="tipo" list="tipo" ng-focus="borrarTipo()" ng-model="registro.tipo" >
                                 <datalist  id="tipo">
                                     <option ng-repeat="item in tipos" value="{{item.id}} - {{item.descripcion}}"></option>
                                 </datalist>
@@ -57,14 +57,14 @@
                             </div>
                             <div class="col-sm-3" style="margin-top: 10px;">
                                 <label>Calibre</label>
-                                <input class="form-control" name="calibre" list="calibre" ng-model="registro.id_calibre" >
+                                <input class="form-control" name="calibre" ng-focus="borrarCalibre()" list="calibre" ng-model="registro.id_calibre" >
                                 <datalist  id="calibre">
                                     <option ng-repeat="item in calibres" value="{{item.id}} - {{item.descripcion}}"></option>
                                 </datalist>
                             </div>
                             <div class="col-sm-3" style="margin-top: 10px;">
                                 <label>Metraje</label>
-                                <input class="form-control" name="metrage" list="metrage" ng-model="registro.id_metraje" >
+                                <input class="form-control" ng-focus="borrarMetraje()" name="metrage" list="metrage" ng-model="registro.id_metraje" >
                                 <datalist  id="metrage">
                                     <option ng-repeat="item in metrajes" value="{{item.id}} - {{item.descripcion}}"></option>
                                 </datalist>
@@ -108,8 +108,11 @@
                                     <option ng-repeat="item in estados" value="{{item.id}}">{{item.descripcion}}</option>
                                 </select>
                             </div>
-                            <div class="col-sm-3" style="margin-top: 30px; float: right;">
-                                <button class="btn btn-success" ng-click="saveColor(registro)" ng-if="action == 'new'" style="margin-left: 100px;font-size: 14px;font-family: tahoma;font-weight: bold"> + Añadir</button>
+                            <div class="col-sm-4" style=" margin-top: 35px; float: right; display: inline-block;">
+                                <button class="btn btn-info" ng-click="limpiarColor(registro)" ng-if="action == 'new'" style="font-size: 14px;font-family: tahoma;font-weight: bold;margin-left: 60px;"> - Limpiar</button>
+                                
+                                <button ng-if="activar_editar == 0" class="btn btn-success" ng-click="saveColor(registro)" ng-if="action == 'new'" style="font-size: 14px;font-family: tahoma;font-weight: bold"> + Añadir</button>
+                                <button ng-if="activar_editar == 1" class="btn btn-success" ng-click="saveEditarColor(registro)" ng-if="action == 'new'" style="font-size: 14px;font-family: tahoma;font-weight: bold"> + Editar</button>
                             </div>
                         </div>
                         <div style="overflow-x:scroll;">
@@ -210,10 +213,10 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            <label style="font-family: tahoma; font-weight: bold;font-size: 20px;">TOTAL: $.{{total}}</label>
+                        </div>
+                         <label style="font-family: tahoma; font-weight: bold;font-size: 20px;">TOTAL: $.{{total}}</label>
 
                             <label style="font-family: tahoma; font-weight: bold;font-size: 20px; margin-left: 30px;">CONOS: {{total_conos}}</label>
-                        </div>
                     </tab>
                     <!-- <tab heading="Lista de colores">
                         <div class="row form-group" ng-show="tabItem == 'Principal'">

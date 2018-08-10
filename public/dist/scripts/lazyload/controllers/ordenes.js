@@ -19,8 +19,12 @@
             $scope.toasts = [];
             $scope.colores_orden = [];
             $scope.colores_mostrar = [];
+            $scope.cantidad = 0;
+            $scope.total_conos = 0;
+            $scope.activar_editar = 0;
             var modal;
-            var contador = 0;
+            $scope.contador = 0;
+            $scope.total = 0;
             // Function for load table
             function MostarDatos() {
                 OrdenesService.index().then(function(response) {
@@ -50,6 +54,7 @@
 
                 OrdenesService.colores().then(function(response){
                     $scope.colores = response.data.records;
+                    console.log($scope.colores);
                 });
 
                 OrdenesService.referencias().then(function(response){
@@ -70,6 +75,22 @@
 
                 
                
+            }
+
+            $scope.borrarColor = function(){
+                $scope.registro.color = "";
+            }
+
+            $scope.borrarMetraje = function(){
+                $scope.registro.id_metraje = "";
+            }
+
+            $scope.borrarCalibre = function(){
+                $scope.registro.id_calibre = "";
+            }
+
+            $scope.borrarTipo = function(){
+                $scope.registro.tipo = "";
             }
 
             $scope.facturasReporte = function(){ 
@@ -134,10 +155,94 @@
             }
 
             $scope.eliminarColor = function (customer){
+                var resta = parseFloat($scope.total) - parseFloat(customer.sub_total);
+                var contador = parseInt( $scope.total_conos) - parseInt(customer.cantidad);
+                $scope.total_conos = contador;
+                $scope.total = resta;
                 $scope.colores_mostrar.splice(customer.id, 1);
                 $scope.colores_orden.splice(customer.id, 1);
-                console.log($scope.colores_mostrar);
-                console.log($scope.colores_orden);
+            }
+            
+            $scope.saveEditarColor = function(customer){
+                $scope.activar_editar = 0;
+                for (var i = 0; i < $scope.colores_orden.length; i++) {
+                    if ($scope.colores_orden[i].id == customer.id) {
+                        var resta = parseFloat($scope.total) - parseFloat($scope.colores_orden[i].sub_total);
+                        var contador = parseInt( $scope.total_conos) - parseInt($scope.colores_orden[i].cantidad);
+                        $scope.total_conos = contador;
+                        $scope.total = resta;
+                        $scope.colores_mostrar.splice($scope.colores_orden[i].id, 1);
+                        $scope.colores_orden.splice($scope.colores_orden[i].id, 1);
+                        var suma = parseFloat($scope.total) + parseFloat($scope.colores_orden.sub_total);
+                        $scope.total = suma.toFixed(2);
+                        var total_conos = parseInt( $scope.total_conos) + parseInt($scope.colores_orden.cantidad);
+                        $scope.total_conos = total_conos;
+                        $scope.colores_orden[i] = customer;
+
+                        var ca = customer.id_calibre.indexOf("-");
+                        var id_calibre = customer.id_calibre.slice(ca+1, customer.id_calibre.length);
+
+                        var ca = customer.id_metraje.indexOf("-");
+                        var id_metraje = customer.id_metraje.slice(ca+1, customer.id_metraje.length);
+
+                        var ca = customer.tipo.indexOf("-");
+                        var tipo = customer.tipo.slice(ca+1, customer.tipo.length);
+                        console.log($Scope.colores_mostrar[i]);
+                        $scope.colores_mostrar[i].calibre.nombre = id_calibre;
+                        $scope.colores_mostrar[i].metraje.nombre = id_metraje;
+                        $scope.colores_mostrar[i].tipo.nombre = tipo;
+                        $scope.colores_mostrar[i].po = customer.po;
+                        $scope.colores_mostrar[i].estilo = customer.estilo;
+                        $scope.colores_mostrar[i].descripcion = customer.descripcion;
+                        $scope.colores_mostrar[i].cantidad = customer.cantidad;
+                        $scope.colores_mostrar[i].precio = customer.precio;
+                        $scope.colores_mostrar[i].referencia = customer.referencia;
+                        $scope.colores_mostrar[i].lugar = customer.lugar;
+                        $scope.colores_mostrar[i].id_estado = customer.id_estado;
+                        $scope.colores_mostrar[i].sub_total = customer.sub_total;
+                        console.log($scope.colores_mostrar);
+
+                    }
+                }
+            }
+
+            $scope.editarColor = function(customer){
+                $scope.activar_editar = 1;
+                console.log(customer);
+                for (var i = 0; i < $scope.colores_orden.length; i++) {
+                    if ($scope.colores_orden[i].id == customer.id) {
+                        console.log($scope.colores_orden[i]);
+                        $scope.registro.po = $scope.colores_orden[i].po;
+                        $scope.registro.estilo = $scope.colores_orden[i].estilo;
+                        $scope.registro.tipo = $scope.colores_orden[i].tipo +' -'+customer.tipo.nombre;
+                        $scope.registro.descripcion = $scope.colores_orden[i].descripcion;
+                        $scope.registro.id_calibre = $scope.colores_orden[i].id_calibre +' -'+customer.calibre.nombre;
+                        $scope.registro.id_metraje = $scope.colores_orden[i].id_metraje +' -'+customer.metraje.nombre;
+                        $scope.registro.color = $scope.colores_orden[i].color;
+                        $scope.registro.cantidad = $scope.colores_orden[i].cantidad;
+                        $scope.registro.precio = $scope.colores_orden[i].precio;
+                        $scope.registro.sub_total = $scope.colores_orden[i].sub_total;
+                        $scope.registro.referencia = $scope.colores_orden[i].referencia;
+                        $scope.registro.lugar = $scope.colores_orden[i].lugar;
+                        $scope.registro.id_estado = $scope.colores_orden[i].id_estado;
+                    }
+                }
+            }
+
+            $scope.limpiarColor = function(customer){
+                $scope.registro.po = '';
+                $scope.registro.estilo = '';
+                $scope.registro.tipo = '';
+                $scope.registro.descripcion = '';
+                $scope.registro.id_calibre = '';
+                $scope.registro.id_metraje = '';
+                $scope.registro.color = '';
+                $scope.registro.cantidad = '';
+                $scope.registro.precio = '';
+                $scope.registro.sub_total = '';
+                $scope.registro.referencia = '';
+                $scope.registro.lugar = '';
+                $scope.registro.id_estado = '';
             }
 
             $scope.saveColor = function (customer){
@@ -155,11 +260,11 @@
                 var tipo = customer.tipo.slice(0, ca);
                 color_solo.tipo = tipo;
 
-                var ca = customer.id_color.indexOf(" -");
-                var id_color = customer.id_color.slice(0, ca);
-                color_solo.id_color = id_color;
-
-                color_solo.id = contador;
+                // var ca = customer.id_color.indexOf(" -");
+                // var id_color = customer.id_color.slice(0, ca);
+                // color_solo.id_color = id_color;
+                color_solo.color = customer.color;
+                color_solo.id = $scope.contador;
                 color_solo.po = customer.po;
                 color_solo.estilo = customer.estilo;
                 color_solo.descripcion = customer.descripcion;
@@ -169,18 +274,19 @@
                 color_solo.lugar = customer.lugar;
                 color_solo.sub_total = customer.sub_total;
                 color_solo.id_estado = customer.id_estado;
+                color_solo.id = $scope.contador;
 
                 var color_mostrar = new Object();
                 var calibre = new Object();
                 var metraje = new Object();
                 var tipo = new Object();
                 var color = new Object();
-                console.log(color_solo);
+                // console.log(color_solo);
 
                 color_mostrar.calibre = calibre;
                 color_mostrar.metraje = metraje
                 color_mostrar.tipo = tipo;
-                color_mostrar.color = color;
+                color_mostrar.color = customer.color;
 
                 var ca = customer.id_calibre.indexOf("-");
                 var id_calibre = customer.id_calibre.slice(ca+1, customer.id_calibre.length);
@@ -194,11 +300,11 @@
                 var tipo = customer.tipo.slice(ca+1, customer.tipo.length);
                 color_mostrar.tipo.nombre = tipo;
 
-                var ca = customer.id_color.indexOf("-");
-                var id_color = customer.id_color.slice(ca+1, customer.id_color.length);
-                color_mostrar.color.nombre = id_color;
+                // var ca = customer.id_color.indexOf("-");
+                // var id_color = customer.id_color.slice(ca+1, customer.id_color.length);
+                // color_mostrar.color.nombre = id_color;
 
-                color_mostrar.id = contador;
+                color_mostrar.id = $scope.contador;
                 color_mostrar.po = customer.po;
                 color_mostrar.estilo = customer.estilo;
                 color_mostrar.descripcion = customer.descripcion;
@@ -212,12 +318,18 @@
                 $scope.colores_mostrar.push(color_mostrar);
                 // console.log(color_solo);
                 $scope.colores_orden.push(color_solo);
-                contador = contador + 1;
+                $scope.contador = parseInt($scope.contador) + 1;
+                var suma = parseFloat($scope.total) + parseFloat(customer.sub_total);
+                $scope.total = suma.toFixed(2);
+                var total_conos = parseInt( $scope.total_conos) + parseInt(customer.cantidad);
+                $scope.total_conos = total_conos;
 
             }
             $scope.calcular = function(){
-                console.log("entro a calcular");
-                $scope.registro.sub_total = parseFloat($scope.registro.precio) * parseFloat($scope.registro.cantidad);
+                // console.log("entro a calcular");
+                var suma = $scope.registro.sub_total = parseFloat($scope.registro.precio) * parseFloat($scope.registro.cantidad);
+                // console.log(suma);
+                $scope.registro.sub_total = suma.toFixed(2);
             }
             // Function for sending data
             $scope.saveData = function (customer) {
@@ -239,9 +351,9 @@
                     var id_metraje = customer.id_metraje.slice(0, metraje);
                     clone_customer.id_metraje = id_metraje;
 
-                    var color = customer.id_color.indexOf(" -");
-                    var id_color = customer.id_color.slice(0, color);
-                    clone_customer.id_color = id_color;
+                    // var color = customer.id_color.indexOf(" -");
+                    // var id_color = customer.id_color.slice(0, color);
+                    // clone_customer.id_color = id_color;
 
                     // var referencia = customer.id_referencias.indexOf(" -");
                     // var id_referencias = customer.id_referencias.slice(0, referencia);
@@ -256,6 +368,7 @@
                     clone_customer.tipo = id_tipoorden;
                     console.log(clone_customer);
                     clone_customer.colores_orden = JSON.stringify($scope.colores_orden);
+                    clone_customer.total = $scope.total;
                     OrdenesService.store(clone_customer).then(
                         function successCallback(response) {
                             if (response.data.result) {
@@ -388,6 +501,7 @@
 
             // Functions for modals
             $scope.modalCreateOpen = function() {
+                $scope.colores_orden = [];
                 $scope.registro = {};
                 $scope.action = 'new'; 
 
