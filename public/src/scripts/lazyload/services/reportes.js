@@ -50,4 +50,17 @@ contactos_service.service('ReportesService', ['$http', 'WS_URL', function($http,
     this.clientes = function(params){
         return $http.get(WS_URL+'clientes', params);
     };
+
+    this.ordenes = function(params){
+        return $http.get(WS_URL+'showOrdenes', params);
+    };
+
+    this.estados = function(params){
+        return $http.get(WS_URL+'estados');
+    };
+
+    this.filtrar = function(params) {
+        return $http.post(WS_URL+'filtrar/despacho', params);
+    };
+
 }]);

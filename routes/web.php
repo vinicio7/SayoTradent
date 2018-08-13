@@ -12,12 +12,13 @@
 */
 
 Route::get('/', function () {
-		return redirect('dist');
+		return redirect('src');
 });
 
 Route::group(['prefix' => 'ws'], function (){
 
 	Route::post 	('filtrar/movimientos',		'MovimientosController@filtrar');
+	Route::post 	('filtrar/despacho',		'DespachosController@filtrar');
 	Route::post 	('consultar',				'PlanillaController@consultar');
 	Route::resource ('usuarios', 				'UsuariosController');
 	Route::any 		('login', 					'UsuariosController@login');
@@ -97,7 +98,8 @@ Route::group(['prefix' => 'ws'], function (){
 	Route::get      ('estadoCuentaOrden/{param}/{param1}','OrdenesController@estadoCuentaOrden');
 	Route::get      ('estadoCuentaConsumo/{param}/{param1}','OrdenesController@estadoCuentaConsumo');
 	Route::get 		('consultarOrden/{id}',				'OrdenesController@consultarOrden');
-});
+	Route::get 		('showOrdenes',						'OrdenesController@ordenes');
+});	
 
 Auth::routes();
 
