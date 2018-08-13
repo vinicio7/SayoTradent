@@ -41,8 +41,8 @@ class TenidoController extends Controller
 			if (!$validacion) {
 				$record = Tenido::create([
 						'id_orden'          => $request->input('id_orden'),
-            'cantidad'          => $request->input('cantidad'),
-            'receta'            => $request->input('receta'),
+						'cantidad'          => $request->input('cantidad'),
+						'receta'            => $request->input('receta'),
 						'estado_id'         => $request->input('estado_id'),
 						'etapa_id'          => $request->input('etapa_id'),
 						'fecha'				=> date("Y-m-d", strtotime($request->input('fecha'))),

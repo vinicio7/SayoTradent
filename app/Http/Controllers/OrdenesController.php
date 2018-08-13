@@ -102,6 +102,7 @@ class OrdenesController extends Controller
             return response()->json($response, $this->status_code);
         }
     }
+    
 
     // public function maseo()
     // {
@@ -205,7 +206,7 @@ class OrdenesController extends Controller
     {
         try {
             // dd("lego");
-            $records           = Orden::with('cliente','estilo','calibre','metraje','color','referencia','lugar','tenido','secado','enconado')->where('estado_prod',3)->get();
+            $records           = Orden::with('cliente','estilo','calibre','metraje','color','referencia','lugar','tenido','secado','enconado')->where('estado_prod',4)->get();
             // dd($records);
             $this->status_code = 200;
             $this->result      = true;
@@ -447,6 +448,7 @@ class OrdenesController extends Controller
                 'cantidad_total'    =>  0,
                 'facturado'         =>  false,
                 'estado_prod'       =>  0,
+                'id_estado'         =>  0,
                 'hora'              =>  date('h:i:s', strtotime($request->input('fecha_hora')))
             ]);
 
