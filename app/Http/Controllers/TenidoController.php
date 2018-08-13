@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Tenido;
-use App\Orden;
+use App\ColoresOrden;
 
 class TenidoController extends Controller
 {
@@ -55,9 +55,11 @@ class TenidoController extends Controller
 						'hora_salida'		=> $request->input('hora_salida'),
 
 					]);
-					$record2 = Orden::find($request->input('id_orden'));
+					// dd($request->input('id_orden'));
+					$record2 = ColoresOrden::find($request->input('id_orden'));
+					dd($record2);
 				if ($record) {
-					$record2->id_estado = 1;
+					$record2->estado_id = 1;
 					$record2->save();
 					$this->status_code = 200;
 					$this->result      = true;

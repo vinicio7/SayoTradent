@@ -22,7 +22,18 @@
             $scope.datos2 = [];
             var modal;
 
+            $scope.cambioPlanilla = function(registro) {
+                // console.log(registro);
+                PlanillaService.filtrar(registro).then(function(response) {
+                    console.log(response.data.records);
+                    $scope.datas = response.data.records;
+                    $scope.search();
+                    $scope.select($scope.currentPage);
+                });
+            };
+
             $scope.consultar = function(datos){
+
                 PlanillaService.consultar(datos).then(
                         function successCallback(response) {
                             $scope.planilla = datos;
