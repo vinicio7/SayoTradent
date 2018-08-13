@@ -5,16 +5,79 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Movimientos;
 use App\Cuentas;
+use DB;
 class MovimientosController extends Controller
 {
     protected $result      = false;
 	protected $message     = 'Ocurrió un problema al procesar su solicitud';
 	protected $records     = array();
     protected $status_code = 400;
+    protected $total_dolares   = 0;
+    protected $total_quetzales = 0;
     
     public function index() {
 		try {
-			$records           = Movimientos::all();
+			$records           = Movimientos::with('cuenta')->get();
+			$suma_quetzales    = DB::table('movimientos')->where('tipo_movimiento', 1)->where('moneda',1)->get()->sum('monto');
+			$suma_dolares	   = DB::table('movimientos')->where('tipo_movimiento', 1)->where('moneda',2)->get()->sum('monto');
+			$resta_quetzales    = DB::table('movimientos')->where('tipo_movimiento', 2)->where('moneda',1)->get()->sum('monto');
+			$resta_dolares      = DB::table('movimientos')->where('tipo_movimiento', 2)->where('moneda',2)->get()->sum('monto');
+			$total_quetzales = $suma_quetzales - $resta_quetzales;
+			$total_dolares   = $suma_dolares   - $resta_dolares;
+			$this->status_code = 200;
+			$this->result      = true;
+			$this->message     = 'Registros consultados correctamente';
+			$this->records     = $records;
+			$this->total_dolares   = $total_dolares;
+			$this->total_quetzales = $total_quetzales;
+		} catch (\Exception $e) {
+			$this->status_code = 400;
+			$this->result      = false;
+			$this->message     = env('APP_DEBUG')?$e->getMessage():$this->message;
+		}finally{
+			$response = [
+				'result'  => $this->result,
+				'message' => $this->message,
+				'records' => $this->records,
+				'total_dolares' => $this->total_dolares,
+				'total_quetzales' => $this->total_quetzales,
+			];
+
+			return response()->json($response, $this->status_code);
+		}
+	}
+
+	public function filtrar(Request $request) {
+		try {
+			$tipo 		  = $request->input('tipo');
+			$moneda 	  = $request->input('moneda');
+			$fecha_inicio = $request->input('fecha_inicio');
+			$fecha_fin    = $request->input('fecha_fin');
+			$cuenta    	  = $request->input('cuenta');
+			if (isset($tipo)) {
+				if ($tipo == 0) {
+					$records = Movimientos::with('cuenta')->get();
+				} else {
+					$records = Movimientos::where('tipo_movimiento',$request->input('tipo'))->with('cuenta')->get();
+				}
+			}
+			if (isset($moneda)) {
+				if ($moneda == 0) {
+					$records = Movimientos::wwhere('tipo_movimiento',$request->input('tipo'))->with('cuenta')->get();
+				} else {
+					$records = Movimientos::where('tipo_movimiento',$request->input('tipo'))->where('moneda',$request->input('moneda'))->with('cuenta')->get();
+				}
+			}
+			if (isset($fecha_fin)) {
+				$records = Movimientos::where('tipo_movimiento',$request->input('tipo'))->where('moneda',$request->input('moneda'))->whereBetween('fecha',[$fecha_inicio,$fecha_fin])->with('cuenta')->get();	
+			}
+			if (isset($cuenta)) {
+				if ($cuenta == 0) {
+					$records = Movimientos::where('tipo_movimiento',$request->input('tipo'))->where('moneda',$request->input('moneda'))->whereBetween('fecha',[$fecha_inicio,$fecha_fin])->with('cuenta')->get();	
+				} else {
+					$records = Movimientos::where('tipo_movimiento',$request->input('tipo'))->where('moneda',$request->input('moneda'))->whereBetween('fecha',[$fecha_inicio,$fecha_fin])->where('cuenta_id',$request->input('cuenta'))->with('cuenta')->get();	
+				}
+			}
 			$this->status_code = 200;
 			$this->result      = true;
 			$this->message     = 'Registros consultados correctamente';
@@ -28,12 +91,15 @@ class MovimientosController extends Controller
 				'result'  => $this->result,
 				'message' => $this->message,
 				'records' => $this->records,
+				'total_dolares' => $this->total_dolares,
+				'total_quetzales' => $this->total_quetzales,
 			];
 
 			return response()->json($response, $this->status_code);
 		}
 	}
-	 public function cuentas()
+
+	public function cuentas()
     {
         try {
             $records           = Cuentas::all();
@@ -62,29 +128,6 @@ class MovimientosController extends Controller
 			$fecha  = date_create($request->input('fecha'));
 			$ingreso = Movimientos::where('tipo_movimiento', 1)->get()->last();
 			$egreso = Movimientos::where('tipo_movimiento', 2)->get()->last();
-			// dd( $ingreso );
-			
-
-			if ($request->input('tipo_movimiento') == 1 && $request->input('moneda') == 1) {
-				$prueba = $ingreso->monto + $request->input('monto');
-				$balanceQ = $prueba - $egreso->monto;
-            }else if($request->input('tipo_movimiento') == 2 && $request->input('moneda') == 1){
-				$prueba = $egreso->monto + $request->input('monto');
-				$balanceQ = $ingreso->monto -  $prueba ;
-			}else{
-				$balanceQ = $ingreso->balanceQ ;
-			}
-
-			if ($request->input('tipo_movimiento') == 1 && $request->input('moneda') == 2) {
-				$prueba = $ingreso->monto + $request->input('monto');
-				$balanceD = $prueba - $egreso->monto;
-            }else if($request->input('tipo_movimiento') == 2 && $request->input('moneda') == 2){
-				$prueba = $egreso->monto + $request->input('monto');
-				$balanceD = $ingreso->monto -  $prueba ;
-			}else{
-				$balanceD = $ingreso->balance_D ;
-			}
-			
 			
             $record = Movimientos::create([
                     'tipo_movimiento'       => $request->input('tipo_movimiento'),
@@ -95,8 +138,8 @@ class MovimientosController extends Controller
                     'nombre'   		        => $request->input('nombre'),
                     'moneda'                => $request->input('moneda'),
                     'cobrado'    		    => $request->input('cobrado'),
-                    'balanceQ'              => $balanceQ,
-                    'balance_D'             => $balanceD,
+                    // 'balanceQ'              => $balanceQ,
+                    // 'balance_D'             => $balanceD,
                     'cuenta_id'             => $cuenta[0],
                      ]);
             if ($record) {
@@ -159,13 +202,13 @@ class MovimientosController extends Controller
                 $record->monto              = $request->input('monto', $record->monto);
                 $record->descripcion  	    = $request->input('descripcion', $record->descripcion);
               
-                $record->fecha     		    = $request->input('fecha',$record->fecha);
+                $record->fecha     		    = date("Y-m-d", strtotime($request->input('fecha')));
                 $record->no_cheque          = $request->input('no_cheque', $record->no_cheque);
                 $record->nombre  		    = $request->input('nombre', $record->nombre);
                 $record->moneda             = $request->input('moneda',$record->moneda);
                 $record->cobrado    		= $request->input('cobrado',$record->cobrado );
-                $record->balanceQ           = $request->input('balanceQ',$record->balanceQ);
-                $record->balance_D          = $request->input('balance_D',$record->balance_D);
+                // $record->balanceQ           = $request->input('balanceQ',$record->balanceQ);
+                // $record->balance_D          = $request->input('balance_D',$record->balance_D);
                 $record->cuenta_id          = $request->input('cuenta_id',$record->cuenta_id );
    //              if ($request->input('tipo_movimiento') == 1) {
 			// 	if ($request->input('moneda') == 1) {

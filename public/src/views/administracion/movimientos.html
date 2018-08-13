@@ -6,8 +6,45 @@
                     <div class="panel-heading"><h4>REGISTRO DE MOVIMIENTOS</h4></div>
                     <div class="panel-body">
                         <div class="row">
-                            <button type="button" class="btn btn-success btn-rounded" ng-click="modalCreateOpen()" md-ink-ripple><i class="fa fa-plus"></i> Ingreso</button>
-                            <button ng-click="redirect()" type="button" class="btn btn-info btn-rounded"> <i class="fa fa-file-excel-o"></i>&nbsp;Excel</button>
+                            <div class="col-md-4">
+                                <button type="button" class="btn btn-success btn-rounded" ng-click="modalCreateOpen()" md-ink-ripple><i class="fa fa-plus"></i> Ingreso</button>
+                                <button ng-click="redirect()" type="button" class="btn btn-info btn-rounded"> <i class="fa fa-file-excel-o"></i>&nbsp;Excel</button>
+                            </div>
+                            <div class="col-md-8" style="text-align: right;">
+                                <h3>Balance Quetzales <b>Q. {{ balance_q}}</b> <br>      Balance Dolares <b>$. {{ balance_d}}</b> </h3>
+                               
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label>Tipo Movimiento</label>
+                                    <select class="form-control" ng-change="cambioMovimiento(movimiento)" ng-model="movimiento.tipo" >
+                                        <option value="0">Todos</option>
+                                        <option ng-repeat="item in select_tipo" value="{{item.id}}">{{ item.descripcion}}</option>
+                                    </select>
+                            </div>
+                            <div class="col-md-2">
+                                <label>Moneda</label>
+                                    <select class="form-control" ng-change="cambioMovimiento(movimiento)" ng-model="movimiento.moneda" >
+                                        <option value="0">Todos</option>
+                                        <option ng-repeat="item in select_moneda" value="{{item.id}}">{{ item.descripcion}}</option>
+                                    </select>
+                            </div>
+                            <div class="col-md-2">
+                                <label>Fecha Inicio</label>
+                                <input type="date" class="form-control" ng-model="movimiento.fecha_inicio" required>
+                            </div>
+                            <div class="col-md-2">
+                                <label>Fecha Fin</label>
+                                <input type="date" class="form-control" ng-change="cambioMovimiento(movimiento)" ng-model="movimiento.fecha_fin" required>
+                            </div>
+                            <div class="col-md-2">
+                                <label>Cuenta</label>
+                                    <select class="form-control" ng-change="cambioMovimiento(movimiento)" ng-model="movimiento.cuenta" >
+                                        <option value="0">Todos</option>
+                                        <option ng-repeat="item in select_cuenta" value="{{item.id}}">{{ item.nombre}}</option>
+                                    </select>
+                            </div>
                         </div>
                         <br>
                         <div class="row">
@@ -19,6 +56,9 @@
                                 </select>
                                 &nbsp;entradas
                             </div>
+                             <form class="form-horizontal right col-lg-4">
+                                <input type="text" class="form-control input-sm" placeholder="Escriba su búsqueda" data-ng-model="searchKeywords" data-ng-keyup="search()">
+                            </form>
                         </div>
                     </div>
                     <!-- data table -->
@@ -37,6 +77,17 @@
                             </th>
 
                             <th>Tipo de movimiento
+                                <div class="th">
+                                    <i class="fa fa-caret-up icon-up"
+                                        ng-click=" order('phone') "
+                                        ng-class="{active: row == 'phone'}"></i>
+                                    <i class="fa fa-caret-down icon-down"
+                                        ng-click=" order('-phone') "
+                                        ng-class="{active: row == '-phone'}"></i>
+                                </div>
+                            </th>
+                            <th>
+                                Moneda 
                                 <div class="th">
                                     <i class="fa fa-caret-up icon-up"
                                         ng-click=" order('phone') "
@@ -82,10 +133,13 @@
                                 </div>
                             </th> -->
                             <th>
-                                Balance Q.
+                                Fecha
                             </th>
                             <th>
-                                Balance $
+                                No. cheque
+                            </th>
+                            <th>
+                                Cuenta
                             </th>
                             <th>
                                 Editar
@@ -103,11 +157,16 @@
                                     <label ng-if="data.tipo_movimiento == 1"> Ingreso </label>
                                     <label ng-if="data.tipo_movimiento == 2"> Egreso </label>
                                 </td>
+                                <td>
+                                    <label ng-if="data.moneda == 1"> Quetzales </label>
+                                    <label ng-if="data.moneda == 2"> Dolares </label>
+                                </td>
                                 <td>{{ data.monto }}</td>
                                 <td>{{ data.descripcion }}</td>
                                 <!-- <td>{{ data.saldo }}</td> -->
-                                <td>{{ data.balanceQ }}</td>
-                                <td>{{ data.balance_D }}</td>
+                                <td>{{ data.fecha }}</td>
+                                <td>{{ data.no_cheque }}</td>
+                                <td>{{ data.cuenta.nombre }}</td>
                                 <td>
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-info ion ion-edit" ng-click="modalEditOpen(data)" md-ink-ripple></button>

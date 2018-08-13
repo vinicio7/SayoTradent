@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Usuarios;
+use App\Cuentas;
 use App\Proveedores;
 use App\Clientes;
 use App\Compras;
@@ -16,7 +17,7 @@ use App\Muestra;
 use Carbon\Carbon;
 use App\ControlCalidad;
 
-    
+
 class ExcelController extends Controller
 {
     public function index(Request $request){
@@ -190,9 +191,43 @@ class ExcelController extends Controller
 
                 $reporte = Movimientos::all();
                 // dd($reporte);
-
+                $tipo       = $request->input('tipo');
+                $moneda     = $request->input('moneda');
+                $fecha_inicio = date("Y-m-d", strtotime($request->input('fecha_inicio')));
+                $fecha_fin    = date("Y-m-d", strtotime($request->input('fecha_fin')));
+                $cuenta       = $request->input('cuenta');
+                // dd($tipo);
+             if (isset($tipo)) {
+                if ($tipo == 0) {
+                  $records = Movimientos::with('cuenta')->get();
+                } else {
+                  $records = Movimientos::where('tipo_movimiento',$request->input('tipo'))->with('cuenta')->get();
+                }
+              }
+              // dd($records);
+              if (isset($moneda)) {
+                if ($moneda == 0) {
+                  $records = Movimientos::wwhere('tipo_movimiento',$request->input('tipo'))->with('cuenta')->get();
+                } else {
+                  $records = Movimientos::where('tipo_movimiento',$request->input('tipo'))->where('moneda',$request->input('moneda'))->with('cuenta')->get();
+                }
+              }
+              // dd($records);
+              // if (isset($fecha_fin)) {
+              //   $records = Movimientos::where('tipo_movimiento',$request->input('tipo'))->where('moneda',$request->input('moneda'))->whereBetween('fecha',[$fecha_inicio,$fecha_fin])->with('cuenta')->get(); 
+              // }
+              // dd($records);
+              // dd($cuenta);
+              if (isset($cuenta)) {
+                if ($cuenta == 0) {
+                  $records = Movimientos::where('tipo_movimiento',$request->input('tipo'))->where('moneda',$request->input('moneda'))->with('cuenta')->get(); 
+                } else {
+                  $records = Movimientos::where('tipo_movimiento',$request->input('tipo'))->where('moneda',$request->input('moneda'))->where('cuenta_id',$request->input('cuenta'))->with('cuenta')->get(); 
+                }
+              }
+             // dd($records);
              $data = [];
-                foreach ($reporte as $reporte) {
+                foreach ($records as $reporte) {
                    $row = [];
                     if ($reporte->tipo_movimiento==1) {
                     $row ["Tipo de Movimiento"] = "Ingreso";
@@ -209,7 +244,7 @@ class ExcelController extends Controller
                     if ($reporte->moneda==1) {
                         $row ["Moneda"] = "Quetzales";
                     } elseif ($reporte->moneda==2){
-                        $row ["Moneda"] = "EgreDolaresso"; 
+                        $row ["Moneda"] = "Dolares"; 
                     }
 
                     if ($reporte->cobrado==1) {
@@ -218,9 +253,10 @@ class ExcelController extends Controller
                         $row ["Cobrado"] = "NO"; 
                     }
                  
-                   $row ["Balance Q"]              = $reporte->balanceQ;
-                   $row ["Balance D"]              = $reporte->balance_D;
-                   $row ["No. de Cuerta"]          = $reporte->cuenta_id;
+                   // $row ["Balance Q"]              = $reporte->balanceQ;
+                   // $row ["Balance D"]              = $reporte->balance_D;
+                   $cuenta = Cuentas::find($reporte->cuenta_id);
+                   $row ["Cuenta"]          = $cuenta->nombre;
               
                    $data[] = $row;
                 } 

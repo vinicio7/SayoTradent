@@ -96,10 +96,10 @@
 
 
             $scope.incentivos = function(item){
-                var pn = item.bon_inc_base/2/12*item.incentivo_pn;
+                var pn = item.calcular_bono/2/2/12*item.incentivo_pn;
                 $scope.planilla.incentivo_pn1 = pn.toFixed(2);
 
-                var as = item.bon_inc_base/2/12*item.incentivo_as;
+                var as = item.calcular_bono/2/2/12*item.incentivo_as;
                 $scope.planilla.incentivo_as1 = as.toFixed(2);
 
                 var total_bn = parseFloat($scope.planilla.incentivo_pn1) + parseFloat($scope.planilla.incentivo_as1);

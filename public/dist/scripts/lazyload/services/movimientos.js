@@ -21,5 +21,20 @@ contactos_service.service('MovimientosService', ['$http', 'WS_URL', function($ht
     this.cuentas = function(params){
         return $http.get(WS_URL+'cuentas');
     };
+
+    this.cargarTipos = function(params){
+        return $http.get(WS_URL+'tipos');
+    };
+
+    // this.cargarMonedas = function(params){
+    //     return $http.get(WS_URL+'monedas');
+    // };
+    this.filtrar = function(params) {
+        return $http.post(WS_URL+'filtrar/movimientos', params);
+    };
+
+    this.cargarCuentas = function(params){
+        return $http.get(WS_URL+'cuentas');
+    };
    
 }]);

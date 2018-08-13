@@ -12,11 +12,12 @@
 */
 
 Route::get('/', function () {
-		return redirect('src');
+		return redirect('dist');
 });
 
 Route::group(['prefix' => 'ws'], function (){
 
+	Route::post 	('filtrar/movimientos',		'MovimientosController@filtrar');
 	Route::post 	('consultar',				'PlanillaController@consultar');
 	Route::resource ('usuarios', 				'UsuariosController');
 	Route::any 		('login', 					'UsuariosController@login');
