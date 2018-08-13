@@ -158,8 +158,10 @@
             // Functions for modals
             $scope.modalCreateOpen = function(data) {
                 $scope.registro = {};
-                $scope.action = 'new'; 
-                $scope.registro.id_orden = data.id;
+                $scope.action = 'new';
+                console.log(data); 
+                $scope.registro.id_orden = data.id_orden;
+                console.log($scope.registro.id_orden);
                 modal = $modal.open({
                     templateUrl: 'views/bodega/modal_tenido.html',
                     scope: $scope,

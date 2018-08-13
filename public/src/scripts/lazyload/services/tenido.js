@@ -23,7 +23,6 @@ contactos_service.service('TenidoService', ['$http', 'WS_URL', function($http, W
         return $http.post(WS_URL+'ordenes/tenido');
     };
     
-    
 
    
 }]);

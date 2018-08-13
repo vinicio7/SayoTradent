@@ -18,6 +18,7 @@ Route::get('/', function () {
 Route::group(['prefix' => 'ws'], function (){
 
 	Route::post 	('filtrar/movimientos',		'MovimientosController@filtrar');
+	Route::post 	('filtrar/planilla',		'PlanillaController@filtrar');
 	Route::post 	('consultar',				'PlanillaController@consultar');
 	Route::resource ('usuarios', 				'UsuariosController');
 	Route::any 		('login', 					'UsuariosController@login');
@@ -45,7 +46,7 @@ Route::group(['prefix' => 'ws'], function (){
 	Route::any 		('reporte/fechas', 			'ExcelController@ordenesfechas');
 	Route::resource ('ordenes', 				'OrdenesController');
 	Route::resource ('facturas', 				'FacturasController');
-	Route::post 	('ordenes/tenido',			'OrdenesController@tenido');
+	Route::any 	('ordenes/tenido',			'OrdenesController@tenido');
 	Route::post 	('ordenes/maseo',			'OrdenesController@maseo');
 	Route::post 	('ordenes/secado',			'OrdenesController@secado');
 	Route::post 	('ordenes/enconado',		'OrdenesController@enconado');

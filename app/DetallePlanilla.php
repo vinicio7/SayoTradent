@@ -16,5 +16,9 @@ class DetallePlanilla extends Model
                            'incentivo_pn','incentivo_as','incentivo_pn1','incentivo_as1',
                            'total_bn_inc','total_ingresos','igss',
                            'isr','otros_descuentos','total_descuentos','total', 'sueldo_ordinario',
-						   ];
+                           ];
+    public function planilla()
+    {
+        return $this->hasOne('App\Planilla', 'id', 'id_planilla');
+    }
 }
