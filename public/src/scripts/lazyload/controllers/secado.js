@@ -220,7 +220,7 @@
                 $scope.action = 'delete'; 
                 $scope.registro.id_orden = data.id;
                 modal = $modal.open({
-                    templateUrl: 'views/bodega/modal_tenido.html',
+                    templateUrl: 'views/bodega/modal_secado.html',
                     scope: $scope,
                     size: 'md', 
                     resolve: function() {},

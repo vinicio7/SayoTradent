@@ -9,9 +9,9 @@ class Maseo extends Model
     protected $table    = 'maseo';
 	// protected $fillable = ['usuario', 'clave', 'activado'];
     protected $fillable = ['id_orden', 
-                           'cantidad',
+                           'fecha',
+                           'maseador',
                            'estado_id',
-                           'etapa_id',
                            'tipo_calibre',
                            'peso',
                            'lote',

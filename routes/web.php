@@ -49,7 +49,7 @@ Route::group(['prefix' => 'ws'], function (){
 	Route::post 	('ordenes/secado',			'OrdenesController@secado');
 	Route::post 	('ordenes/enconado',		'OrdenesController@enconado');
 	Route::post 	('ordenes/maseo',		    'OrdenesController@maseo');
-	Route::get 		('calidad',		    'OrdenesController@control_calidad2');
+	Route::get 		('calidad',		    		'OrdenesController@control_calidad2');
 	Route::resource ('movimientos', 			'MovimientosController');
 	Route::get 		('cliente', 				'OrdenesController@cliente');
 	Route::get 		('estilos', 				'OrdenesController@estilos');

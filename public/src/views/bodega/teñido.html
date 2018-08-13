@@ -101,6 +101,7 @@
                                 <td>{{ data.estilo.descripcion }}</td>
                                     <td>{{ data.calibre.descripcion }}</td>
                                     <td>{{ data.metraje.descripcion }}</td>
+                                    
                                     <td>
                                         <label ng-if="data.tipo == 1">
                                             Normal
@@ -125,7 +126,7 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <button type="button" class="btn btn-info ion ion-edit" ng-if="data.tenido.estado_id == 1"ng-click="modalEditOpen(data)" md-ink-ripple></button>
+                                    <button type="button" class="btn btn-info ion ion-edit" ng-if="data.id_estado == 1"ng-click="modalEditOpen(data)" md-ink-ripple></button>
                                 </td>
                             </tr>
                         </tbody>
