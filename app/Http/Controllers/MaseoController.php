@@ -41,9 +41,9 @@ class MaseoController extends Controller
 			if (!$validacion) {
 				$record = Maseo::create([
 						'id_orden'          => $request->input('id_orden'),
-                        'cantidad'          => $request->input('cantidad'),
+                        'fecha'             => date("Y-m-d", strtotime($request->input('fecha'))),
+						'maseador'          =>$request->input('maseador'),
 						'estado_id'         =>$request->input('estado_id'),
-						'etapa_id'          =>$request->input('etapa_id'),
 						'tipo_calibre'      =>$request->input('tipo_calibre'),
 						'peso'          	=>$request->input('peso'),
 						'lote'          	=>$request->input('lote'),

@@ -200,14 +200,15 @@
 
             $scope.modalStopOpen = function(data) {
 
-                console.log(data);
+                console.log(data.id);
                 $http({
                     method: 'GET',
-                    url:    WS_URL+'buscar3/'+data.id
+                    url:    WS_URL+'buscar2/'+data.id
                 })
                 .then(function succesCallback (response) {
                     if( response.data.result ) {
                         data = response.data.records;
+                        console.log(data);
                         $scope.registro = data;
                         console.log($scope.registro);
                     }
@@ -221,7 +222,7 @@
                 $scope.action = 'delete'; 
                 $scope.registro.id_orden = data.id;
                 modal = $modal.open({
-                    templateUrl: 'views/bodega/modal_tenido.html',
+                    templateUrl: 'views/bodega/modal_enconado.html',
                     scope: $scope,
                     size: 'md', 
                     resolve: function() {},

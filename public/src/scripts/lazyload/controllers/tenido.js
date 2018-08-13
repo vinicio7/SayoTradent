@@ -30,6 +30,7 @@
                     $scope.select($scope.currentPage);      
                 });
                 
+                
             } 
 
             $scope.redirect = function(){ 
@@ -95,7 +96,6 @@
 
             // Function for sending data
             $scope.saveData = function (customer) {
-                console.log(customer);
                 if ($scope.action == 'new') {
                     TenidoService.store(customer).then(
                         function successCallback(response) {
@@ -134,9 +134,9 @@
                     );
                 }
                 else if ($scope.action == 'delete') {
-                    console.log(customer);
-                    // console.log(customer[0].orden.id);
-                    TenidoService.destroy(customer[0].orden).then(
+                    // console.log(customer);
+                    console.log(customer[0].orden.id);
+                    TenidoService.destroy(customer[0].orden.id).then(
                         function successCallback(response) {
                             if (response.data.result) {
                                 MostarDatos();
@@ -158,8 +158,10 @@
             // Functions for modals
             $scope.modalCreateOpen = function(data) {
                 $scope.registro = {};
-                $scope.action = 'new'; 
-                $scope.registro.id_orden = data.id;
+                $scope.action = 'new';
+                console.log(data); 
+                $scope.registro.id_orden = data.id_orden;
+                console.log($scope.registro.id_orden);
                 modal = $modal.open({
                     templateUrl: 'views/bodega/modal_tenido.html',
                     scope: $scope,

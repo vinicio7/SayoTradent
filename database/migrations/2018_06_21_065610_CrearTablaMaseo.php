@@ -16,9 +16,15 @@ class CrearTablaMaseo extends Migration
         Schema::create('maseo', function (Blueprint $table) {
             $table->increments('id');
             $table->Integer('id_orden');
-            $table->Integer('cantidad');
+            $table->Integer('fecha');
+            $table->Integer('maseador');
             $table->Integer('estado_id');
-            $table->Integer('etapa_id');
+            $table->Integer('tipo_calibre');
+            $table->Integer('peso');
+            $table->Integer('lote');
+            $table->Integer('conos_grandes');
+            $table->Integer('quesos');
+            $table->Integer('kilos');
             $table->timestamps();
         });
     }
