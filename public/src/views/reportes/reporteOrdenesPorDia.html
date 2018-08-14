@@ -10,11 +10,8 @@
                                     <label>Fecha Filtro</label>
                                     <input type="date" class="form-control" ng-model="fechaFiltro" required>
                                 </div>
-                                <div class="col-sm-2">
+                                <div class="col-sm-6">
                                     <button ng-click="MostrarDatos()" type="button" class="btn btn-info btn-rounded"> <i class="fa fa-file-excel-o"></i>&nbsp;Filtrar</button>
-                                    
-                                </div>
-                                <div class="col-sm">
                                     <button ng-click="ordenesPorDiaReporte()" type="button" class="btn btn-info btn-rounded"> <i class="fa fa-file-excel-o"></i>&nbsp;Excel</button>
                                 </div>
                             </div>
@@ -115,14 +112,14 @@
                                 </th>
                             </tr>
                             </thead>
-                            <tbody>
-                                <tr ng-repeat="data in currentPageStores track by $index">
+                            <tbody ng-repeat="data in currentPageStores track by $index">
+                                <tr ng-repeat="orden in data.colores_orden">
                                     <td>{{ data.fecha_hora }}</td>
                                     <td>{{ data.cliente.nombre }}</td>
-                                    <td>{{ data.po }}</td>
-                                    <td>{{ data.color.descripcion }}</td>
-                                    <td>{{ data.estilo.descripcion }}</td>
-                                    <td>{{ data.cantidad }}</td>
+                                    <td>{{ orden.po }}</td>
+                                    <td>{{ orden.color }}</td>
+                                    <td>{{ orden.estilo }}</td>
+                                    <td>{{ orden.cantidad }}</td>
                                     <td>{{ data.amount }}</td>
                                 </tr>
                             </tbody>

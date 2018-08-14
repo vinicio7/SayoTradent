@@ -63,4 +63,8 @@ contactos_service.service('ReportesService', ['$http', 'WS_URL', function($http,
         return $http.post(WS_URL+'filtrar/despacho', params);
     };
 
+    this.filtrarMuestras = function(params) {
+        return $http.post(WS_URL+'filtrar/muestra', params);
+    };
+
 }]);

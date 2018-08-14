@@ -29,11 +29,7 @@
                     $scope.select($scope.currentPage);
                 });
             };
-
-            Array.prototype.unique=function(a){
-              return function(){return this.filter(a)}}(function(a,b,c){return c.indexOf(a,b+1)<0
-            });
-
+            
             // Function for load table
             function MostarDatos() {
                 ReportesService.despachos().then(function(response) {

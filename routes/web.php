@@ -19,6 +19,7 @@ Route::group(['prefix' => 'ws'], function (){
 
 	Route::post 	('filtrar/movimientos',		'MovimientosController@filtrar');
 	Route::post 	('filtrar/despacho',		'DespachosController@filtrar');
+	Route::post 	('filtrar/muestra',		'MuestrasController@filtrar');
 	Route::post 	('consultar',				'PlanillaController@consultar');
 	Route::resource ('usuarios', 				'UsuariosController');
 	Route::any 		('login', 					'UsuariosController@login');

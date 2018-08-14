@@ -10,11 +10,8 @@
                                     <label>Fecha Filtro</label>
                                     <input type="date" class="form-control" ng-model="fechaFiltro" required>
                                 </div>
-                                <div class="col-sm-2">
+                                <div class="col-sm-6">
                                     <button ng-click="MostrarDatos()" type="button" class="btn btn-info btn-rounded"> <i class="fa fa-file-excel-o"></i>&nbsp;Filtrar</button>
-                                    
-                                </div>
-                                <div class="col-sm">
                                     <button ng-click="ordenesPorDiaReporte()" type="button" class="btn btn-info btn-rounded"> <i class="fa fa-file-excel-o"></i>&nbsp;Excel</button>
                                 </div>
                                 <!-- <button type="button" class="btn btn-success btn-rounded" ng-click="modalCreateOpen()" md-ink-ripple><i class="fa fa-plus"></i> Nuevo Pedido</button> -->
@@ -147,18 +144,18 @@
                                 <!-- <th>Facturar</th> -->
                             </tr>
                             </thead>
-                            <tbody>
-                                <tr ng-repeat="data in currentPageStores track by $index">
+                            <tbody ng-repeat="data in currentPageStores track by $index">
+                                <tr ng-repeat="factura in data.colores_orden">
                                     <td>{{ $index + 1 }}</td>
                                     <td>A</td>
                                      <td>{{ $index + 1 }}</td>
                                     <td>{{ data.orden }}</td>
-                                    <td>{{ data.descripcion }}</td>
+                                    <td>{{ factura.descripcion }}</td>
                                     <td>{{ data.cliente.nombre }}</td>
-                                    <td>{{ data.po }}</td>
-                                    <td>{{ data.estilo.descripcion }}</td>
-                                    <td>{{ data.calibre.descripcion }}</td>
-                                    <td>{{ data.metraje.descripcion }}</td>
+                                    <td>{{ factura.po }}</td>
+                                    <td>{{ factura.estilo }}</td>
+                                    <td>{{ factura.calibre.descripcion }}</td>
+                                    <td>{{ factura.metraje.descripcion }}</td>
                                     <td>
                                         <label ng-if="data.tipo == 1">
                                             Normal
@@ -167,12 +164,12 @@
                                             Cafta
                                         </label>
                                     </td>
-                                    <td>{{ data.color.descripcion }}</td>
+                                    <td>{{ factura.color }}</td>
 
                                     <td>{{ data.fecha_hora }}</td> 
                                     <td>{{ data.total_salida }}</td> 
                                     <td>{{ data.balance }}</td> 
-                                    <td>{{ data.cantidad }}</td>       
+                                    <td>{{ factura.cantidad }}</td>       
                                    
                                 </tr>
                             </tbody>

@@ -101,7 +101,7 @@ class DespachosController extends Controller
     public function despachosDiarios($param)
     {
         try {
-            $records           = Despachos::where('fecha', $param)->with('orden', 'orden.cliente', 'orden.color','orden.estilo', 'orden.calibre')->get();
+            $records           = Despachos::where('fecha', $param)->with('orden', 'orden.cliente', 'orden.coloresOrden', 'orden.coloresOrden.calibre')->get();
             $this->status_code = 200;
             $this->result      = true;
             $this->message     = 'Registros consultados correctamente';

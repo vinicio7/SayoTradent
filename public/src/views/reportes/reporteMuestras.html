@@ -47,13 +47,6 @@
                                 <label>Fecha Fin</label>
                                 <input type="date" class="form-control" ng-change="cambioDespacho(despacho)" ng-model="despacho.fecha_fin" required>
                             </div>
-                            <div class="col-md-2">
-                                <label>Estado</label>
-                                    <select class="form-control" ng-change="cambioDespacho(despacho)" ng-model="despacho.estado" >
-                                        <option value="0">Todos</option>
-                                        <option ng-repeat="item in estados" value="{{item.id}}">{{ item.descripcion}}</option>
-                                    </select>
-                            </div>
                         </div>
                         <table class="table table-bordered table-striped">
                             <thead>
