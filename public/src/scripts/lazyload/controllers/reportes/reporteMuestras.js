@@ -29,6 +29,23 @@
                 });
             }
 
+            function cargarClientes(){
+                ReportesService.clientes().then(function(response){
+                    $scope.clientes = response.data.records;
+                });
+            }
+
+            function cargarOrdenes(){
+                ReportesService.ordenes().then(function(response){
+                    $scope.ordenes = response.data.records;
+                });
+            }
+
+            function cargarEstados(){
+                ReportesService.estados().then(function(response){
+                    $scope.estados = response.data.records;
+                });
+            }
 
             function cargarModal(){
                

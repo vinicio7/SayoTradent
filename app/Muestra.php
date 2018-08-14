@@ -13,13 +13,8 @@ class Muestra extends Model
                            'envio', 
                            'rechazo', 
                            'fecha_ok',
-                           'id_estado',
                            ];
                            
-    public function estados()
-    {
-        return $this->hasOne('App\Estados', 'id', 'id_estado');
-    }
     public function orden()
     {
         return $this->hasOne('App\Orden', 'id', 'id_orden');
