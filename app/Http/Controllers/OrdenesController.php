@@ -821,7 +821,7 @@ class OrdenesController extends Controller
     public function estadoCuentaConsumo($param, $param1)
     {
         try {
-            $records = Orden::whereBetween('fecha_hora', [$param, $param1])->orderBy('orden')->with('cliente','estilo','tipoOrden')->get();
+            $records = Orden::whereBetween('fecha_hora', [$param, $param1])->orderBy('orden')->with('cliente','tipoOrden')->get();
             $this->status_code = 200;
             $this->result      = true;
             $this->message     = 'Registros consultados correctamente';
