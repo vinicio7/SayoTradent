@@ -33,6 +33,7 @@
                     $scope.select($scope.currentPage);
                 });
             };
+            
 
             function cargarTipos(){
                 var tipo = {};

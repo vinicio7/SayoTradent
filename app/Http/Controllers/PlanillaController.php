@@ -36,6 +36,59 @@ class PlanillaController extends Controller{
         }
     }
 
+    public function filtrar(Request $request) {
+       
+		try {
+			$tipo 		  = $request->input('tipo');
+			$fecha_inicio = $request->input('fecha_inicio');
+            $fecha_fin    = $request->input('fecha_fin');
+
+            $resultado = substr($fecha_inicio, 6, 1);
+            $resultado1 = substr($fecha_fin, 6, 1);
+            
+			if (isset($tipo)) {
+                if ($tipo == null) {
+					$records = Planilla::all();
+				} else {
+					$records = Planilla::where('nombre',$request->input('tipo'))->get();
+				}
+            }
+            // dd($tipo, $fecha_fin);
+			
+                
+            if ($tipo == null && $resultado1 == null){
+                // dd("Entro al if general");
+                $records = DetallePlanilla::all();
+                // dd($records);
+            }else if($tipo == null && $resultado1 != null){
+                // dd("entro al else");
+                $records = DetallePlanilla::whereBetween('mes',[$resultado,$resultado1])->with('planilla')->get();
+                // dd($records);
+            }else{
+                $records = DetallePlanilla::all();
+                // dd($records);
+            }
+			
+			$this->status_code = 200;
+			$this->result      = true;
+			$this->message     = 'Registros consultados correctamente';
+			$this->records     = $records;
+		} catch (\Exception $e) {
+			$this->status_code = 400;
+			$this->result      = false;
+			$this->message     = env('APP_DEBUG')?$e->getMessage():$this->message;
+		}finally{
+			$response = [
+				'result'  => $this->result,
+				'message' => $this->message,
+				'records' => $this->records,
+			];
+
+			return response()->json($response, $this->status_code);
+		}
+	}
+
+
     public function consultar(Request $request){
         try {
             $planilla = Planilla::where('no_empleado',$request->input('no_empleado'))->first();

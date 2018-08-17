@@ -10,6 +10,25 @@
                         </div>
                         <br>
                         <div class="row">
+                            <div class="col-md-2">
+                                <label>Empleado</label>
+                                    <!-- <select class="form-control" ng-change="cambioPlanilla(planilla)" ng-model="planilla.tipo" >
+                                        <option value="0">Todos</option>
+                                        <option ng-repeat="item in select_tipo" value="{{item.id}}">{{ item.descripcion}}</option>
+                                    </select> -->
+                                    <input type="text" class="form-control" ng-change="cambioPlanilla(planilla)" ng-model="planilla.tipo" required>
+                            </div>
+                            <div class="col-md-2">
+                                <label>Fecha Inicio</label>
+                                <input type="date" class="form-control" ng-model="planilla.fecha_inicio" required>
+                            </div>
+                            <div class="col-md-2">
+                                <label>Fecha Fin</label>
+                                <input type="date" class="form-control" ng-change="cambioPlanilla(planilla)" ng-model="planilla.fecha_fin" required>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
                             <div class="small text-bold left mt5">
                                 Mostrar
                                 <select data-ng-model="numPerPage"
@@ -23,6 +42,7 @@
                             </form>
                         </div>
                     </div>
+
                     <!-- data table -->
                     <table class="table table-bordered table-striped">
                         <thead>

@@ -54,7 +54,10 @@ class OrdenesController extends Controller
         try {
             $records           = Orden::where('orden',$id)->with('cliente')->first();
             if ($records) {
-                $records2 = ColoresOrden::where('id_orden',$records->orden)->with('calibre','metraje','tipoOrden')->get();
+                $records2 = ColoresOrden::where([['id_orden',$records->orden],['estado_prod', 0],])->with('calibre','metraje','tipoOrden')->get();
+                    // dd($records2);
+
+                // $records2 = ColoresOrden::where('id_orden',$records->orden)->with('calibre','metraje','tipoOrden')->get();
                 // $var = $records->fecha_hora;
                 // $date = str_replace('-', '/', $var);
                 // $records->fecha_hora = date('d/m/Y', strtotime($date));
@@ -83,7 +86,7 @@ class OrdenesController extends Controller
     {
         try {
             // dd("lego");
-            $records           = Orden::with('cliente','estilo','calibre','metraje','color','referencia','lugar','tenido','secado')->where('estado_prod',0)->get();
+            $records           = ColoresOrden::with('calibre','metraje','tipoOrden')->where('estado_prod',0)->get();
             $this->status_code = 200;
             $this->result      = true;
             $this->message     = 'Registros consultados correctamente';
@@ -496,6 +499,7 @@ class OrdenesController extends Controller
                         'id_estado'     =>  $item->id_estado,
                         'sub_total'     =>  $item->sub_total,
                         'precio'        => $item->precio,
+                        'estado_prod'       =>  0,
                     ]);
                     $b = $b + $record2->cantidad;
                     $c = $c + $record2->sub_total;
@@ -848,7 +852,7 @@ class OrdenesController extends Controller
 
     public function ordenes(){
         try {
-            $records           = Orden::with('cliente')->get();
+            $records = Orden::whereBetween('fecha_hora', [$param, $param1])->orderBy('orden')->with('cliente','tipoOrden')->get();
             $this->status_code = 200;
             $this->result      = true;
             $this->message     = 'Registros consultados correctamente';
