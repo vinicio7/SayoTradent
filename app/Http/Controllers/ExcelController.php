@@ -16,6 +16,8 @@ use App\Despachos;
 use App\Muestra;
 use Carbon\Carbon;
 use App\ControlCalidad;
+use App\Planilla;
+use App\DetallePlanilla;
 
 
 class ExcelController extends Controller
@@ -262,6 +264,113 @@ class ExcelController extends Controller
                 } 
 
           $sheet->fromArray($data);
+      });
+      })->export('xls');
+    }
+
+    public function reportePlanillas(Request $request){
+        \Excel::create('Planillas', function($excel) use ($request){
+             $excel->sheet('Datos', function($sheet) use ($request) {
+
+                $reporte = Planilla::with('detalle')->get();
+                // dd($reporte);
+                // var_dump($reporte);
+                $tipo 		  = $request->input('tipo');
+                $fecha_inicio =  date("Y-m-d", strtotime($request->input('fecha_inicio')));
+                $fecha_fin    = date("Y-m-d", strtotime($request->input('fecha_fin')));
+    
+                $resultado = substr($fecha_inicio, 6, 1);
+                $resultado1 = substr($fecha_fin, 6, 1);
+                
+                if (isset($tipo)) {
+                    if ($tipo == null) {
+                        // dd("entro a tipo null");
+                        $records = Planilla::with('detalle')->get();
+                        // dd($records);
+                        $records1 = [];
+                    } else {
+                        // dd("entro al else");
+                        $records = Planilla::where('nombre',$request->input('tipo'))->with('detalle')->get();
+                        $records1 = [];
+                    }
+                }
+                
+                // dd($tipo, $fecha_fin);
+                
+                if(isset($resultado1)){
+                    if ($tipo == null && $resultado1 == null){
+                        // dd("Entro al if general");
+                        $records = Planilla::with('detalle')->get();
+                        
+                        $records1 = [];
+                        // dd($records);
+                    }else if($tipo == null && $resultado1 != null){
+                        // dd("entro al else");
+                        $records1 = DetallePlanilla::whereBetween('mes',[$resultado,$resultado1])->with('planilla')->get();
+                        $records = [];
+                        // dd($records);
+                    }
+                }
+                // dd($records, "despues de los if");
+            //  dd( $records1);
+                if($records == TRUE){
+                    // dd("llego al if de records == true");
+                    $data = [];
+                    foreach ($records as $reporte) {
+                        // dd($reporte);
+                       $row = [];
+                       
+                       $row ["No. de Empleado"]              = $reporte->no_empleado;
+                       $row ["Nombre"]                       = $reporte->nombre;
+                       $row ["Sueldo base"]                  = $reporte->sueldo_base;
+                       $row ["Bono Calculado"]               = $reporte->calcular_bono;
+                       $row ["Dias Trabajados"]              = $reporte->detalle->dias_trabajados;
+                       $row ["Bono Legal"]                   = $reporte->detalle->bon_legal;
+                       $row ["Total de bonos de incentivo"]  = $reporte->detalle->total_bn_inc;
+                       $row ["Total de Ingresos"]            = $reporte->detalle->total_ingresos;
+                       $row ["IGSS"]                         = $reporte->detalle->igss;
+                       $row ["ISR"]                          = $reporte->detalle->isr;
+                       $row ["Otros Descuentos"]             = $reporte->detalle->otros_descuentos;
+                       $row ["Total de Descuentos"]          = $reporte->detalle->total_descuentos;
+                       $row ["Total "]                       = $reporte->detalle->total;
+                       
+                    //    dd($row);
+                       $data[] = $row;
+                    //    dd($data);
+                    } 
+                    $sheet->fromArray($data);
+                }elseif($records1 == TRUE){
+                    // dd($records1);
+                    $data = [];
+                    foreach ($records1 as $reporte) {
+                    $row = [];
+                    // dd( "lleo a records1");
+                    
+                    $row ["No. de Empleado"]              = $reporte->planilla->no_empleado;
+                    $row ["Nombre"]                       = $reporte->planilla->nombre;
+                    $row ["Sueldo base"]                  = $reporte->planilla->sueldo_base;
+                    $row ["Bono Calculado"]               = $reporte->planilla->calcular_bono;
+                    $row ["Dias Trabajados"]              = $reporte->dias_trabajados;
+                    $row ["Bono Legal"]                   = $reporte->bon_legal;
+                    $row ["Total de bonos de incentivo"]  = $reporte->total_bn_inc;
+                    $row ["Total de Ingresos"]            = $reporte->total_ingresos;
+                    $row ["IGSS"]                         = $reporte->igss;
+                    $row ["ISR"]                          = $reporte->isr;
+                    $row ["Otros Descuentos"]             = $reporte->otros_descuentos;
+                    $row ["Total de Descuentos"]          = $reporte->total_descuentos;
+                    $row ["Total "]                       = $reporte->total;
+                    
+                    // dd($row);
+                    $data[] = $row;
+                    // dd($data[]);
+                    } 
+                    $sheet->fromArray($data);
+                    // dd($sheet);
+                }
+
+             
+
+          
       });
       })->export('xls');
     }

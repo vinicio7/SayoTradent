@@ -34,6 +34,7 @@ Route::group(['prefix' => 'ws'], function (){
 	Route::any 		('excel/control', 			'ExcelController@reporteControl');
 	Route::any 		('excel/compras', 			'ExcelController@reporteCompras');
 	Route::any 		('excel/movimientos', 		'ExcelController@reporteMovimientos');
+	Route::any 		('excel/planilla', 			'ExcelController@reportePlanillas');
 	Route::any 		('excel/inventarioColorantes','ExcelController@reporteInventarioColorantes');
 	Route::any 		('excel/despachos',			'ExcelController@reporteDespachos');
 	Route::any 		('excel/facturas',			'ExcelController@reporteFacturas');

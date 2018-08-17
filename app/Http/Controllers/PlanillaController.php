@@ -55,18 +55,16 @@ class PlanillaController extends Controller{
             }
             // dd($tipo, $fecha_fin);
 			
-                
-            if ($tipo == null && $resultado1 == null){
-                // dd("Entro al if general");
-                $records = DetallePlanilla::all();
-                // dd($records);
-            }else if($tipo == null && $resultado1 != null){
-                // dd("entro al else");
-                $records = DetallePlanilla::whereBetween('mes',[$resultado,$resultado1])->with('planilla')->get();
-                // dd($records);
-            }else{
-                $records = DetallePlanilla::all();
-                // dd($records);
+            if(isset($resultado1)){
+                if ($tipo == null && $resultado1 == null){
+                    // dd("Entro al if general");
+                    $records = Planilla::all();
+                    // dd($records);
+                }else if($tipo == null && $resultado1 != null){
+                    // dd("entro al else");
+                    $records = DetallePlanilla::whereBetween('mes',[$resultado,$resultado1])->with('planilla')->get();
+                    // dd($records);
+                }
             }
 			
 			$this->status_code = 200;
@@ -88,6 +86,7 @@ class PlanillaController extends Controller{
 		}
 	}
 
+    
 
     public function consultar(Request $request){
         try {
