@@ -19,16 +19,37 @@
             $scope.toasts = [];
             var modal;
 
+            $scope.cambioDespacho = function(registro) {
+                ReportesService.filtrarMuestras(registro).then(function(response) {
+                    $scope.datas = response.data.records;
+                    $scope.search();
+                    $scope.select($scope.currentPage);
+                });
+            };
+
             // Function for load table
             function MostarDatos() {
                 ReportesService.muestras().then(function(response) {
                     $scope.datas = response.data.records;
-                    console.log($scope.datas);
                     $scope.search();
                     $scope.select($scope.currentPage);
+
+                    cargarClientes();
+                    cargarOrdenes();
                 });
             }
 
+            function cargarClientes(){
+                ReportesService.clientes().then(function(response){
+                    $scope.clientes = response.data.records;
+                });
+            }
+
+            function cargarOrdenes(){
+                ReportesService.ordenes().then(function(response){
+                    $scope.ordenes = response.data.records;
+                });
+            }
 
             function cargarModal(){
                

@@ -752,7 +752,7 @@ class OrdenesController extends Controller
     public function ordenesPorDia($param)
     {
         try {
-            $records           = Orden::where('fecha_hora', $param)->with('cliente','color','estilo','calibre')->get();
+            $records           = Orden::where('fecha_hora', $param)->with('cliente','coloresOrden','coloresOrden.calibre')->get();
             $this->status_code = 200;
             $this->result      = true;
             $this->message     = 'Registros consultados correctamente';
@@ -775,7 +775,16 @@ class OrdenesController extends Controller
     public function controlOrdenCafta($param, $param1)
     {
         try {
-            $records = Orden::whereBetween('fecha_hora', [$param, $param1])->where('tipo', 2)->with('cliente','color','calibre','estilo')->get();
+            /*$records = Orden::whereBetween('fecha_hora', [$param, $param1])->where('coloresOrden.tipo', 2)->with('cliente','calibre','coloresOrden')->get();
+*/
+            $records = Orden::whereHas('ColoresOrden', function($query)
+                    {
+                        $query
+                        ->join('tipo_orden', 'tipo_orden.id', '=', 'colores_orden.tipo')
+                        ->where('colores_orden.tipo', '=', 1);
+                        })->with('cliente', 'coloresOrden', 'coloresOrden.calibre', 'coloresOrden.metraje', 'coloresOrden.referencia', 'coloresOrden.lugar', 'coloresOrden.tipoOrden', 'coloresOrden.estado')
+                        ->get();
+
             $this->status_code = 200;
             $this->result      = true;
             $this->message     = 'Registros consultados correctamente';
@@ -798,7 +807,7 @@ class OrdenesController extends Controller
     public function estadoCuentaOrden($param, $param1)
     {
         try {
-            $records = Orden::whereBetween('fecha_hora', [$param, $param1])->orderBy('orden')->with('cliente')->get();
+            $records = Orden::whereBetween('fecha_hora', [$param, $param1])->orderBy('orden')->with('cliente', 'coloresOrden')->get();
             $this->status_code = 200;
             $this->result      = true;
             $this->message     = 'Registros consultados correctamente';
@@ -820,6 +829,28 @@ class OrdenesController extends Controller
 
     public function estadoCuentaConsumo($param, $param1)
     {
+        try {
+            $records = Orden::whereBetween('fecha_hora', [$param, $param1])->orderBy('orden')->with('cliente','coloresOrden', 'coloresOrden.tipoOrden')->get();
+            $this->status_code = 200;
+            $this->result      = true;
+            $this->message     = 'Registros consultados correctamente';
+            $this->records     = $records;
+        } catch (\Exception $e) {
+            $this->status_code = 400;
+            $this->result      = false;
+            $this->message     = env('APP_DEBUG')?$e->getMessage():$this->message;
+        }finally{
+            $response = [
+                'result'  => $this->result,
+                'message' => $this->message,
+                'records' => $this->records,
+            ];
+
+            return response()->json($response, $this->status_code);
+        }
+    }
+
+    public function ordenes(){
         try {
             $records = Orden::whereBetween('fecha_hora', [$param, $param1])->orderBy('orden')->with('cliente','tipoOrden')->get();
             $this->status_code = 200;

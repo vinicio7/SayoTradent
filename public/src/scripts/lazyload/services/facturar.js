@@ -4,7 +4,7 @@ contactos_service.service('FacturarService', ['$http', 'WS_URL', function($http,
     delete $http.defaults.headers.common['X-Requested-With'];
 
     this.index = function(params){
-        return $http.get(WS_URL+'facturas');
+        return $http.get(WS_URL+'facturar');
     };
 
     this.store = function(params) {
