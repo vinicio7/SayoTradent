@@ -15,6 +15,6 @@ class Planilla extends Model
 
 	public function detalle()
   	{
-    	return $this->hasOne('App\DetallePlanilla', 'id', 'id_planilla');
+    	return $this->hasOne('App\DetallePlanilla', 'id_planilla', 'id');
   	}
 }
