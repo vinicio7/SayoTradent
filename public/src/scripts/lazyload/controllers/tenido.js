@@ -160,8 +160,8 @@
                 $scope.registro = {};
                 $scope.action = 'new';
                 console.log(data); 
-                $scope.registro.id_orden = data.id_orden;
-                console.log($scope.registro.id_orden);
+                // $scope.registro.id_orden = data.id_orden;
+                // console.log($scope.registro.id_orden);
                 modal = $modal.open({
                     templateUrl: 'views/bodega/modal_tenido.html',
                     scope: $scope,
