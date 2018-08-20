@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Tenido;
 use App\ColoresOrden;
+use App\detalle_tenido;
 
 class TenidoController extends Controller
 {
@@ -37,14 +38,14 @@ class TenidoController extends Controller
     
     public function store(Request $request) {
 		try {
-			$validacion = Tenido::where("id_orden", $request->input('id_orden'))->first();
-			if (!$validacion) {
+			// $validacion = Tenido::where("id_orden", $request->input('id_orden'))->first();
+			if (true) {
 				$record = Tenido::create([
-						'id_orden'          => $request->input('id_orden'),
+						'id_orden'          => 0,
 						'cantidad'          => $request->input('cantidad'),
 						'receta'            => $request->input('receta'),
-						'estado_id'         => $request->input('estado_id'),
-						'etapa_id'          => $request->input('etapa_id'),
+						'estado_id'         => 1,
+						'etapa_id'          => 1,
 						'fecha'				=> date("Y-m-d", strtotime($request->input('fecha'))),
 						'maquina'			=> $request->input('maquina'),
 						'operario'			=> $request->input('operario'),
@@ -55,12 +56,29 @@ class TenidoController extends Controller
 						'hora_salida'		=> $request->input('hora_salida'),
 
 					]);
-					// dd($request->input('id_orden'));
-					$record2 = ColoresOrden::find($request->input('id_orden'));
-					dd($record2);
-				if ($record) {
-					$record2->estado_id = 1;
-					$record2->save();
+					$array  = json_decode($request->input('colores_tenido'));
+					$numero = count($array); 
+					$total  = $record->quesos / $numero;
+					$total  = number_format($total,2);
+					foreach ($array as $item) {
+						$record2 = ColoresOrden::where('estilo',$item->estilo)->first();
+						if ($record2) {
+							$record2->estado_id 	= 1;
+							$record2->estado_prod   = 1;
+							$record2->id_estado 	= 1;
+							$record2->save();
+						}
+
+						$record = detalle_tenido::create([
+							'id_tenido'          => $record->id,
+							'estado'          	 => 1,
+							'cantidad_tenida'    => $item->cantidad,
+							'etapa'              => 1,
+							'quesos'          	 => $total,
+							'color'				 => $item->estilo,
+						]);
+					}
+				if ($record) {		
 					$this->status_code = 200;
 					$this->result      = true;
 					$this->message     = 'Proceso de teñido creado correctamente.';

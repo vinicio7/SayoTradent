@@ -50,7 +50,7 @@ class PlanillaController extends Controller{
                 if ($tipo == null) {
 					$records = Planilla::all();
 				} else {
-					$records = Planilla::where('nombre',$request->input('tipo'))->get();
+					$records = Planilla::where('no_empleado',$request->input('tipo'))->get();
 				}
             }
             // dd($tipo, $fecha_fin);

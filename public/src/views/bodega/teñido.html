@@ -71,7 +71,13 @@
                                     Cantidad
                                 </th>
                                 <th>
-                                    Fecha y hora de inicio  
+                                    Fecha inicio  
+                                </th>
+                                 <th>
+                                    Fecha fin 
+                                </th>
+                                <th>
+                                    Receta 
                                 </th>
                                  <th>
                                     Total Teñido
@@ -90,6 +96,9 @@
                                         ng-class="{active: row == '-phone'}"></i>
                                 </div>
                             </th>
+                            <th>
+                                Teñidas
+                            </th>
 
                            
                             
@@ -99,7 +108,7 @@
                             <tr ng-repeat="data in currentPageStores track by $index">
                                 <td>{{ $index + 1 }}</td>
                                 <td>{{ data.id_orden }}</td>
-                                <td>{{ data.cliente.nombre }}</td>
+                                <td>{{ data.orden.cliente.nombre }}</td>
                                 <td>{{ data.estilo }}</td>
                                     <td>{{ data.calibre.descripcion }}</td>
                                     <td>{{ data.metraje.descripcion }}</td>
@@ -114,15 +123,34 @@
                                     </td>
                                     <td>{{ data.color }}</td>
                                     <td>{{ data.cantidad }}</td>
-                                    <td>{{ data.tenido.fecha }}</td>
-                                    <td>{{ data.tenido.cantidad }}</td>
-                                    <td>{{ data.balance }}</td>
+                                    <td> 
+                                        <label ng-if="data.detalle_tenido.tenido != null">{{ data.detalle_tenido.tenido.fecha }} </label>
+                                        <label ng-if="data.detalle_tenido.tenido == null"> - - - </label>
+                                    </td>
+                                    <td>
+                                        <label ng-if="data.detalle_tenido.tenido != null">{{ data.detalle_tenido.tenido.fecha }}</label>
+                                        <label ng-if="!data.detalle_tenido.tenido == null"> - - - </label>
+                                    </td>
+                                    <td>
+                                        <label ng-if="data.detalle_tenido.tenido != null">{{ data.detalle_tenido.tenido.receta }}</label>
+                                        <label ng-if="!data.detalle_tenido.tenido == null">No tiene</label>
+                                    </td>
+                                    <td>
+                                        <label ng-if="data.detalle_tenido"> {{ data.detalle_tenido.cantidad_tenida }} </label>
+                                        <label ng-if="!data.detalle_tenido"> 0 </label>
+                                    </td>
+                                    <td>
+                                        <label ng-if="data.detalle_tenido"> {{  data.cantidad - data.detalle_tenido.cantidad_tenida }} </label>
+                                        <label ng-if="!data.detalle_tenido"> {{ data.cantidad }} </label>
+                                    </td>
                                 <td>
-                                    <label ng-if="data.tenido.estado_id == 1">Inicio</label>
-                                    <label ng-if="data.tenido.estado_id == 2">Fin</label>
-                                    <label ng-if="data.tenido.estado_id != 1 && data.tenido.estado_id != 2">Sin iniciar</label>
+                                    <label ng-if="data.estado_prod == 1">Iniciada</label>
+                                    <label ng-if="data.estado_prod > 1">Finalizada</label>
+                                    <label ng-if="data.estado_prod == 0">Sin iniciar</label>
                                 </td>
-                                
+                                <td>
+                                     <button type="button" class="btn btn-primary ion ion-clipboard" ng-click="detailtenidas(data)" md-ink-ripple></button>
+                                </td>
                                
                                 
                             </tr>

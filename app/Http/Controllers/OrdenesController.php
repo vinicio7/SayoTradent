@@ -86,7 +86,7 @@ class OrdenesController extends Controller
     {
         try {
             // dd("lego");
-            $records           = ColoresOrden::with('calibre','metraje','tipoOrden')->where('estado_prod',0)->get();
+            $records           = ColoresOrden::with('calibre','metraje','tipoOrden','orden','orden.cliente','detalle_tenido','detalle_tenido.tenido')->get();
             $this->status_code = 200;
             $this->result      = true;
             $this->message     = 'Registros consultados correctamente';

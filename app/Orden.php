@@ -28,4 +28,8 @@ class Orden extends Model
    {
        return $this->hasMany('App\ColoresOrden', 'id_orden', 'orden');
    }
+   public function tenido()
+   {
+       return $this->hasOne('App\Tenido', 'id_orden', 'orden');
+   }
 }

@@ -30,5 +30,9 @@ class Tenido extends Model
     public function secado()
     {
         return $this->hasOne('App\Secado', 'id_orden', 'id');
+    }
+    public function detalle_tenido()
+    {
+        return $this->hasMany('App\detalle_tenido', 'id_tenido', 'id');
     }         
 }

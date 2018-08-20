@@ -39,10 +39,15 @@ class ColoresOrden extends Model
       return $this->hasOne('App\Metraje', 'id', 'id_metraje');
   }
 
-  // public function color()
+  // public function tenido()
   // {
-  //     return $this->hasOne('App\Color', 'id', 'id_color');
+  //     return $this->belo('App\Tenido', 'id_orden', 'id_orden');
   // }
+
+  public function detalle_tenido()
+  {
+      return $this->hasOne('App\detalle_tenido', 'color', 'estilo');
+  }
 
   public function referencia()
   {

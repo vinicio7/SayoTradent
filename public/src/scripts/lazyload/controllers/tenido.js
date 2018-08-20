@@ -18,7 +18,8 @@
             $scope.currentPage = 1;
             $scope.positionModel = 'topRight';
             $scope.toasts = [];
-
+            $scope.currentPageStores3 = [];
+            $scope.numero = 0;
             var modal;
 
             // Function for load table
@@ -79,6 +80,19 @@
                 $scope.onOrderChange();
             };
 
+            $scope.addTenido = function(params){
+                params.no = $scope.numero;
+                $scope.currentPageStores3.push(params);
+                console.log($scope.currentPageStores3);
+                $scope.numero = $scope.numero + 1;
+            }
+
+            $scope.EliminarTenido = function(params){
+                console.log(params);
+                console.log($scope.currentPageStores3.lenght);
+                $scope.currentPageStores3.splice(params.no, 1);
+            }   
+
             MostarDatos();
 
             // Function for toast
@@ -90,13 +104,23 @@
                 });
             }
 
+            $scope.calcularKilos = function(params){
+                if ($scope.registro.tipo == 1) {
+                    $scope.registro.quesos = $scope.registro.kilos;
+                } else {
+                    $scope.registro.quesos = $scope.registro.kilos / 1.4175;
+                }
+            }
+
             function closeAlert (index) {
                 $scope.toasts.splice(index, 1);
             }
 
             // Function for sending data
             $scope.saveData = function (customer) {
+                customer.colores_tenido = JSON.stringify($scope.currentPageStores3);
                 if ($scope.action == 'new') {
+                    console.log(customer);
                     TenidoService.store(customer).then(
                         function successCallback(response) {
                             if (response.data.result) {

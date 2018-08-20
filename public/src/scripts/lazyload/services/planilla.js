@@ -28,6 +28,7 @@ contactos_service.service('PlanillaService', ['$http', 'WS_URL', function($http,
     };
 
     this.filtrar = function(params) {
+        console.log(params);
         return $http.post(WS_URL+'filtrar/planilla', params);
     };
    

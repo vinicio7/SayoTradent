@@ -59,10 +59,18 @@
                         <input type="text" class="form-control" ng-model="registro.contenedor" required>
                     </div>
                     <div class="col-sm-4">
-                        <label>Kilos</label>
-                        <input type="text" class="form-control" ng-model="registro.kilos" required>
+                        <label>Tipo</label>
+                        <select class="form-control" ng-model="registro.tipo" required>                  
+                            <option disabled>Selecciona un tipo</option>
+                            <option value="1">TEXT</option>
+                            <option value="2">40/2</option>
+                        </select>
                     </div>
-                     <div class="col-sm-4">
+                    <div class="col-sm-4">
+                        <label>Kilos</label>
+                        <input type="text" class="form-control" ng-model="registro.kilos" ng-keyup="calcularKilos(registro)" required>
+                    </div>
+                    <div class="col-sm-4">
                         <label>Quesos</label>
                         <input type="text" class="form-control" ng-model="registro.quesos" required>
                     </div>
@@ -77,93 +85,263 @@
                 </div>
             </tab>
             <tab heading="Seleccion">
+                <div class="panel-body">
+                    <div class="row">
+                        <form class="form-horizontal right col-lg-4">
+                                <input type="text" class="form-control input-sm" placeholder="Escriba su búsqueda" data-ng-model="searchKeywords" data-ng-keyup="search()">
+                        </form>
+                    </div>
+                </div>
+                <div style="overflow-x:scroll;">
+                     <table class="table table-bordered table-striped" >
+                        <thead>
+                        <tr>
+                            <th>#
+                                <div class="th">
+                                    <i class="fa fa-caret-up icon-up"
+                                        ng-click=" order('phone') "
+                                        ng-class="{active: row == 'phone'}"></i>
+                                    <i class="fa fa-caret-down icon-down"
+                                        ng-click=" order('-phone') "
+                                        ng-class="{active: row == '-phone'}"></i>
+                                </div>
+                            </th>
 
+                            <th>Orden
+                                <div class="th">
+                                    <i class="fa fa-caret-up icon-up"
+                                        ng-click=" order('phone') "
+                                        ng-class="{active: row == 'phone'}"></i>
+                                    <i class="fa fa-caret-down icon-down"
+                                        ng-click=" order('-phone') "
+                                        ng-class="{active: row == '-phone'}"></i>
+                                </div>
+                            </th>
+                            <th>
+                                    Cliente
+                                </th>
+                            <th>
+                                    Estilo
+                                </th>
+                                <th>
+                                    Calibre
+                                </th>
+                                <th>
+                                    Metraje
+                                </th>
+                                <th>
+                                    Tipo
+                                </th>
+                                <th>
+                                    Color
+                                </th>
+                                <th>
+                                    Cantidad
+                                </th>
+                                <th>
+                                    Total teñido
+                                </th>
+                                <th>
+                                    Balance
+                                </th>
+                                <th>
+                                    Añadir
+                                </th>
+                               <!--  <th>
+                                    Fecha y hora de inicio  
+                                </th>
+                                 <th>
+                                    Total Teñido
+                                </th>
+                                 <th>
+                                Balance
+                            </th> -->
+                            <!-- <th>
+                                 Estado
+                                <div class="th">
+                                    <i class="fa fa-caret-up icon-up"
+                                        ng-click=" order('phone') "
+                                        ng-class="{active: row == 'phone'}"></i>
+                                    <i class="fa fa-caret-down icon-down"
+                                        ng-click=" order('-phone') "
+                                        ng-class="{active: row == '-phone'}"></i>
+                                </div>
+                            </th> -->
+
+                           
+                            
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="data in currentPageStores track by $index">
+                                <td>{{ $index + 1 }}</td>
+                                <td>{{ data.id_orden }}</td>
+                                <td>{{ data.orden.cliente.nombre }}</td>
+                                <td>{{ data.estilo }}</td>
+                                    <td>{{ data.calibre.descripcion }}</td>
+                                    <td>{{ data.metraje.descripcion }}</td>
+                                    
+                                    <td>
+                                        <label ng-if="data.tipo == 1">
+                                            Normal
+                                        </label>
+                                        <label ng-if="data.tipo == 2">
+                                            Cafta
+                                        </label>
+                                    </td>
+                                    <td>{{ data.color }}</td>
+                                    <td>{{ data.cantidad }}</td> 
+                                    <td>
+                                        <label ng-if="data.tenido.cantidad"> {{ data.tenido.cantidad }} </label>
+                                        <label ng-if="!data.tenido.cantidad"> 0 </label>
+                                    </td>
+                                    <td>
+                                        <label ng-if="data.tenido.detalle_tenido"> {{ data.tenido.detalle_tenido.balance }} </label>
+                                        <label ng-if="!data.tenido.detalle_tenido"> {{ data.cantidad }} </label>
+                                    </td>
+                                        <td>
+                                             <button type="button" class="btn btn-primary ion ion-plus" ng-click="addTenido(data)" md-ink-ripple></button>
+                                        </td>
+                                
+                               
+                                
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </tab>
             <tab heading="Colores">
                 <div style="overflow-x:scroll;">
-                    <table class="table table-bordered table-striped">
-                        <thead> 
-                            <tr>
-                                <td>Orden</td>
-                                <td>PO</td>
-                                <td>Estilo</td>
-                                <!-- <td>Descripcion</td> -->
-                                <td>Calibre</td>
-                                <td>Metraje</td>
-                                <td>Tipo</td>
-                                <td>Color</td>
-                                <!-- <td>Cantidad</td> -->
-                                <!-- <td>Precio</td> -->
-                                <!-- <td>Sub total</td> -->
-                                <!-- <td>Referencia</td>
-                                <td>Lugar de entrega</td> -->
-                                <!-- <td>Estado</td> -->
-                                <td>Editar</td>
-                                <td>Eliminar</td>
-                            </tr>
+                     <table class="table table-bordered table-striped" >
+                        <thead>
+                        <tr>
+                            <th>#
+                                <div class="th">
+                                    <i class="fa fa-caret-up icon-up"
+                                        ng-click=" order('phone') "
+                                        ng-class="{active: row == 'phone'}"></i>
+                                    <i class="fa fa-caret-down icon-down"
+                                        ng-click=" order('-phone') "
+                                        ng-class="{active: row == '-phone'}"></i>
+                                </div>
+                            </th>
+
+                            <th>Orden
+                                <div class="th">
+                                    <i class="fa fa-caret-up icon-up"
+                                        ng-click=" order('phone') "
+                                        ng-class="{active: row == 'phone'}"></i>
+                                    <i class="fa fa-caret-down icon-down"
+                                        ng-click=" order('-phone') "
+                                        ng-class="{active: row == '-phone'}"></i>
+                                </div>
+                            </th>
+                            <th>
+                                    Cliente
+                                </th>
+                            <th>
+                                    Estilo
+                                </th>
+                                <th>
+                                    Calibre
+                                </th>
+                                <th>
+                                    Metraje
+                                </th>
+                                <th>
+                                    Tipo
+                                </th>
+                                <th>
+                                    Color
+                                </th>
+                                <th>
+                                    Cantidad
+                                </th>
+                                <th>
+                                    Total teñido
+                                </th>
+                                <th>
+                                    Balance
+                                </th>
+                                <th>
+                                    Para teñir
+                                </th>
+                                <!-- <td>
+                                    Nuevo balance
+                                </td> -->
+                                <th>
+                                    Eliminar
+                                </th>
+                               <!--  <th>
+                                    Fecha y hora de inicio  
+                                </th>
+                                 <th>
+                                    Total Teñido
+                                </th>
+                                 <th>
+                                Balance
+                            </th> -->
+                            <!-- <th>
+                                 Estado
+                                <div class="th">
+                                    <i class="fa fa-caret-up icon-up"
+                                        ng-click=" order('phone') "
+                                        ng-class="{active: row == 'phone'}"></i>
+                                    <i class="fa fa-caret-down icon-down"
+                                        ng-click=" order('-phone') "
+                                        ng-class="{active: row == '-phone'}"></i>
+                                </div>
+                            </th> -->
+
+                           
+                            
+                        </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="item in colores_mostrar" ng-if="action == 'new'">
-                                <td>{{ item.orden }}</td>
-                                <td>{{ item.po }}</td>
-                                <td>{{ item.estilo }}</td>
-                                <td>{{ item.calibre.nombre }}</td>
-                                <td>{{ item.metraje.nombre }}</td>
-                                <td>{{ item.tipo.nombre }}</td>
-                                <td>{{ item.color }}</td>
-                                <td>
-                                     <button type="button" class="btn btn-primary ion ion-edit" ng-click="editarColor(item)" md-ink-ripple></button>
-                                </td>
-                                <td>
-                                     <button type="button" class="btn btn-danger ion ion-trash-a" ng-click="eliminarColor(item)" md-ink-ripple></button>
-                                </td>
-                            </tr>
-                <tr ng-repeat="item in colores_orden" ng-if="action != 'new'">
-                    <td>{{ item.po }}</td>
-                    <td>{{ item.estilo }}</td>
-                    <td>{{ item.descripcion }}</td>
-                    <td>{{ item.calibre.descripcion }}</td>
-                    <td>{{ item.metraje.descripcion }}</td>
-                    <td>{{ item.tipo_orden.descripcion }}</td>
-                    <td>{{ item.color }}</td>
-                    <td>{{ item.cantidad }}</td>
-                    <td>{{ item.precio }}</td>
-                    <td>{{ item.sub_total}}</td>
-                    <td>{{ item.referencia }}</td>
-                    <td>{{ item.lugar }}</td>
-                    <td>
-                        <label ng-if="item.id_estado == '1'">
-                            Y CFM
-                        </label>
-                        <label ng-if="item.id_estado == '2'">
-                            Y IN
-                        </label>
-                        <label ng-if="item.id_estado == '3'">
-                            Y YET
-                        </label>
-                        <label ng-if="item.id_estado == '4'">
-                            O ENT
-                        </label>
-                        <label ng-if="item.id_estado == '5'">
-                            Y REJ
-                        </label>
-                    </td>
-                                       <!--  <td>
-                                             <button type="button" class="btn btn-primary ion ion-edit" ng-click="editarColor(item)" md-ink-ripple></button>
-                                        </td>
-                                        <td>
-                                             <button type="button" class="btn btn-danger ion ion-trash-a" ng-click="eliminarColor(item)" md-ink-ripple></button>
-                                        </td> -->
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                         <!-- <label style="font-family: tahoma; font-weight: bold;font-size: 20px;">TOTAL: $.{{total}}</label>
+                            <tr ng-repeat="data in currentPageStores3 track by $index">
+                                <td>{{ $index + 1 }}</td>
+                                <td>{{ data.id_orden }}</td>
+                                <td>{{ data.orden.cliente.nombre }}</td>
+                                <td>{{ data.estilo }}</td>
+                                    <td>{{ data.calibre.descripcion }}</td>
+                                    <td>{{ data.metraje.descripcion }}</td>
+                                    
+                                    <td>
+                                        <label ng-if="data.tipo == 1">
+                                            Normal
+                                        </label>
+                                        <label ng-if="data.tipo == 2">
+                                            Cafta
+                                        </label>
+                                    </td>
+                                    <td>{{ data.color }}</td>
+                                    <td>{{ data.cantidad }}</td> 
 
-                            <label style="font-family: tahoma; font-weight: bold;font-size: 20px; margin-left: 30px;">CONOS: {{total_conos}}</label> -->
+                                    <td>
+                                        <label ng-if="data.tenido.cantidad"> {{ data.tenido.cantidad }} </label>
+                                        <label ng-if="!data.tenido.cantidad"> 0 </label>
+                                    </td>
+                                    <td>
+                                        <label ng-if="data.tenido.detalle_tenido"> {{ data.tenido.detalle_tenido.balance }} </label>
+                                        <label ng-if="!data.tenido.detalle_tenido"> {{ data.cantidad }} </label>
+                                    </td>
+                                    <td>
+                                        <input type="text" name="" ng-model="para_tenir">
+                                    </td>
+                                        <td>
+                                             <button type="button" class="btn btn-danger ion ion-trash-a" ng-click="EliminarTenido(data)" md-ink-ripple></button>
+                                        </td>
+                                    <!-- <td>{{ data.cantidad }}</td> -->
+                                
+                               
+                                
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </tab>
-            <tab heading="Etapas">
-            </tab>
+           <!--  <tab heading="Teñidas">
+            </tab> -->
         </tabset>
             <div class="row form-group">
                 <div class="col-sm-12 text-right">

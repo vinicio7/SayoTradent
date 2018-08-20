@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class DetallePlanilla extends Model
 {
-     protected $table    = 'planilla_detalle';
+    protected $table    = 'planilla_detalle';
     protected $fillable = ['mes',
                            'quincena', 
                            'dias_trabajados', 
