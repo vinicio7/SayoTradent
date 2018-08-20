@@ -9,6 +9,7 @@
             // General variables
             $scope.datas = [];
             $scope.fechaInicio = new Date();
+            $scope.fechaInicio.setDate($scope.fechaInicio.getDate() - 30);
             $scope.fechaFin = new Date();
             $scope.currentPageStores = [];
             $scope.searchKeywords = '';

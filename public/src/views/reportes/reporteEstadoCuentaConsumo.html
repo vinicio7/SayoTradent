@@ -14,7 +14,7 @@
                                     <label>Fecha Fin</label>
                                     <input type="date" class="form-control" ng-model="fechaFin" required>
                                 </div>
-                                <div class="col-sm-2">
+                                <div class="col-sm-6">
                                     <button ng-click="MostrarDatos()" type="button" class="btn btn-info btn-rounded"> <i class="fa fa-file-excel-o"></i>&nbsp;Filtrar</button>
                                     <button ng-click="estadoCuentaConsumoReporte()" type="button" class="btn btn-info btn-rounded"> <i class="fa fa-file-excel-o"></i>&nbsp;Excel</button>
                                 </div>
@@ -107,14 +107,14 @@
                                 </th>
                             </tr>
                             </thead>
-                            <tbody>
-                                <tr ng-repeat="data in currentPageStores track by $index">
+                            <tbody ng-repeat="data in currentPageStores track by $index">
+                                <tr ng-repeat="consumo in data.colores_orden">
                                     <td>{{ data.fecha_hora }}</td>
                                     <td>{{ data.cliente.nombre }}</td>
                                     <td>{{ data.orden }}</td>
-                                    <td>{{ data.po }}</td>
-                                    <td>{{ data.estilo.descripcion }}</td>
-                                    <td>{{ data.tipo_orden.descripcion }}</td>
+                                    <td>{{ consumo.po }}</td>
+                                    <td>{{ consumo.estilo }}</td>
+                                    <td>{{ consumo.tipo_orden.descripcion }}</td>
                                 </tr>
                             </tbody>
                         </table>

@@ -18,6 +18,8 @@ Route::get('/', function () {
 Route::group(['prefix' => 'ws'], function (){
 
 	Route::post 	('filtrar/movimientos',		'MovimientosController@filtrar');
+	Route::post 	('filtrar/despacho',		'DespachosController@filtrar');
+	Route::post 	('filtrar/muestra',		'MuestrasController@filtrar');
 	Route::post 	('filtrar/planilla',		'PlanillaController@filtrar');
 	Route::post 	('consultar',				'PlanillaController@consultar');
 	Route::resource ('usuarios', 				'UsuariosController');
@@ -34,6 +36,7 @@ Route::group(['prefix' => 'ws'], function (){
 	Route::any 		('excel/control', 			'ExcelController@reporteControl');
 	Route::any 		('excel/compras', 			'ExcelController@reporteCompras');
 	Route::any 		('excel/movimientos', 		'ExcelController@reporteMovimientos');
+	Route::any 		('excel/planilla', 			'ExcelController@reportePlanillas');
 	Route::any 		('excel/inventarioColorantes','ExcelController@reporteInventarioColorantes');
 	Route::any 		('excel/despachos',			'ExcelController@reporteDespachos');
 	Route::any 		('excel/facturas',			'ExcelController@reporteFacturas');
@@ -98,7 +101,8 @@ Route::group(['prefix' => 'ws'], function (){
 	Route::get      ('estadoCuentaOrden/{param}/{param1}','OrdenesController@estadoCuentaOrden');
 	Route::get      ('estadoCuentaConsumo/{param}/{param1}','OrdenesController@estadoCuentaConsumo');
 	Route::get 		('consultarOrden/{id}',				'OrdenesController@consultarOrden');
-});
+	Route::get 		('showOrdenes',						'OrdenesController@ordenes');
+});	
 
 Auth::routes();
 

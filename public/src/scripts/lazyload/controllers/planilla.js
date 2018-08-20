@@ -8,6 +8,7 @@
            
             // General variables
             $scope.datas = [];
+            $scope.cambio = 0;
             $scope.currentPageStores = [];
             $scope.searchKeywords = '';
             $scope.filteredData = [];
@@ -29,8 +30,30 @@
                     $scope.datas = response.data.records;
                     $scope.search();
                     $scope.select($scope.currentPage);
+                    $scope.cambio = 1;
+                    console.log($scope.cambio);
                 });
             };
+
+            $scope.cambioPlanilla1 = function(registro) {
+                // console.log(registro);
+                PlanillaService.filtrar(registro).then(function(response) {
+                    console.log(response.data.records);
+                    $scope.datas = response.data.records;
+                    $scope.search();
+                    $scope.select($scope.currentPage);
+                    $scope.cambio = 0;
+                    console.log($scope.cambio);
+                });
+            };
+
+            $scope.redirect = function(){ 
+                console.log($scope.planilla.tipo, $scope.planilla.fecha_inicio, $scope.planilla.fecha_fin);
+                window.location="../ws/excel/planilla?tipo="+$scope.planilla.tipo+"&fecha_inicio="+$scope.planilla.fecha_inicio+"&fecha_fin="+$scope.planilla.fecha_fin;
+                createToast('success', '<strong>Éxito: </strong>'+'Reporte Creado Exitosamente');
+                $timeout( function(){ closeAlert(0); }, 3000);
+                console.log(window.location);
+            }
 
             $scope.consultar = function(datos){
 
@@ -135,6 +158,7 @@
                     $scope.datas = response.data.records;
                     $scope.search();
                     $scope.select($scope.currentPage);
+                    console.log($scope.cambio);
                 });
             }
 

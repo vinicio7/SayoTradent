@@ -15,14 +15,15 @@ class FacturasController extends Controller
     protected $status_code = 400;
 
     public function index()
-    {
+    {   
          try {
             // $records           = Orden::with('cliente','estilo','calibre','metraje','color','referencia','lugar','tenido','secado','estado')->orderBy('created_at','DESC')->groupBy('orden')->get();
-            $records           = DB::table('ordenes')->select(DB::raw('SUM(balance) as balance,SUM(precio) as precio, orden'))->groupBy('orden')->where('balance','0')->get();
+            $records    = DB::table('ordenes')->select(DB::raw('SUM(balance) as balance,SUM(amount) as precio, orden'))->groupBy('orden')->where('balance','0')->get();
+
             // dd($records);
             $array = array();
             foreach ($records as $item) {
-                $item2 =  Orden::with('cliente','estilo','calibre','metraje','color','referencia','lugar','tenido','secado','estado')->where('orden',$item->orden)->first();
+                $item2 =  Orden::with('cliente','coloresOrden','coloresOrden.calibre','coloresOrden.metraje','coloresOrden.estado')->where('orden',$item->orden)->first();
                 $item2->precio_total = $item->precio;
                 array_push($array, $item2);
             }
