@@ -6,16 +6,7 @@
                         <div class="panel-heading"><h4>Estado de cuenta por orden</h4></div>
                         <div class="panel-body">
                             <div class="row">
-                                <div class="col-sm-3">
-                                    <label>Fecha Inicio</label>
-                                    <input type="date" class="form-control" ng-model="fechaInicio" required>
-                                </div>
-                                <div class="col-sm-3">
-                                    <label>Fecha Fin</label>
-                                    <input type="date" class="form-control" ng-model="fechaFin" required>
-                                </div>
                                 <div class="col-sm-6">
-                                    <button ng-click="MostrarDatos()" type="button" class="btn btn-info btn-rounded"> <i class="fa fa-file-excel-o"></i>&nbsp;Filtrar</button>
                                     <button ng-click="estadoCuentaOrdenReporte()" type="button" class="btn btn-info btn-rounded"> <i class="fa fa-file-excel-o"></i>&nbsp;Excel</button>
                                 </div>
                                 
@@ -33,6 +24,30 @@
                                 <form class="form-horizontal right col-lg-4">
                                     <input type="text" class="form-control input-sm" placeholder="Escriba su búsqueda" data-ng-model="searchKeywords" data-ng-keyup="search()">
                                 </form>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label>Nombre</label>
+                                    <select class="form-control" ng-change="cambioEstadoCuenta(ecuenta)" ng-model="ecuenta.cliente" >
+                                        <option value="0">Todos</option>
+                                        <option ng-repeat="item in clientes" value="{{item.id}}">{{ item.nombre}}</option>
+                                    </select>
+                            </div>
+                            <div class="col-md-2">
+                                <label>Orden</label>
+                                    <select class="form-control" ng-change="cambioEstadoCuenta(ecuenta)" ng-model="ecuenta.orden" >
+                                        <option value="0">Todos</option>
+                                        <option ng-repeat="item in ordenes" value="{{item.id}}">{{ item.orden}}</option>
+                                    </select>
+                            </div>
+                            <div class="col-md-2">
+                                <label>Fecha Inicio</label>
+                                <input type="date" class="form-control" ng-model="ecuenta.fecha_inicio" required>
+                            </div>
+                            <div class="col-md-2">
+                                <label>Fecha Fin</label>
+                                <input type="date" class="form-control" ng-change="cambioEstadoCuenta(ecuenta)" ng-model="ecuenta.fecha_fin" required>
                             </div>
                         </div>
                         <!-- data table -->

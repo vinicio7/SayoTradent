@@ -22,6 +22,14 @@
             $scope.toasts = [];
             var modal;
 
+            $scope.cambioCafta = function(registro) {
+                ReportesService.filtrarCafta(registro).then(function(response) {
+                    $scope.datas = response.data.records;
+                    $scope.search();
+                    $scope.select($scope.currentPage);
+                });
+            };
+
             // Function for load table
             $scope.MostrarDatos = function() {
                 var dateinicio = $filter('date')($scope.fechaInicio,'yyyy-MM-dd');
@@ -31,9 +39,29 @@
                     $scope.datas = response.data.records;
                     $scope.search();
                     $scope.select($scope.currentPage);
+                    cargarClientes();
+                    cargarOrdenes();
+                    cargarEstados();
                 });
             }
 
+            function cargarClientes(){
+                ReportesService.clientes().then(function(response){
+                    $scope.clientes = response.data.records;
+                });
+            }
+
+            function cargarOrdenes(){
+                ReportesService.ordenes().then(function(response){
+                    $scope.ordenes = response.data.records;
+                });
+            }
+
+            function cargarEstados(){
+                ReportesService.estados().then(function(response){
+                    $scope.estados = response.data.records;
+                });
+            }
 
             function cargarModal(){
                

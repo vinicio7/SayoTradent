@@ -19,8 +19,11 @@ Route::group(['prefix' => 'ws'], function (){
 
 	Route::post 	('filtrar/movimientos',		'MovimientosController@filtrar');
 	Route::post 	('filtrar/despacho',		'DespachosController@filtrar');
-	Route::post 	('filtrar/muestra',		'MuestrasController@filtrar');
+	Route::post 	('filtrar/muestra',			'MuestrasController@filtrar');
+	Route::post 	('filtrar/estadoCuenta',	'OrdenesController@filtrar');
+	Route::post 	('filtrar/estadoCuentaConsumo',	'OrdenesController@filtrarConsumo');
 	Route::post 	('filtrar/planilla',		'PlanillaController@filtrar');
+	Route::post 	('filtrar/cafta',			'OrdenesController@filtrarCafta');
 	Route::post 	('consultar',				'PlanillaController@consultar');
 	Route::resource ('usuarios', 				'UsuariosController');
 	Route::any 		('login', 					'UsuariosController@login');

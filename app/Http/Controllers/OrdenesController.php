@@ -807,7 +807,7 @@ class OrdenesController extends Controller
     public function estadoCuentaOrden($param, $param1)
     {
         try {
-            $records = Orden::whereBetween('fecha_hora', [$param, $param1])->orderBy('orden')->with('cliente', 'coloresOrden')->get();
+            $records = Orden::orderBy('orden')->with('cliente', 'coloresOrden')->get();
             $this->status_code = 200;
             $this->result      = true;
             $this->message     = 'Registros consultados correctamente';
@@ -830,7 +830,7 @@ class OrdenesController extends Controller
     public function estadoCuentaConsumo($param, $param1)
     {
         try {
-            $records = Orden::whereBetween('fecha_hora', [$param, $param1])->orderBy('orden')->with('cliente','coloresOrden', 'coloresOrden.tipoOrden')->get();
+            $records = Orden::orderBy('orden')->with('cliente','coloresOrden', 'coloresOrden.tipoOrden')->get();
             $this->status_code = 200;
             $this->result      = true;
             $this->message     = 'Registros consultados correctamente';
@@ -852,7 +852,8 @@ class OrdenesController extends Controller
 
     public function ordenes(){
         try {
-            $records = Orden::orderBy('orden')->with('cliente','tipoOrden')->get();
+7
+            $records = Orden::orderBy('orden')->with('cliente')->get();
             $this->status_code = 200;
             $this->result      = true;
             $this->message     = 'Registros consultados correctamente';
@@ -866,6 +867,181 @@ class OrdenesController extends Controller
                 'result'  => $this->result,
                 'message' => $this->message,
                 'records' => $this->records,
+            ];
+
+            return response()->json($response, $this->status_code);
+        }
+    }
+
+    public function filtrar(Request $request) {
+        try {
+
+            $nombre       = $request->input('cliente');
+            $orden        = $request->input('orden');
+            $fecha_inicio = $request->input('fecha_inicio');
+            $fecha_fin    = $request->input('fecha_fin');
+            if (isset($nombre)) {
+
+                if ($nombre == 0) {
+                    $records = Orden::with('cliente', 'coloresOrden', 'coloresOrden.calibre', 'coloresOrden.metraje', 'coloresOrden.referencia', 'coloresOrden.lugar', 'coloresOrden.tipoOrden', 'coloresOrden.estado')->get();
+                } else {
+
+                    $records = Orden::where('id_empresa','=',$nombre)->with('cliente', 'coloresOrden', 'coloresOrden.calibre', 'coloresOrden.metraje', 'coloresOrden.referencia', 'coloresOrden.lugar', 'coloresOrden.tipoOrden', 'coloresOrden.estado')
+                        ->get();
+
+                }
+            }
+            if (isset($orden)) {
+                if ($orden == 0) {
+                    $records = Orden::where('id_empresa','=',$nombre)->with('cliente', 'coloresOrden', 'coloresOrden.calibre', 'coloresOrden.metraje', 'coloresOrden.referencia', 'coloresOrden.lugar', 'coloresOrden.tipoOrden', 'coloresOrden.estado')
+                        ->get();
+                } else {
+                    $records = Orden::where('id_empresa','=',$nombre)->where('ordenes.id', '=', $orden)->with('cliente', 'coloresOrden', 'coloresOrden.calibre', 'coloresOrden.metraje', 'coloresOrden.referencia', 'coloresOrden.lugar', 'coloresOrden.tipoOrden', 'coloresOrden.estado')
+                        ->get();
+                }
+            }
+            if (isset($fecha_fin)) {
+
+                $records = Orden::where('id_empresa','=',$nombre)->where('ordenes.id', '=', $orden)->whereBetween('fecha_hora',[$fecha_inicio,$fecha_fin])->with('cliente', 'coloresOrden', 'coloresOrden.calibre', 'coloresOrden.metraje', 'coloresOrden.referencia', 'coloresOrden.lugar', 'coloresOrden.tipoOrden', 'coloresOrden.estado')
+                        ->get();
+            }
+
+            $this->status_code = 200;
+            $this->result      = true;
+            $this->message     = 'Registros consultados correctamente';
+            $this->records     = $records;
+        } catch (\Exception $e) {
+            $this->status_code = 400;
+            $this->result      = false;
+            $this->message     = env('APP_DEBUG')?$e->getMessage():$this->message;
+        }finally{
+            $response = [
+                'result'  => $this->result,
+                'message' => $this->message,
+                'records' => $this->records
+            ];
+
+            return response()->json($response, $this->status_code);
+        }
+    }
+
+    public function filtrarConsumo(Request $request) {
+        try {
+
+            $nombre       = $request->input('cliente');
+            $orden        = $request->input('orden');
+            $fecha_inicio = $request->input('fecha_inicio');
+            $fecha_fin    = $request->input('fecha_fin');
+            if (isset($nombre)) {
+
+                if ($nombre == 0) {
+                    $records = Orden::with('cliente', 'coloresOrden', 'coloresOrden.calibre', 'coloresOrden.metraje', 'coloresOrden.referencia', 'coloresOrden.lugar', 'coloresOrden.tipoOrden', 'coloresOrden.estado')->get();
+                } else {
+
+                    $records = Orden::where('id_empresa','=',$nombre)->with('cliente', 'coloresOrden', 'coloresOrden.calibre', 'coloresOrden.metraje', 'coloresOrden.referencia', 'coloresOrden.lugar', 'coloresOrden.tipoOrden', 'coloresOrden.estado')
+                        ->get();
+
+                }
+            }
+            if (isset($orden)) {
+                if ($orden == 0) {
+                    $records = Orden::where('id_empresa','=',$nombre)->with('cliente', 'coloresOrden', 'coloresOrden.calibre', 'coloresOrden.metraje', 'coloresOrden.referencia', 'coloresOrden.lugar', 'coloresOrden.tipoOrden', 'coloresOrden.estado')
+                        ->get();
+                } else {
+                    $records = Orden::where('id_empresa','=',$nombre)->where('ordenes.id', '=', $orden)->with('cliente', 'coloresOrden', 'coloresOrden.calibre', 'coloresOrden.metraje', 'coloresOrden.referencia', 'coloresOrden.lugar', 'coloresOrden.tipoOrden', 'coloresOrden.estado')
+                        ->get();
+                }
+            }
+            if (isset($fecha_fin)) {
+
+                $records = Orden::where('id_empresa','=',$nombre)->where('ordenes.id', '=', $orden)->whereBetween('fecha_hora',[$fecha_inicio,$fecha_fin])->with('cliente', 'coloresOrden', 'coloresOrden.calibre', 'coloresOrden.metraje', 'coloresOrden.referencia', 'coloresOrden.lugar', 'coloresOrden.tipoOrden', 'coloresOrden.estado')
+                        ->get();
+            }
+
+            $this->status_code = 200;
+            $this->result      = true;
+            $this->message     = 'Registros consultados correctamente';
+            $this->records     = $records;
+        } catch (\Exception $e) {
+            $this->status_code = 400;
+            $this->result      = false;
+            $this->message     = env('APP_DEBUG')?$e->getMessage():$this->message;
+        }finally{
+            $response = [
+                'result'  => $this->result,
+                'message' => $this->message,
+                'records' => $this->records
+            ];
+
+            return response()->json($response, $this->status_code);
+        }
+    }
+
+    public function filtrarCafta(Request $request) {
+        try {
+
+            $nombre       = $request->input('cliente');
+            $orden        = $request->input('orden');
+            $fecha_inicio = $request->input('fecha_inicio');
+            $fecha_fin    = $request->input('fecha_fin');
+            $estado       = $request->input('estado');
+            if (isset($nombre)) {
+
+                if ($nombre == 0) {
+                    $records = Orden::with('cliente', 'coloresOrden', 'coloresOrden.calibre', 'coloresOrden.metraje', 'coloresOrden.referencia', 'coloresOrden.lugar', 'coloresOrden.tipoOrden', 'coloresOrden.estado')->get();
+                } else {
+
+                    $records = Orden::where('id_empresa','=',$nombre)->with('cliente', 'coloresOrden', 'coloresOrden.calibre', 'coloresOrden.metraje', 'coloresOrden.referencia', 'coloresOrden.lugar', 'coloresOrden.tipoOrden', 'coloresOrden.estado')
+                        ->get();
+
+                }
+            }
+            if (isset($orden)) {
+                if ($orden == 0) {
+                    $records = Orden::where('id_empresa','=',$nombre)->with('cliente', 'coloresOrden', 'coloresOrden.calibre', 'coloresOrden.metraje', 'coloresOrden.referencia', 'coloresOrden.lugar', 'coloresOrden.tipoOrden', 'coloresOrden.estado')
+                        ->get();
+                } else {
+                    $records = Orden::where('id_empresa','=',$nombre)->where('ordenes.id', '=', $orden)->with('cliente', 'coloresOrden', 'coloresOrden.calibre', 'coloresOrden.metraje', 'coloresOrden.referencia', 'coloresOrden.lugar', 'coloresOrden.tipoOrden', 'coloresOrden.estado')
+                        ->get();
+                }
+            }
+            if (isset($fecha_fin)) {
+
+                $records = Orden::where('id_empresa','=',$nombre)->where('ordenes.id', '=', $orden)->whereBetween('fecha_hora',[$fecha_inicio,$fecha_fin])->with('cliente', 'coloresOrden', 'coloresOrden.calibre', 'coloresOrden.metraje', 'coloresOrden.referencia', 'coloresOrden.lugar', 'coloresOrden.tipoOrden', 'coloresOrden.estado')
+                        ->get();
+            }
+            if (isset($estado)) {
+                if ($estado == 0) {
+                    $records = Orden::where('id_empresa','=',$nombre)->where('ordenes.id', '=', $orden)->whereBetween('fecha_hora',[$fecha_inicio,$fecha_fin])->with('cliente', 'coloresOrden', 'coloresOrden.calibre', 'coloresOrden.metraje', 'coloresOrden.referencia', 'coloresOrden.lugar', 'coloresOrden.tipoOrden', 'coloresOrden.estado')
+                        ->get();
+                } else {
+                    $records = $records = Orden::join('colores_orden', function ($q) use($nombre, $orden, $fecha_inicio, $fecha_fin, $estado)
+                    {
+                       $q->on('colores_orden.id_orden', '=', 'ordenes.orden')
+                         ->join('estados', 'estados.id', '=', 'colores_orden.id_estado')
+                         ->where('ordenes.id_empresa', '=', $nombre)
+                         ->where('ordenes.id', '=', $orden)
+                         ->whereBetween('ordenes.fecha_hora',[$fecha_inicio,$fecha_fin])
+                         ->where('colores_orden.id_estado', '=', $estado);
+                    })
+                      ->with('cliente', 'coloresOrden', 'coloresOrden.calibre', 'coloresOrden.metraje', 'coloresOrden.referencia', 'coloresOrden.lugar', 'coloresOrden.tipoOrden', 'coloresOrden.estado')
+                      ->get(); 
+                }
+            }
+
+            $this->status_code = 200;
+            $this->result      = true;
+            $this->message     = 'Registros consultados correctamente';
+            $this->records     = $records;
+        } catch (\Exception $e) {
+            $this->status_code = 400;
+            $this->result      = false;
+            $this->message     = env('APP_DEBUG')?$e->getMessage():$this->message;
+        }finally{
+            $response = [
+                'result'  => $this->result,
+                'message' => $this->message,
+                'records' => $this->records
             ];
 
             return response()->json($response, $this->status_code);
