@@ -18,7 +18,9 @@
             $scope.currentPage = 1;
             $scope.positionModel = 'topRight';
             $scope.toasts = [];
-
+            $scope.currentPageStores3 = [];
+            $scope.numero = 0;
+            $scope.tenidas = [];
             var modal;
 
             // Function for load table
@@ -29,6 +31,7 @@
                     $scope.search();
                     $scope.select($scope.currentPage);      
                 });
+                
                 
             } 
 
@@ -78,6 +81,21 @@
                 $scope.onOrderChange();
             };
 
+            $scope.addTenido = function(params){
+                params.no = $scope.numero;
+                $scope.currentPageStores3.push(params);
+                console.log($scope.currentPageStores3);
+                $scope.numero = $scope.numero + 1;
+                createToast('success', '<strong>Éxito: </strong>'+'Añadido correctamente');
+                                $timeout( function(){ closeAlert(0); }, 3000);
+            }
+
+            $scope.EliminarTenido = function(params){
+                console.log(params);
+                console.log($scope.currentPageStores3.lenght);
+                $scope.currentPageStores3.splice(params.no, 1);
+            }   
+
             MostarDatos();
 
             // Function for toast
@@ -89,15 +107,24 @@
                 });
             }
 
+            $scope.calcularKilos = function(params){
+                if ($scope.registro.tipo == 1) {
+                    $scope.registro.quesos = $scope.registro.kilos;
+                } else {
+                    $scope.registro.quesos = $scope.registro.kilos / 1.4175;
+                }
+            }
+
             function closeAlert (index) {
                 $scope.toasts.splice(index, 1);
             }
 
             // Function for sending data
             $scope.saveData = function (customer) {
-                console.log(customer);
+                customer.colores_tenido = JSON.stringify($scope.currentPageStores3);
                 if ($scope.action == 'new') {
-                    EnconadoService.store(customer).then(
+                    console.log(customer);
+                    TenidoService.store(customer).then(
                         function successCallback(response) {
                             if (response.data.result) {
                                 MostarDatos();
@@ -116,7 +143,7 @@
                     );
                 }
                 else if ($scope.action == 'update') {
-                    EnconadoService.update(customer).then(
+                    TenidoService.update(customer).then(
                         function successCallback(response) {
                             if (response.data.result) {
                                 modal.close();
@@ -134,8 +161,9 @@
                     );
                 }
                 else if ($scope.action == 'delete') {
+                    // console.log(customer);
                     console.log(customer[0].orden.id);
-                    EnconadoService.destroy(customer[0].orden.id).then(
+                    TenidoService.destroy(customer[0].orden.id).then(
                         function successCallback(response) {
                             if (response.data.result) {
                                 MostarDatos();
@@ -154,12 +182,24 @@
                     );
                 }
             };   
+            $scope.detailtenidas = function(data){
+                $scope.tenidas = [];
+                modal = $modal.open({
+                    templateUrl: 'views/bodega/tenidas.html',
+                    scope: $scope,
+                    size: 'lg', 
+                    resolve: function() {},
+                    windowClass: 'default'
+                });
+            }
             // Functions for modals
             $scope.modalCreateOpen = function(data) {
-
+                $scope.currentPageStores3 = [];
                 $scope.registro = {};
-                $scope.action = 'new'; 
-                $scope.registro.id_orden = data.id;
+                $scope.action = 'new';
+                console.log(data); 
+                // $scope.registro.id_orden = data.id_orden;
+                // console.log($scope.registro.id_orden);
                 modal = $modal.open({
                     templateUrl: 'views/bodega/modal_enconado.html',
                     scope: $scope,
@@ -169,11 +209,45 @@
                 });
             };
 
+            $scope.modalStopOpen = function(data) {
+               console.log(data);
+                $http({
+                    method: 'GET',
+                    url:    WS_URL+'buscar/'+data.id
+                })
+                .then(function succesCallback (response) {
+                    if( response.data.result ) {
+                        data = response.data.records;
+                        $scope.registro = data;
+                    }
+                },
+                function errorCallback(response) {
+                    createToast('danger', '<strong>Error: </strong>'+response.data.message);
+                    $timeout( function(){ closeAlert(0); }, 3000);
+                })
+                
+                // $scope.registro = data;
+                // console.log($scope.registro);
+                $scope.action = 'delete'; 
+                modal = $modal.open({
+                    templateUrl: 'views/bodega/modal_tenido.html',
+                    scope: $scope,
+                    size: 'md', 
+                    resolve: function() {},
+                    windowClass: 'default'
+                });
+            };
+
             $scope.modalEditOpen = function(data) {
+                console.log(data.tenido);
+                var date = data.tenido.fecha;
+                var newdate = date.split("-").reverse().join("/");
+                data.tenido.fecha = newdate;
+                console.log(data.tenido)
                 console.log("llego");
                 $http({
                     method: 'GET',
-                    url:    WS_URL+'enconado/'+data.id
+                    url:    WS_URL+'tenido/'+data.id
                 })
                 .then(function succesCallback (response) {
                     if( response.data.result ) {
@@ -189,7 +263,7 @@
                 $scope.registro = data;
                 
                 modal = $modal.open({
-                    templateUrl: 'views/bodega/modal_enconado.html',
+                    templateUrl: 'views/bodega/modal_tenido.html',
                     scope: $scope,
                     size: 'lg',
                     resolve: function() {},
@@ -198,43 +272,11 @@
             
             };
 
-            $scope.modalStopOpen = function(data) {
-
-                console.log(data);
-                $http({
-                    method: 'GET',
-                    url:    WS_URL+'buscar3/'+data.id
-                })
-                .then(function succesCallback (response) {
-                    if( response.data.result ) {
-                        data = response.data.records;
-                        $scope.registro = data;
-                        console.log($scope.registro);
-                    }
-                },
-                function errorCallback(response) {
-                    createToast('danger', '<strong>Error: </strong>'+response.data.message);
-                    $timeout( function(){ closeAlert(0); }, 3000);
-                })
-
-                $scope.registro = {};
-                $scope.action = 'delete'; 
-                $scope.registro.id_orden = data.id;
+            $scope.modalDeleteOpen = function(data) {
+                $scope.action = 'delete';
+                $scope.proveedor = data;
                 modal = $modal.open({
                     templateUrl: 'views/bodega/modal_tenido.html',
-                    scope: $scope,
-                    size: 'md', 
-                    resolve: function() {},
-                    windowClass: 'default'
-                });
-            };
-
-            $scope.modalDeleteOpen = function(data) {
-                
-                $scope.action = 'delete';
-                $scope.registro = data;
-                modal = $modal.open({
-                    templateUrl: 'views/bodega/modal_enconado.html',
                     scope: $scope,
                     size: 'md',
                     resolve: function() {},

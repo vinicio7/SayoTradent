@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-		return redirect('src');
+		return redirect('dist');
 });
 
 Route::group(['prefix' => 'ws'], function (){

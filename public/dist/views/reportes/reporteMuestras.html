@@ -3,7 +3,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="panel panel-default table-responsive panel-hovered mb20"  >
-                        <div class="panel-heading"><h4>Reporte DE Muestras</h4></div>
+                        <div class="panel-heading"><h4>Reporte de Muestras</h4></div>
                         <div class="panel-body">
                             <div class="row">
                                 <button ng-click="muestrasReporte()" type="button" class="btn btn-info btn-rounded"> <i class="fa fa-file-excel-o"></i>&nbsp;Excel</button>
@@ -24,6 +24,30 @@
                             </div>
                         </div>
                         <!-- data table -->
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label>Nombre</label>
+                                    <select class="form-control" ng-change="cambioDespacho(despacho)" ng-model="despacho.cliente" >
+                                        <option value="0">Todos</option>
+                                        <option ng-repeat="item in clientes" value="{{item.id}}">{{ item.nombre}}</option>
+                                    </select>
+                            </div>
+                            <div class="col-md-2">
+                                <label>Orden</label>
+                                    <select class="form-control" ng-change="cambioDespacho(despacho)" ng-model="despacho.orden" >
+                                        <option value="0">Todos</option>
+                                        <option ng-repeat="item in ordenes" value="{{item.id}}">{{ item.orden}}</option>
+                                    </select>
+                            </div>
+                            <div class="col-md-2">
+                                <label>Fecha Inicio</label>
+                                <input type="date" class="form-control" ng-model="despacho.fecha_inicio" required>
+                            </div>
+                            <div class="col-md-2">
+                                <label>Fecha Fin</label>
+                                <input type="date" class="form-control" ng-change="cambioDespacho(despacho)" ng-model="despacho.fecha_fin" required>
+                            </div>
+                        </div>
                         <table class="table table-bordered table-striped">
                             <thead>
                             <tr>
@@ -128,17 +152,17 @@
                                 </th>
                             </tr>
                             </thead>
-                            <tbody>
-                                <tr ng-repeat="data in currentPageStores track by $index">
-                                    <td>{{ data.fecha_hora }}</td>
-                                    <td>{{ data.orden.cliente.nombre}}</td>
-                                    <td>{{ data.orden.orden }}</td>
-                                    <td>{{ data.orden.po }}</td>
-                                    <td>{{ data.orden.color.descripcion }}</td>
-                                    <td>{{ data.orden.estilo.descripcion }}</td>
-                                    <td>{{ data.envio }}</td>
-                                    <td>{{ data.rechazo }}</td>
-                                    <td>{{ data.fecha_ok }}</td>
+                            <tbody ng-repeat="muestras in currentPageStores track by $index">
+                                <tr ng-repeat="data in muestras.orden.colores_orden">
+                                    <td>{{ muestras.fecha_hora }}</td>
+                                    <td>{{ muestras.orden.cliente.nombre}}</td>
+                                    <td>{{ muestras.orden.orden }}</td>
+                                    <td>{{ data.po }}</td>
+                                    <td>{{ data.color }}</td>
+                                    <td>{{ data.estilo }}</td>
+                                    <td>{{ muestras.envio }}</td>
+                                    <td>{{ muestras.rechazo }}</td>
+                                    <td>{{ muestras.fecha_ok }}</td>
                                     <!-- <td>
                                         <div class="btn-group">
                                             <button type="button" class="btn btn-info ion ion-edit" ng-click="modalEditOpen(data)" md-ink-ripple></button>

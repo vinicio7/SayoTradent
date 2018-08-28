@@ -9,6 +9,7 @@
             // General variables
             $scope.datas = [];
             $scope.fechaInicio = new Date();
+            $scope.fechaInicio.setDate($scope.fechaInicio.getDate() - 30);
             $scope.fechaFin = new Date();
             $scope.currentPageStores = [];
             $scope.searchKeywords = '';
@@ -21,6 +22,13 @@
             $scope.toasts = [];
             var modal;
 
+            $scope.cambioEstadoCuenta = function(registro) {
+                ReportesService.filtrarEstadoCuenta(registro).then(function(response) {
+                    $scope.datas = response.data.records;
+                    $scope.search();
+                    $scope.select($scope.currentPage);
+                });
+            };
             // Function for load table
             $scope.MostrarDatos = function() {
                 var dateinicio = $filter('date')($scope.fechaInicio,'yyyy-MM-dd');
@@ -30,9 +38,23 @@
                     $scope.datas = response.data.records;
                     $scope.search();
                     $scope.select($scope.currentPage);
+
+                    cargarClientes();
+                    cargarOrdenes();
                 });
             }
 
+            function cargarClientes(){
+                ReportesService.clientes().then(function(response){
+                    $scope.clientes = response.data.records;
+                });
+            }
+
+            function cargarOrdenes(){
+                ReportesService.ordenes().then(function(response){
+                    $scope.ordenes = response.data.records;
+                });
+            }
 
             function cargarModal(){
                

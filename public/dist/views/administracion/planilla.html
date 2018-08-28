@@ -7,6 +7,23 @@
                     <div class="panel-body">
                         <div class="row">
                             <button type="button" class="btn btn-success btn-rounded" ng-click="modalCreateOpen()" md-ink-ripple><i class="fa fa-plus"></i>Ingreso</button>
+                            <button ng-click="redirect()" type="button" class="btn btn-info btn-rounded"> <i class="fa fa-file-excel-o"></i>&nbsp;Excel</button>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label>Empleado</label>
+                                   
+                                    <input type="text" class="form-control" ng-change="cambioPlanilla1(planilla)" ng-model="planilla.tipo" >
+                            </div>
+                            <div class="col-md-2">
+                                <label>Fecha Inicio</label>
+                                <input type="date" class="form-control" ng-model="planilla.fecha_inicio" >
+                            </div>
+                            <div class="col-md-2">
+                                <label>Fecha Fin</label>
+                                <input type="date" class="form-control" ng-change="cambioPlanilla(planilla)" ng-model="planilla.fecha_fin" >
+                            </div>
                         </div>
                         <br>
                         <div class="row">
@@ -23,6 +40,7 @@
                             </form>
                         </div>
                     </div>
+
                     <!-- data table -->
                     <table class="table table-bordered table-striped">
                         <thead>
@@ -85,11 +103,16 @@
                         </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="data in currentPageStores track by $index">
+                            <tr  ng-repeat="data in currentPageStores track by $index">
                                 <td>{{ $index + 1 }}</td>
-                                <td>{{ data.no_empleado }}</td>
-                                <td>{{ data.nombre }}</td>
-                                <td>Q{{ data.sueldo_base }}</td>
+                                <td ng-if="cambio == 0">{{ data.no_empleado }}</td>
+                                <td ng-if="cambio == 1">{{ data.planilla.no_empleado }}</td>
+
+                                <td ng-if="cambio == 0">{{ data.nombre }}</td>
+                                <td ng-if="cambio == 1">{{ data.planilla.nombre }}</td>
+
+                                <td ng-if="cambio == 0">Q{{ data.sueldo_base }}</td>
+                                <td ng-if="cambio == 1">Q{{ data.planilla.sueldo_base }}</td>
                                 <td>
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-primary fa fa-list-ul  " ng-click="modalEditOpen(data)" md-ink-ripple></button>

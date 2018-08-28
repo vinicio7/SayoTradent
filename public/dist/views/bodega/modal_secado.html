@@ -7,69 +7,331 @@
     </div>
     <div class="modal-body">
         <div class="row form-group" ng-if="action == 'delete'">
-            <h3>¿Está seguro de finalizar este proceso?</h3>
+            <h4>¿Desea finalizar este proceso?</h4>
         </div>
         <form class="form-horizontal" name="form" ng-if="action != 'delete'" action="javascript:;" novalidate>
+            <tabset justified="true">
+            <tab heading="Poceso">
                 <div class="row form-group">
-                        <div class="col-sm-6">
-                            <label>Estado</label>
-                             <select class="form-control" ng-model="registro.estado_id" required>                  
-                                    <option disabled>Selecciona un estado</option>
-                                    <option value="1">Inicio</option>
-                                    <option value="2">Fin</option>
-                                </select>
-                        </div>
-                        <div class="col-sm-6">
-                            <label>Etapa</label>
-                            <select class="form-control" ng-model="registro.etapa_id" required>                  
-                                    <option disabled>Selecciona una etapa</option>
-                                    <option value="1">Primera</option>
-                                    <option value="2">Segunda</option>
-                                    <option value="3">Tercera</option>
-                                    <option value="4">Cuarta</option>
-                                    <option value="5">Quinta</option>
-                                    <option value="6">Sexta</option>
-                                    <option value="7">Septima</option>
-                                </select>
-                        </div>
+                   <!--  <div class="col-sm-4">
+                        <label>Estado</label>
+                         <select class="form-control" ng-model="registro.estado_id" required>                  
+                                <option disabled>Selecciona un estado</option>
+                                <option value="1">Inicio</option>
+                                <option value="2">Fin</option>
+                            </select>
                     </div>
-                    <div class="row form-group">
-                        <div class="col-sm-6">
-                            <label>Secador</label>
-                            <input type="text" class="form-control" ng-model="registro.secador" required>
-                        </div>
-                         <div class="col-sm-6">
-                            <label>No. Lote</label>
-                            <input type="text" class="form-control" ng-model="registro.no_lote" required>
-                        </div>
+                    <div class="col-sm-4">
+                        <label>Etapa</label>
+                        <select class="form-control" ng-model="registro.etapa_id" required>                  
+                                <option disabled>Selecciona una etapa</option>
+                                <option value="1">Primera</option>
+                                <option value="2">Segunda</option>
+                                <option value="4">Tercera</option>
+                                <option value="4">Cuarta</option>
+                                <option value="5">Quinta</option>
+                                <option value="6">Sexta</option>
+                                <option value="7">Septima</option>
+                            </select>
+                    </div> -->
+                    <div class="col-sm-4">
+                        <label>Cantidad</label>
+                        <input type="text" class="form-control" ng-model="registro.cantidad" required>
                     </div>
-                    <div class="row form-group">
-                        <div class="col-sm-6">
-                            <label>No. de maquina</label>
-                            <input type="text" class="form-control" ng-model="registro.no_maquina" required>
-                        </div>
-                         <div class="col-sm-6">
-                            <label>Hora de Salida</label>
-                            <input type="time" class="form-control" ng-model="registro.hora_salida" required>
-                        </div>
+                    <div class="col-sm-4">
+                        <label>Fecha</label>
+                        <input type="date" class="form-control" ng-model="registro.fecha" required>
                     </div>
-                    <div class="row form-group">
-                        <div class="col-sm-6">
-                            <label>Observaciones</label>
-                            <input type="text" class="form-control" ng-model="registro.observaciones" required>
-                        </div>
-                         <div class="col-sm-6">
-                            <label>Fecha</label>
-                            <input type="date" class="form-control" ng-model="registro.contenedor" required>
-                        </div>
+                     <div class="col-sm-4">
+                        <label>Maquina</label>
+                        <input type="text" class="form-control" ng-model="registro.maquina" required>
                     </div>
-                    
-            
+                    <div class="col-sm-4">
+                        <label>Operario</label>
+                        <input type="text" class="form-control" ng-model="registro.operario" required>
+                    </div>
+                    <div class="col-sm-4">
+                        <label>Tipo</label>
+                        <select class="form-control" ng-model="registro.tipo" required>                  
+                            <option disabled>Selecciona un tipo</option>
+                            <option value="1">Electrico</option>
+                            <option value="2">Vapor</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-4">
+                        <label>Hora de ingreso</label>
+                        <input type="time" class="form-control" ng-model="registro.hora_ingreso" required>
+                    </div>
+                     <div class="col-sm-4">
+                        <label>Hora de salida</label>
+                        <input type="time" class="form-control" ng-model="registro.hora_salida" required>
+                    </div>
+                </div>
+            </tab>
+            <tab heading="Seleccion">
+                <div class="panel-body">
+                    <div class="row">
+                        <form class="form-horizontal right col-lg-4">
+                                <input type="text" class="form-control input-sm" placeholder="Escriba su búsqueda" data-ng-model="searchKeywords" data-ng-keyup="search()">
+                        </form>
+                    </div>
+                </div>
+                <div style="overflow-x:scroll;">
+                     <table class="table table-bordered table-striped" >
+                        <thead>
+                        <tr>
+                            <th>#
+                                <div class="th">
+                                    <i class="fa fa-caret-up icon-up"
+                                        ng-click=" order('phone') "
+                                        ng-class="{active: row == 'phone'}"></i>
+                                    <i class="fa fa-caret-down icon-down"
+                                        ng-click=" order('-phone') "
+                                        ng-class="{active: row == '-phone'}"></i>
+                                </div>
+                            </th>
+
+                            <th>Orden
+                                <div class="th">
+                                    <i class="fa fa-caret-up icon-up"
+                                        ng-click=" order('phone') "
+                                        ng-class="{active: row == 'phone'}"></i>
+                                    <i class="fa fa-caret-down icon-down"
+                                        ng-click=" order('-phone') "
+                                        ng-class="{active: row == '-phone'}"></i>
+                                </div>
+                            </th>
+                            <th>
+                                    Cliente
+                                </th>
+                            <th>
+                                    Estilo
+                                </th>
+                                <th>
+                                    Calibre
+                                </th>
+                                <th>
+                                    Metraje
+                                </th>
+                                <th>
+                                    Tipo
+                                </th>
+                                <th>
+                                    Color
+                                </th>
+                                <th>
+                                    Cantidad
+                                </th>
+                                <th>
+                                    Total secado
+                                </th>
+                                <th>
+                                    Balance
+                                </th>
+                                <th>
+                                    Añadir
+                                </th>
+                               <!--  <th>
+                                    Fecha y hora de inicio  
+                                </th>
+                                 <th>
+                                    Total secado
+                                </th>
+                                 <th>
+                                Balance
+                            </th> -->
+                            <!-- <th>
+                                 Estado
+                                <div class="th">
+                                    <i class="fa fa-caret-up icon-up"
+                                        ng-click=" order('phone') "
+                                        ng-class="{active: row == 'phone'}"></i>
+                                    <i class="fa fa-caret-down icon-down"
+                                        ng-click=" order('-phone') "
+                                        ng-class="{active: row == '-phone'}"></i>
+                                </div>
+                            </th> -->
+
+                           
+                            
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="data in currentPageStores track by $index">
+                                <td>{{ $index + 1 }}</td>
+                                <td>{{ data.id_orden }}</td>
+                                <td>{{ data.orden.cliente.nombre }}</td>
+                                <td>{{ data.estilo }}</td>
+                                    <td>{{ data.calibre.descripcion }}</td>
+                                    <td>{{ data.metraje.descripcion }}</td>
+                                    
+                                    <td>
+                                        <label ng-if="data.tipo == 1">
+                                            Normal
+                                        </label>
+                                        <label ng-if="data.tipo == 2">
+                                            Cafta
+                                        </label>
+                                    </td>
+                                    <td>{{ data.color }}</td>
+                                    <td>{{ data.cantidad }}</td> 
+                                   <td>
+                                        <label ng-if="data.detalle_tenido"> {{ data.detalle_tenido.cantidad_tenida }} </label>
+                                        <label ng-if="!data.detalle_tenido"> 0 </label>
+                                    </td>
+                                    <td>
+                                        <label ng-if="data.detalle_tenido"> {{  data.cantidad - data.detalle_tenido.cantidad_tenida }} </label>
+                                        <label ng-if="!data.detalle_tenido"> {{ data.cantidad }} </label>
+                                    </td>
+                                        <td>
+                                             <button type="button" class="btn btn-primary ion ion-plus" ng-click="addTenido(data)" md-ink-ripple></button>
+                                        </td>
+                                
+                               
+                                
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </tab>
+            <tab heading="Colores">
+                <div style="overflow-x:scroll;">
+                     <table class="table table-bordered table-striped" >
+                        <thead>
+                        <tr>
+                            <th>#
+                                <div class="th">
+                                    <i class="fa fa-caret-up icon-up"
+                                        ng-click=" order('phone') "
+                                        ng-class="{active: row == 'phone'}"></i>
+                                    <i class="fa fa-caret-down icon-down"
+                                        ng-click=" order('-phone') "
+                                        ng-class="{active: row == '-phone'}"></i>
+                                </div>
+                            </th>
+
+                            <th>Orden
+                                <div class="th">
+                                    <i class="fa fa-caret-up icon-up"
+                                        ng-click=" order('phone') "
+                                        ng-class="{active: row == 'phone'}"></i>
+                                    <i class="fa fa-caret-down icon-down"
+                                        ng-click=" order('-phone') "
+                                        ng-class="{active: row == '-phone'}"></i>
+                                </div>
+                            </th>
+                            <th>
+                                    Cliente
+                                </th>
+                            <th>
+                                    Estilo
+                                </th>
+                                <th>
+                                    Calibre
+                                </th>
+                                <th>
+                                    Metraje
+                                </th>
+                                <th>
+                                    Tipo
+                                </th>
+                                <th>
+                                    Color
+                                </th>
+                                <th>
+                                    Cantidad
+                                </th>
+                                <th>
+                                    Total secado
+                                </th>
+                                <th>
+                                    Balance
+                                </th>
+                                <th>
+                                    Para secar
+                                </th>
+                                <!-- <td>
+                                    Nuevo balance
+                                </td> -->
+                                <th>
+                                    Eliminar
+                                </th>
+                               <!--  <th>
+                                    Fecha y hora de inicio  
+                                </th>
+                                 <th>
+                                    Total secado
+                                </th>
+                                 <th>
+                                Balance
+                            </th> -->
+                            <!-- <th>
+                                 Estado
+                                <div class="th">
+                                    <i class="fa fa-caret-up icon-up"
+                                        ng-click=" order('phone') "
+                                        ng-class="{active: row == 'phone'}"></i>
+                                    <i class="fa fa-caret-down icon-down"
+                                        ng-click=" order('-phone') "
+                                        ng-class="{active: row == '-phone'}"></i>
+                                </div>
+                            </th> -->
+
+                           
+                            
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="data in currentPageStores3 track by $index">
+                                <td>{{ $index + 1 }}</td>
+                                <td>{{ data.id_orden }}</td>
+                                <td>{{ data.orden.cliente.nombre }}</td>
+                                <td>{{ data.estilo }}</td>
+                                    <td>{{ data.calibre.descripcion }}</td>
+                                    <td>{{ data.metraje.descripcion }}</td>
+                                    
+                                    <td>
+                                        <label ng-if="data.tipo == 1">
+                                            Normal
+                                        </label>
+                                        <label ng-if="data.tipo == 2">
+                                            Cafta
+                                        </label>
+                                    </td>
+                                    <td>{{ data.color }}</td>
+                                    <td>{{ data.cantidad }}</td> 
+
+                                     <td>
+                                        <label ng-if="data.detalle_tenido"> {{ data.detalle_tenido.cantidad_tenida }} </label>
+                                        <label ng-if="!data.detalle_tenido"> 0 </label>
+                                    </td>
+                                    <td>
+                                        <label ng-if="data.detalle_tenido"> {{  data.cantidad - data.detalle_tenido.cantidad_tenida }} </label>
+                                        <label ng-if="!data.detalle_tenido"> {{ data.cantidad }} </label>
+                                    </td>
+                                    <td>
+                                        <input type="text" name="" ng-model="para_tenir">
+                                    </td>
+                                        <td>
+                                             <button type="button" class="btn btn-danger ion ion-trash-a" ng-click="EliminarTenido(data)" md-ink-ripple></button>
+                                        </td>
+                                    <!-- <td>{{ data.cantidad }}</td> -->
+                                
+                               
+                                
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </tab>
+           <!--  <tab heading="Teñidas">
+            </tab> -->
+        </tabset>
             <div class="row form-group">
                 <div class="col-sm-12 text-right">
                     <button class="btn btn-danger" ng-click="modalClose()">Cerrar</button>
-                    <button class="btn btn-success" ng-if="action == 'new'" ng-disabled="form.$invalid" ng-click="saveData(registro)">Registrar</button>
-                    <button class="btn btn-success" ng-if="action == 'update'" ng-disabled="form.$invalid" ng-click="saveData(registro)">Editar</button>
+                    <button class="btn btn-success" ng-if="action == 'new'" ng-click="saveData(registro)">Registrar</button>
+                    <button class="btn btn-success" ng-if="action == 'update'" ng-click="saveData(registro)">Editar</button>
                 </div>
             </div>
         </form>
@@ -77,7 +339,7 @@
     <div class="row form-group">
         <div class="col-sm-10 text-right">
             <button class="btn btn-success" ng-if="action == 'delete'" ng-click="modalClose()">Cerrar</button>
-            <button class="btn btn-danger"  ng-if="action == 'delete'" ng-click="saveData(registro)">Eliminar</button>
+            <button class="btn btn-danger"  ng-if="action == 'delete'" ng-click="saveData(registro)">Finalizar</button>
         </div>
     </div>
 </div>

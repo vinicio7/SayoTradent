@@ -20,15 +20,48 @@
 
             var modal;
 
+            $scope.cambioDespacho = function(registro) {
+                console.log(registro);
+                ReportesService.filtrar(registro).then(function(response) {
+                    console.log(response.data.records);
+                    $scope.datas = response.data.records;
+                    $scope.search();
+                    $scope.select($scope.currentPage);
+                });
+            };
+            
             // Function for load table
             function MostarDatos() {
                 ReportesService.despachos().then(function(response) {
                     $scope.datas = response.data.records;
                     $scope.search();
                     $scope.select($scope.currentPage);
+                    cargarClientes();
+                    cargarOrdenes();
+                    cargarEstados();
                 });
             }
 
+            function cargarClientes(){
+                ReportesService.clientes().then(function(response){
+                    $scope.clientes = response.data.records;
+                });
+            }
+
+            function cargarOrdenes(){
+                ReportesService.ordenes().then(function(response){
+                    $scope.ordenes = response.data.records;
+                });
+            }
+
+            function cargarEstados(){
+                ReportesService.estados().then(function(response){
+                    $scope.estados = response.data.records;
+                });
+            }
+
+            MostarDatos();
+            cargarModal();
 
             function cargarModal(){
                
@@ -82,9 +115,6 @@
                 $scope.filteredData = $filter('orderBy')($scope.datas, rowName);
                 $scope.onOrderChange();
             };
-
-            MostarDatos();
-            cargarModal();
 
             // Function for toast
             function createToast (type, message) {

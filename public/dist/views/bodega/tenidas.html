@@ -1,0 +1,148 @@
+<div class="modal-style">
+    <div class="modal-header clearfix">
+        <h4 ng-if="action == 'new'" class="modal-title">Teñidas por color</h4>
+        <h4 ng-if="action == 'update'" class="modal-title">Editar teñido</h4>
+        <h4 ng-if="action == 'delete'" class="modal-title">Finalizar teñido</h4>
+        <span class="close ion ion-android-close" ng-click="modalClose()"></span>
+    </div>
+    <div class="modal-body">
+        <div class="row form-group" ng-if="action == 'delete'">
+            <h4>¿Desea finalizar este proceso?</h4>
+        </div>
+        <form class="form-horizontal" name="form" ng-if="action != 'delete'" action="javascript:;" novalidate>
+            <tabset justified="true">
+           
+            <tab heading="Teñidas">
+                <div style="overflow-x:scroll;">
+                     <table class="table table-bordered table-striped" >
+                        <thead>
+                        <tr>
+                            <th>#
+                                <div class="th">
+                                    <i class="fa fa-caret-up icon-up"
+                                        ng-click=" order('phone') "
+                                        ng-class="{active: row == 'phone'}"></i>
+                                    <i class="fa fa-caret-down icon-down"
+                                        ng-click=" order('-phone') "
+                                        ng-class="{active: row == '-phone'}"></i>
+                                </div>
+                            </th>
+                            <th>Orden</th>
+                            <th>PO</th>
+                            <th>Estilo</th>
+                            <th>Cantidad
+                            </th>
+                            <th>
+                                    Receta
+                                </th>
+                            <th>
+                                    Etapa
+                                </th>
+                                <th>
+                                    Fecha
+                                </th>
+                                <th>
+                                    Maquina
+                                </th>
+                                <th>
+                                    Operario
+                                </th>
+                                <th>
+                                    Contenedor
+                                </th>
+                                <th>
+                                    Cantidad
+                                </th>
+                                <th>
+                                    Total teñido
+                                </th>
+                                <th>
+                                    Balance
+                                </th>
+                               <!--  <th>
+                                    Fecha y hora de inicio  
+                                </th>
+                                 <th>
+                                    Total Teñido
+                                </th>
+                                 <th>
+                                Balance
+                            </th> -->
+                            <!-- <th>
+                                 Estado
+                                <div class="th">
+                                    <i class="fa fa-caret-up icon-up"
+                                        ng-click=" order('phone') "
+                                        ng-class="{active: row == 'phone'}"></i>
+                                    <i class="fa fa-caret-down icon-down"
+                                        ng-click=" order('-phone') "
+                                        ng-class="{active: row == '-phone'}"></i>
+                                </div>
+                            </th> -->
+
+                           
+                            
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="data in currentPageStores3 track by $index">
+                                <td>{{ $index + 1 }}</td>
+                                <td>{{ data.id_orden }}</td>
+                                <td>{{ data.orden.cliente.nombre }}</td>
+                                <td>{{ data.estilo }}</td>
+                                    <td>{{ data.calibre.descripcion }}</td>
+                                    <td>{{ data.metraje.descripcion }}</td>
+                                    
+                                    <td>
+                                        <label ng-if="data.tipo == 1">
+                                            Normal
+                                        </label>
+                                        <label ng-if="data.tipo == 2">
+                                            Cafta
+                                        </label>
+                                    </td>
+                                    <td>{{ data.color }}</td>
+                                    <td>{{ data.cantidad }}</td> 
+
+                                    <td>
+                                        <label ng-if="data.tenido.cantidad"> {{ data.tenido.cantidad }} </label>
+                                        <label ng-if="!data.tenido.cantidad"> 0 </label>
+                                    </td>
+                                    <td>
+                                        <label ng-if="data.tenido.detalle_tenido"> {{ data.tenido.detalle_tenido.balance }} </label>
+                                        <label ng-if="!data.tenido.detalle_tenido"> {{ data.cantidad }} </label>
+                                    </td>
+                                    <td>
+                                        <input type="text" name="" ng-model="para_tenir">
+                                    </td>
+                                        <td>
+                                             <button type="button" class="btn btn-danger ion ion-trash-a" ng-click="EliminarTenido(data)" md-ink-ripple></button>
+                                        </td>
+                                    <!-- <td>{{ data.cantidad }}</td> -->
+                                
+                               
+                                
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </tab>
+           <!--  <tab heading="Teñidas">
+            </tab> -->
+        </tabset>
+            <div class="row form-group">
+                <div class="col-sm-12 text-right">
+                    <button class="btn btn-danger" ng-click="modalClose()">Cerrar</button>
+                    <button class="btn btn-success" ng-if="action == 'new'" ng-click="saveData(registro)">Registrar</button>
+                    <button class="btn btn-success" ng-if="action == 'update'" ng-click="saveData(registro)">Editar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="row form-group">
+        <div class="col-sm-10 text-right">
+            <button class="btn btn-success" ng-if="action == 'delete'" ng-click="modalClose()">Cerrar</button>
+            <button class="btn btn-danger"  ng-if="action == 'delete'" ng-click="saveData(registro)">Finalizar</button>
+        </div>
+    </div>
+</div>

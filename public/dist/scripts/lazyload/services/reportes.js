@@ -50,4 +50,33 @@ contactos_service.service('ReportesService', ['$http', 'WS_URL', function($http,
     this.clientes = function(params){
         return $http.get(WS_URL+'clientes', params);
     };
+
+    this.ordenes = function(params){
+        return $http.get(WS_URL+'showOrdenes', params);
+    };
+
+    this.estados = function(params){
+        return $http.get(WS_URL+'estados');
+    };
+
+    this.filtrar = function(params) {
+        return $http.post(WS_URL+'filtrar/despacho', params);
+    };
+
+    this.filtrarMuestras = function(params) {
+        return $http.post(WS_URL+'filtrar/muestra', params);
+    };
+
+    this.filtrarEstadoCuenta = function(params) {
+        return $http.post(WS_URL+'filtrar/estadoCuenta', params);
+    };
+
+    this.filtrarEstadoCuentaConsumo = function(params) {
+        return $http.post(WS_URL+'filtrar/estadoCuentaConsumo', params);
+    };
+
+    this.filtrarCafta = function(params) {
+        return $http.post(WS_URL+'filtrar/cafta', params);
+    };
+
 }]);
