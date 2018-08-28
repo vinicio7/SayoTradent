@@ -105,37 +105,12 @@ class OrdenesController extends Controller
             return response()->json($response, $this->status_code);
         }
     }
-    
-
-    // public function maseo()
-    // {
-    //     try {
-    //         // dd("lego");
-    //         $records           = Orden::with('cliente','estilo','calibre','metraje','color','referencia','lugar','tenido','secado')->where('estado_prod',3)->get();
-    //         $this->status_code = 200;
-    //         $this->result      = true;
-    //         $this->message     = 'Registros consultados correctamente';
-    //         $this->records     = $records;
-    //     } catch (\Exception $e) {
-    //         $this->status_code = 400;
-    //         $this->result      = false;
-    //         $this->message     = env('APP_DEBUG')?$e->getMessage():$this->message;
-    //     }finally{
-    //         $response = [
-    //             'result'  => $this->result,
-    //             'message' => $this->message,
-    //             'records' => $this->records,
-    //         ];
-
-    //         return response()->json($response, $this->status_code);
-    //     }
-    // }
 
     public function secado()
     {
         try {
             // dd("lego");
-            $records           = Orden::with('cliente','estilo','calibre','metraje','color','referencia','lugar','tenido','secado')->where('estado_prod',1)->get();
+            $records           = ColoresOrden::with('calibre','metraje','tipoOrden','orden','orden.cliente','detalle_tenido','detalle_tenido.tenido')->where('estado_prod',2)->get();
             $this->status_code = 200;
             $this->result      = true;
             $this->message     = 'Registros consultados correctamente';
@@ -159,8 +134,7 @@ class OrdenesController extends Controller
     {
         try {
             // dd("lego");
-            $records           = Orden::with('cliente','estilo','calibre','metraje','color','referencia','lugar','tenido','secado','enconado')->where('estado_prod',2)->get();
-            // dd($records);
+            $records           = ColoresOrden::with('calibre','metraje','tipoOrden','orden','orden.cliente','detalle_tenido','detalle_tenido.tenido')->where('estado_prod',3)->get();
             $this->status_code = 200;
             $this->result      = true;
             $this->message     = 'Registros consultados correctamente';
@@ -184,8 +158,7 @@ class OrdenesController extends Controller
     {
         try {
             // dd("lego");
-            $records           = Orden::with('cliente','estilo','calibre','metraje','color','referencia','lugar','tenido','secado','enconado')->where('estado_prod',3)->get();
-            // dd($records);
+            $records           = ColoresOrden::with('calibre','metraje','tipoOrden','orden','orden.cliente','detalle_tenido','detalle_tenido.tenido')->where('estado_prod',4)->get();
             $this->status_code = 200;
             $this->result      = true;
             $this->message     = 'Registros consultados correctamente';
@@ -209,7 +182,7 @@ class OrdenesController extends Controller
     {
         try {
             // dd("lego");
-            $records           = Orden::with('cliente','estilo','calibre','metraje','color','referencia','lugar','tenido','secado','enconado')->where('estado_prod',4)->get();
+            $records           = Orden::with('cliente')->where('estado_prod',5)->get();
             // dd($records);
             $this->status_code = 200;
             $this->result      = true;
@@ -852,7 +825,6 @@ class OrdenesController extends Controller
 
     public function ordenes(){
         try {
-7
             $records = Orden::orderBy('orden')->with('cliente')->get();
             $this->status_code = 200;
             $this->result      = true;

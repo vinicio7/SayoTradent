@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Facturas;
 use App\Orden;
+use App\ColoresOrden;
 use DB;
 
 class FacturasController extends Controller
@@ -18,20 +19,20 @@ class FacturasController extends Controller
     {   
          try {
             // $records           = Orden::with('cliente','estilo','calibre','metraje','color','referencia','lugar','tenido','secado','estado')->orderBy('created_at','DESC')->groupBy('orden')->get();
-            $records    = DB::table('ordenes')->select(DB::raw('SUM(balance) as balance,SUM(amount) as precio, orden'))->groupBy('orden')->where('balance','0')->get();
+            $records    = ColoresOrden::with('calibre','metraje','tipoOrden','orden','orden.cliente')->where('estado_prod',4)->where('estado_id',2)->get();
 
             // dd($records);
-            $array = array();
-            foreach ($records as $item) {
-                $item2 =  Orden::with('cliente','coloresOrden','coloresOrden.calibre','coloresOrden.metraje','coloresOrden.estado')->where('orden',$item->orden)->first();
-                $item2->precio_total = $item->precio;
-                array_push($array, $item2);
-            }
-            $news_records = $array;
+            // $array = array();
+            // foreach ($records as $item) {
+            //     $item2 =  Orden::with('cliente','coloresOrden','coloresOrden.calibre','coloresOrden.metraje','coloresOrden.estado')->where('orden',$item->orden)->first();
+            //     $item2->precio_total = $item->precio;
+            //     array_push($array, $item2);
+            // }
+            // $news_records = $array;
             $this->status_code = 200;
             $this->result      = true;
             $this->message     = 'Registros consultados correctamente';
-            $this->records     = $news_records;
+            $this->records     = $records;
         } catch (\Exception $e) {
             $this->status_code = 400;
             $this->result      = false;

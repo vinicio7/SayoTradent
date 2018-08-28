@@ -49,7 +49,7 @@
                                             ng-class="{active: row == '-phone'}"></i>
                                     </div>
                                 </th>
-                                <th>
+                               <!--  <th>
                                     Descripción
                                     <div class="th">
                                         <i class="fa fa-caret-up icon-up"
@@ -59,7 +59,7 @@
                                             ng-click=" order('-phone') "
                                             ng-class="{active: row == '-phone'}"></i>
                                     </div>
-                                </th>
+                                </th> -->
                                 <th>
                                     Cliente
                                 </th>
@@ -81,17 +81,7 @@
                                 <th>
                                     Color
                                 </th>
-                                <th>
-                                    Fecha y Hora de Ingreso
-                                    <div class="th">
-                                        <i class="fa fa-caret-up icon-up"
-                                            ng-click=" order('phone') "
-                                            ng-class="{active: row == 'phone'}"></i>
-                                        <i class="fa fa-caret-down icon-down"
-                                            ng-click=" order('-phone') "
-                                            ng-class="{active: row == '-phone'}"></i>
-                                    </div>
-                                </th>
+                        
 
                                 <th>
                                     Total de Salida
@@ -138,11 +128,11 @@
                             <tbody>
                                 <tr ng-repeat="data in currentPageStores track by $index">
                                     <td>{{ $index + 1 }}</td>
-                                    <td>{{ data.orden }}</td>
-                                    <td>{{ data.descripcion }}</td>
-                                    <td>{{ data.cliente.nombre }}</td>
+                                    <td>{{ data.id_orden }}</td>
+                                    <!-- <td>{{ data.descripcion }}</td> -->
+                                    <td>{{ data.orden.cliente.nombre }}</td>
                                     <td>{{ data.po }}</td>
-                                    <td>{{ data.estilo.descripcion }}</td>
+                                    <td>{{ data.estilo }}</td>
                                     <td>{{ data.calibre.descripcion }}</td>
                                     <td>{{ data.metraje.descripcion }}</td>
                                     <td>
@@ -153,14 +143,13 @@
                                             Cafta
                                         </label>
                                     </td>
-                                    <td>{{ data.color.descripcion }}</td>
+                                    <td>{{ data.color }}</td>
 
-                                    <td>{{ data.fecha_hora }}</td> 
-                                    <td>{{ data.total_salida }}</td> 
-                                    <td>{{ data.balance }}</td> 
+                                    <td>{{ data.cantidad }}</td> 
+                                    <td>0</td> 
                                     <td>{{ data.cantidad }}</td>       
                                     <td>
-                                        <div ng-if="data.facturado == 0" class="btn-group">
+                                        <div ng-if="data.orden.facturado == 0" class="btn-group">
                                             <button type="button" class="btn btn-info ion ion-document" ng-click="modalFacturar(data)" md-ink-ripple></button>
                                         </div>
                                         <!-- <div ng-if="data.facturado == 1" class="btn-group">
