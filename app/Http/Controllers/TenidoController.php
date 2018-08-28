@@ -68,15 +68,26 @@ class TenidoController extends Controller
 							$record2->id_estado 	= 1;
 							$record2->save();
 						}
-
-						$record = detalle_tenido::create([
-							'id_tenido'          => $record->id,
-							'estado'          	 => 1,
-							'cantidad_tenida'    => $item->cantidad,
-							'etapa'              => 1,
-							'quesos'          	 => $total,
-							'color'				 => $item->estilo,
-						]);
+						$validar = detalle_tenido::where('color',$item->estilo)->first();
+						if ($validar) {
+							$nuevo = detalle_tenido::create([
+								'id_tenido'          => $record->id,
+								'estado'          	 => 1,
+								'cantidad_tenida'    => $validar->cantidad_tenida + $item->cantidad,
+								'etapa'              => $validar->etapa + 1,
+								'quesos'          	 => $total,
+								'color'				 => $item->estilo,
+							]);
+						} else {
+							$nuevo = detalle_tenido::create([
+								'id_tenido'          => $record->id,
+								'estado'          	 => 1,
+								'cantidad_tenida'    => $item->cantidad,
+								'etapa'              => 1,
+								'quesos'          	 => $total,
+								'color'				 => $item->estilo,
+							]);
+						}
 					}
 				if ($record) {		
 					$this->status_code = 200;

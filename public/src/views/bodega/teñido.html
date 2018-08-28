@@ -129,11 +129,11 @@
                                     </td>
                                     <td>
                                         <label ng-if="data.detalle_tenido.tenido != null">{{ data.detalle_tenido.tenido.fecha }}</label>
-                                        <label ng-if="!data.detalle_tenido.tenido == null"> - - - </label>
+                                        <label ng-if="data.detalle_tenido.tenido == null"> - - - </label>
                                     </td>
                                     <td>
                                         <label ng-if="data.detalle_tenido.tenido != null">{{ data.detalle_tenido.tenido.receta }}</label>
-                                        <label ng-if="!data.detalle_tenido.tenido == null">No tiene</label>
+                                        <label ng-if="data.detalle_tenido.tenido == null">No tiene</label>
                                     </td>
                                     <td>
                                         <label ng-if="data.detalle_tenido"> {{ data.detalle_tenido.cantidad_tenida }} </label>

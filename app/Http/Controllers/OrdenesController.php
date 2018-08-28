@@ -852,7 +852,7 @@ class OrdenesController extends Controller
 
     public function ordenes(){
         try {
-            $records = Orden::whereBetween('fecha_hora', [$param, $param1])->orderBy('orden')->with('cliente','tipoOrden')->get();
+            $records = Orden::orderBy('orden')->with('cliente','tipoOrden')->get();
             $this->status_code = 200;
             $this->result      = true;
             $this->message     = 'Registros consultados correctamente';

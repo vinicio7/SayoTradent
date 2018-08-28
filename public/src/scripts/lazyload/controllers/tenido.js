@@ -20,6 +20,7 @@
             $scope.toasts = [];
             $scope.currentPageStores3 = [];
             $scope.numero = 0;
+            $scope.tenidas = [];
             var modal;
 
             // Function for load table
@@ -85,6 +86,8 @@
                 $scope.currentPageStores3.push(params);
                 console.log($scope.currentPageStores3);
                 $scope.numero = $scope.numero + 1;
+                createToast('success', '<strong>Éxito: </strong>'+'Añadido correctamente');
+                                $timeout( function(){ closeAlert(0); }, 3000);
             }
 
             $scope.EliminarTenido = function(params){
@@ -179,8 +182,19 @@
                     );
                 }
             };   
+            $scope.detailtenidas = function(data){
+                $scope.tenidas = [];
+                modal = $modal.open({
+                    templateUrl: 'views/bodega/tenidas.html',
+                    scope: $scope,
+                    size: 'lg', 
+                    resolve: function() {},
+                    windowClass: 'default'
+                });
+            }
             // Functions for modals
             $scope.modalCreateOpen = function(data) {
+                $scope.currentPageStores3 = [];
                 $scope.registro = {};
                 $scope.action = 'new';
                 console.log(data); 

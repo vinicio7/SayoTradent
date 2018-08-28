@@ -191,13 +191,13 @@
                                     </td>
                                     <td>{{ data.color }}</td>
                                     <td>{{ data.cantidad }}</td> 
-                                    <td>
-                                        <label ng-if="data.tenido.cantidad"> {{ data.tenido.cantidad }} </label>
-                                        <label ng-if="!data.tenido.cantidad"> 0 </label>
+                                   <td>
+                                        <label ng-if="data.detalle_tenido"> {{ data.detalle_tenido.cantidad_tenida }} </label>
+                                        <label ng-if="!data.detalle_tenido"> 0 </label>
                                     </td>
                                     <td>
-                                        <label ng-if="data.tenido.detalle_tenido"> {{ data.tenido.detalle_tenido.balance }} </label>
-                                        <label ng-if="!data.tenido.detalle_tenido"> {{ data.cantidad }} </label>
+                                        <label ng-if="data.detalle_tenido"> {{  data.cantidad - data.detalle_tenido.cantidad_tenida }} </label>
+                                        <label ng-if="!data.detalle_tenido"> {{ data.cantidad }} </label>
                                     </td>
                                         <td>
                                              <button type="button" class="btn btn-primary ion ion-plus" ng-click="addTenido(data)" md-ink-ripple></button>
@@ -317,13 +317,13 @@
                                     <td>{{ data.color }}</td>
                                     <td>{{ data.cantidad }}</td> 
 
-                                    <td>
-                                        <label ng-if="data.tenido.cantidad"> {{ data.tenido.cantidad }} </label>
-                                        <label ng-if="!data.tenido.cantidad"> 0 </label>
+                                     <td>
+                                        <label ng-if="data.detalle_tenido"> {{ data.detalle_tenido.cantidad_tenida }} </label>
+                                        <label ng-if="!data.detalle_tenido"> 0 </label>
                                     </td>
                                     <td>
-                                        <label ng-if="data.tenido.detalle_tenido"> {{ data.tenido.detalle_tenido.balance }} </label>
-                                        <label ng-if="!data.tenido.detalle_tenido"> {{ data.cantidad }} </label>
+                                        <label ng-if="data.detalle_tenido"> {{  data.cantidad - data.detalle_tenido.cantidad_tenida }} </label>
+                                        <label ng-if="!data.detalle_tenido"> {{ data.cantidad }} </label>
                                     </td>
                                     <td>
                                         <input type="text" name="" ng-model="para_tenir">
