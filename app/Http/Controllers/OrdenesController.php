@@ -656,9 +656,9 @@ class OrdenesController extends Controller
         try {
             $record2                 = Orden::find($request->input('id_orden'));
             if ($record2) {
-                if ($request->input('cantidad') > $record2->balance ) {
-                    throw new \Exception('La cantidad no puede ser mayor al balance');
-                }  
+                // if ($request->input('cantidad') > $record2->balance ) {
+                //     throw new \Exception('La cantidad no puede ser mayor al balance');
+                // }  
             }
             $record = Despachos::create([
                 

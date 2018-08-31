@@ -155,7 +155,7 @@
                 modal = $modal.open({
                     templateUrl: 'views/mantenimientos/modal_calibres.html',
                     scope: $scope,
-                    size: 'lg', 
+                    size: 'xs', 
                     resolve: function() {},
                     windowClass: 'default'
                 });
@@ -168,7 +168,7 @@
                 modal = $modal.open({
                     templateUrl: 'views/mantenimientos/modal_calibres.html',
                     scope: $scope,
-                    size: 'lg',
+                    size: 'xs',
                     resolve: function() {},
                     windowClass: 'default'
                 });

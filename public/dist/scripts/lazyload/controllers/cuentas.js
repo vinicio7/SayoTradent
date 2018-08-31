@@ -154,7 +154,7 @@
                 modal = $modal.open({
                     templateUrl: 'views/administracion/modal_cuentas.html',
                     scope: $scope,
-                    size: 'lg', 
+                    size: 'xs', 
                     resolve: function() {},
                     windowClass: 'default'
                 });
@@ -166,7 +166,7 @@
                 modal = $modal.open({
                     templateUrl: 'views/administracion/modal_cuentas.html',
                     scope: $scope,
-                    size: 'lg',
+                    size: 'xs',
                     resolve: function() {},
                     windowClass: 'default'
                 });
