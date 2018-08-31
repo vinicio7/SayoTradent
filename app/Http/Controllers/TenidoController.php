@@ -101,7 +101,7 @@ class TenidoController extends Controller
 								'quesos'          	 => $total,
 								'color'				 => $item->estilo,
 								'total_tenido'		 => $item->cantidad_tenida + $item->para_tenir,
-								'receta_cantidad'	 => $record->cantidad / $total;
+								'receta_cantidad'	 => $record->cantidad / $total,
 							]);
 						} else {
 							$nuevo = detalle_tenido::create([
