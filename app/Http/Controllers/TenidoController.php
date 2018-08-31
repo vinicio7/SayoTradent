@@ -88,10 +88,12 @@ class TenidoController extends Controller
 			return response()->json($response, $this->status_code);
 		}
     }
+
 	
 	public function recetas(Request $request) {
 		try {
 			$records           = detalle_tenido::where('id_tenido', $request->input('id_tenido'))->with('tenido','orden')->get();
+
 			$this->status_code = 200;
 			$this->result      = true;
 			$this->message     = 'Registros consultados correctamente';
@@ -109,7 +111,7 @@ class TenidoController extends Controller
 
 			return response()->json($response, $this->status_code);
 		}
-	}
+
 	
 	public function rechazos(Request $request) {
 		try {
@@ -135,6 +137,28 @@ class TenidoController extends Controller
 			return response()->json($response, $this->status_code);
 		}
 	}
+
+  
+  public function consultarTenidas( Request $request) {
+		try {
+			$records           = detalle_tenido::where('id_color',$request->input('id'))->with('color','color.orden','color.orden.cliente','color.calibre','color.metraje')->get();
+			$this->status_code = 200;
+			$this->result      = true;
+			$this->message     = 'Registros consultados correctamente';
+			$this->records     = $records;
+		} catch (\Exception $e) {
+			$this->status_code = 400;
+			$this->result      = false;
+			$this->message     = env('APP_DEBUG')?$e->getMessage():$this->message;
+		}finally{
+			$response = [
+				'result'  => $this->result,
+				'message' => $this->message,
+				'records' => $this->records,
+			];
+			return response()->json($response, $this->status_code);
+		}
+    }
     
     public function store(Request $request) {
 		try {
@@ -170,24 +194,30 @@ class TenidoController extends Controller
 						}
 						$validar = detalle_tenido::where('color',$item->estilo)->where('estado', 1)->first();
 						if ($validar) {
+							$total = count($array);
 							$nuevo = detalle_tenido::create([
-								'id_tenido'          => $record->id,
+								'id_color'           => $record2->id,
 								'estado'          	 => 1,
+
 								'cantidad_tenida'    => $validar->cantidad_tenida + $item->para_tenir,
+
 								'etapa'              => $validar->etapa + 1,
 								'kilos'				 => $kilos,
 								'quesos'          	 => $quesos,
 								'color'				 => $item->estilo,
+								'total_tenido'		 => $item->cantidad_tenida + $item->para_tenir,
+								'receta_cantidad'	 => $record->cantidad / $total,
 							]);
 						} else {
 							$nuevo = detalle_tenido::create([
-								'id_tenido'          => $record->id,
+								'id_color'           => $record2->id,
 								'estado'          	 => 1,
 								'cantidad_tenida'    => $item->para_tenir,
 								'etapa'              => 1,
 								'kilos'				 => $kilos,
 								'quesos'          	 => $quesos,
 								'color'				 => $item->estilo,
+								'receta_cantidad'	 => $record->cantidad / $total
 							]);
 						}
 					}

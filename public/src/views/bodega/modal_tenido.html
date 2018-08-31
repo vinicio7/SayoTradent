@@ -353,7 +353,9 @@
                                         <label ng-if="!data.detalle_tenido"> {{ data.cantidad }} </label>
                                     </td>
                                     <td>
+
                                         <input type="number" name="" ng-min="0" ng-max="data.cantidad" ng-value="0" ng-model="data.para_tenir" ng-keyup="calcularTotal()">
+
                                     </td>
                                         <td>
                                              <button type="button" class="btn btn-danger ion ion-trash-a" ng-click="EliminarTenido(data)" md-ink-ripple></button>

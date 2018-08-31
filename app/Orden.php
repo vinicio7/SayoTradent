@@ -11,7 +11,7 @@ class Orden extends Model
                            'fecha_hora', 
                            'id_empresa',
                            'balance',
-                           'total_salida',
+                           
                            'amount',
                            'precio_total',
                            'facturado',

@@ -25,6 +25,7 @@ Route::group(['prefix' => 'ws'], function (){
 	Route::post 	('filtrar/planilla',		'PlanillaController@filtrar');
 	Route::post 	('filtrar/cafta',			'OrdenesController@filtrarCafta');
 	Route::post 	('consultar',				'PlanillaController@consultar');
+	Route::post 	('consultar/tenidas',		'TenidoController@consultarTenidas');
 	Route::resource ('usuarios', 				'UsuariosController');
 	Route::any 		('login', 					'UsuariosController@login');
 	Route::resource ('planilla', 				'PlanillaController');

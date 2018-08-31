@@ -124,11 +124,11 @@
                                     <td>{{ data.color }}</td>
                                     <td>{{ data.cantidad }}</td>
                                     <td> 
-                                        <label ng-if="data.detalle_tenido.tenido != null">{{ data.detalle_tenido.tenido.fecha }} </label>
+                                        <label ng-if="data.detalle_tenido.tenido != null">{{ data.detalle_tenido.created_at }} </label>
                                         <label ng-if="data.detalle_tenido.tenido == null"> - - - </label>
                                     </td>
                                     <td>
-                                        <label ng-if="data.detalle_tenido.tenido != null">{{ data.detalle_tenido.tenido.fecha }}</label>
+                                        <label ng-if="data.detalle_tenido.tenido != null">{{ data.detalle_tenido.created_at }}</label>
                                         <label ng-if="data.detalle_tenido.tenido == null"> - - - </label>
                                     </td>
                                     <td>
@@ -136,11 +136,11 @@
                                         <label ng-if="data.detalle_tenido.tenido == null">No tiene</label>
                                     </td>
                                     <td>
-                                        <label ng-if="data.detalle_tenido"> {{ data.detalle_tenido.cantidad_tenida }} </label>
+                                        <label ng-if="data.detalle_tenido"> {{ data.detalle_tenido.total_tenido }} </label>
                                         <label ng-if="!data.detalle_tenido"> 0 </label>
                                     </td>
                                     <td>
-                                        <label ng-if="data.detalle_tenido"> {{  data.cantidad - data.detalle_tenido.cantidad_tenida }} </label>
+                                        <label ng-if="data.detalle_tenido"> {{  data.cantidad - data.detalle_tenido.total_tenido }} </label>
                                         <label ng-if="!data.detalle_tenido"> {{ data.cantidad }} </label>
                                     </td>
                                 <td>

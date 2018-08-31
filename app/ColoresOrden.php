@@ -22,6 +22,7 @@ class ColoresOrden extends Model
                            'id_estado',
                            'sub_total',
                            'precio',
+
                            'balance',
                            'total_salida'
 						   ];

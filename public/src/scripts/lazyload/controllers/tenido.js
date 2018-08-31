@@ -19,6 +19,7 @@
             $scope.positionModel = 'topRight';
             $scope.toasts = [];
             $scope.currentPageStores3 = [];
+            $scope.currentPageStores4 = [];
             $scope.numero = 0;
             $scope.tenidas = [];
             $scope.recetas = [];
@@ -165,6 +166,7 @@
             // Function for sending data
 
             $scope.saveData = function (customer) {
+                console.log($scope.currentPageStores3);
                 customer.colores_tenido = JSON.stringify($scope.currentPageStores3);
                 if ($scope.action == 'new') {
                     console.log(customer);
@@ -227,6 +229,11 @@
                 }
             };   
             $scope.detailtenidas = function(data){
+                TenidoService.consultarTenidas(data).then(function(response) {
+                    console.log(response.data.records);   
+                    $scope.currentPageStores4 = response.data.records;
+                });
+
                 $scope.tenidas = [];
                 modal = $modal.open({
                     templateUrl: 'views/bodega/tenidas.html',
