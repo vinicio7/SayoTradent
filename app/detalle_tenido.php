@@ -13,10 +13,17 @@ class detalle_tenido extends Model
                            'color',
                            'etapa', 
                            'quesos',
+                           'total_tenido',
                            ];
 
   public function tenido()
   {
       return $this->belongsTo('App\Tenido', 'id_tenido', 'id');
   }
+
+  public function color()
+  {
+      return $this->hasOne('App\ColoresOrden', 'id', 'id_color');
+  }
+
 }

@@ -19,6 +19,7 @@
             $scope.positionModel = 'topRight';
             $scope.toasts = [];
             $scope.currentPageStores3 = [];
+            $scope.currentPageStores4 = [];
             $scope.numero = 0;
             $scope.tenidas = [];
             var modal;
@@ -184,6 +185,11 @@
                 }
             };   
             $scope.detailtenidas = function(data){
+                TenidoService.consultarTenidas(data).then(function(response) {
+                    console.log(response.data.records);   
+                    $scope.currentPageStores4 = response.data.records;
+                });
+
                 $scope.tenidas = [];
                 modal = $modal.open({
                     templateUrl: 'views/bodega/tenidas.html',

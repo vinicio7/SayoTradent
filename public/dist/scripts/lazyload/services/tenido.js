@@ -23,6 +23,8 @@ contactos_service.service('TenidoService', ['$http', 'WS_URL', function($http, W
         return $http.post(WS_URL+'ordenes/tenido');
     };
     
-
+    this.consultarTenidas = function(params){
+        return $http.post(WS_URL+'consultar/tenidas', params);
+    };
    
 }]);
