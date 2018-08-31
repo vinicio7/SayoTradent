@@ -92,6 +92,7 @@ class TenidoController extends Controller
 						}
 						$validar = detalle_tenido::where('color',$item->estilo)->first();
 						if ($validar) {
+							$total = count($array);
 							$nuevo = detalle_tenido::create([
 								'id_color'           => $record2->id,
 								'estado'          	 => 1,
@@ -100,6 +101,7 @@ class TenidoController extends Controller
 								'quesos'          	 => $total,
 								'color'				 => $item->estilo,
 								'total_tenido'		 => $item->cantidad_tenida + $item->para_tenir,
+								'receta_cantidad'	 => $record->cantidad / $total;
 							]);
 						} else {
 							$nuevo = detalle_tenido::create([
@@ -109,6 +111,7 @@ class TenidoController extends Controller
 								'etapa'              => 1,
 								'quesos'          	 => $total,
 								'color'				 => $item->estilo,
+								'receta_cantidad'	 => $record->cantidad / $total;
 							]);
 						}
 					}

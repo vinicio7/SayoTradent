@@ -14,6 +14,7 @@ class detalle_tenido extends Model
                            'etapa', 
                            'quesos',
                            'total_tenido',
+                           'receta_cantidad',
                            ];
 
   public function tenido()
