@@ -11,7 +11,8 @@ class detalle_tenido extends Model
                            'estado', 
                            'cantidad_tenida', 
                            'color',
-                           'etapa', 
+                           'etapa',
+                           'kilos',
                            'quesos',
                            'total_tenido',
                            'receta_cantidad',
@@ -22,9 +23,15 @@ class detalle_tenido extends Model
       return $this->belongsTo('App\Tenido', 'id_tenido', 'id');
   }
 
+
+  public function orden() {
+    return $this->hasOne('App\ColoresOrden', 'estilo', 'color')->with('orden');
+  }
+
   public function color()
   {
       return $this->hasOne('App\ColoresOrden', 'id', 'id_color');
   }
+
 
 }

@@ -22,12 +22,14 @@ class ColoresOrden extends Model
                            'id_estado',
                            'sub_total',
                            'precio',
-                           'total_salida',
+
+                           'balance',
+                           'total_salida'
 						   ];
 
 
   public function orden(){
-  	return $this->hasOne('App\Orden', 'orden','id_orden');
+  	return $this->hasOne('App\Orden', 'orden','id_orden')->with('cliente');
   }
 
   public function calibre()
@@ -47,7 +49,7 @@ class ColoresOrden extends Model
 
   public function detalle_tenido()
   {
-      return $this->hasOne('App\detalle_tenido', 'color', 'estilo');
+      return $this->hasOne('App\detalle_tenido', 'color', 'estilo')->where('estado', 1);
   }
 
   public function referencia()

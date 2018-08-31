@@ -51,9 +51,9 @@ Route::group(['prefix' => 'ws'], function (){
 	Route::get 		('excel/estadoCuentaOrden/{param}/{param1}', 'ExcelController@reporteEstadoCuentaOrden');
 	Route::get 		('excel/estadoCuentaConsumo/{param}/{param1}', 'ExcelController@reporteEstadoCuentaConsumo');
 	Route::any 		('reporte/fechas', 			'ExcelController@ordenesfechas');
+	Route::any 		('ordenes/tenido',			'OrdenesController@tenido');
 	Route::resource ('ordenes', 				'OrdenesController');
 	Route::resource ('facturas', 				'FacturasController');
-	Route::any 	('ordenes/tenido',			'OrdenesController@tenido');
 	Route::post 	('ordenes/maseo',			'OrdenesController@maseo');
 	Route::post 	('ordenes/secado',			'OrdenesController@secado');
 	Route::post 	('ordenes/enconado',		'OrdenesController@enconado');
@@ -73,6 +73,10 @@ Route::group(['prefix' => 'ws'], function (){
 	Route::get 		('mostrar/muestra/{id}', 	'OrdenesController@mostrarmuestra');
 	Route::post 	('despachos', 				'OrdenesController@despachostore');
 	Route::get 		('mostrar/despacho/{id}', 	'OrdenesController@mostrardespacho');
+	Route::get 		('recetas',					'TenidoController@recetas');
+	Route::get 		('recetasproceso',			'TenidoController@recetas_proceso');
+	Route::post 	('rechazarproceso', 		'TenidoController@rechazar_proceso');
+	Route::get	 	('tenido/rechazos', 		'TenidoController@rechazos');
 	Route::resource ('tenido', 				    'TenidoController');
 	Route::get      ('filtro/teñido', 			'TenidoController@filtrotenido');
 	Route::get      ('buscar/{id}', 		    'TenidoController@buscar');

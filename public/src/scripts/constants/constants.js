@@ -9,8 +9,8 @@
         // .constant('API_URL', 'http://localhost/SayoTradent/public/api/')
         // .constant('APP_URL', 'http://localhost/SayoTradent/public/');
 
-        .constant('WS_URL', 'http://142.93.241.92/SayoTradent/public/ws/')
-        .constant('API_URL', 'http://142.93.241.92/SayoTradent/public/api/')
-        .constant('APP_URL', 'http://142.93.241.92/SayoTradent/public/');
+        .constant('WS_URL', 'http://'+window.location.hostname+'/sayotradent-web/public/ws/')
+        .constant('API_URL', 'http://'+window.location.hostname+'/sayotradent-web/public/api/')
+        .constant('APP_URL', 'http://'+window.location.hostname+'/sayotradent-web/public/');
 
 }());
