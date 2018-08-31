@@ -36,7 +36,7 @@
                     </div> -->
                     <div class="col-sm-4">
                         <label>Cantidad</label>
-                        <input type="text" class="form-control" ng-model="registro.cantidad" required>
+                        <input type="number" class="form-control" min="0" ng-model="registro.cantidad" required>
                     </div>
                      <div class="col-sm-4">
                         <label>Receta</label>
@@ -62,17 +62,44 @@
                         <label>Tipo</label>
                         <select class="form-control" ng-model="registro.tipo" required>                  
                             <option disabled>Selecciona un tipo</option>
-                            <option value="1">TEXT</option>
-                            <option value="2">40/2</option>
+                            <option value="TEXT">TEXT</option>
+                            <option value="40/2">40/2</option>
+                            <option value="20/2">20/2</option>
+                            <option value="20/3">20/3</option>
+                            <option value="20/9">20/9</option>
+                            <option value="30/2">30/2</option>
+                            <option value="30/3">30/3</option>
+                            <option value="40/3">40/3</option>
+                            <option value="45/2">45/2</option>
+                            <option value="50/2">50/2</option>
+                            <option value="60/2">60/2</option>
+                            <option value="60/3">60/3</option>
+                            <option value="Polibordado 120/D">Polibordado 120/D</option>
+                            <option value="Twill Tape">Twill Tape</option>
+                            <option value="Drawcord">Drawcord</option>
+                            <option value="Satin">Satin</option>
+                            <option value="Felt">Felt</option>
+                            <option value="Tela">Tela</option>
+                            <option value="Rayon">Rayon</option>
+                            <option value="Nylon">Nylon</option>
+                            <option value="Botton">Botton</option>
+                            <option value="Elastico">Elastico</option>
+                            <option value="Encaje">Encaje</option>
+                            <option value="Lace">Lace</option>
+                            <option value="Ziper">Ziper</option>
+                            <option value="Kalim B (Hilo)">Kalim B (Hilo)</option>
+                            <option value="Cuello">Cuello</option>
+                            <option value="Algodon">Algodon</option>
                         </select>
                     </div>
                     <div class="col-sm-4">
                         <label>Kilos</label>
-                        <input type="text" class="form-control" ng-model="registro.kilos" ng-keyup="calcularKilos(registro)" required>
+                        <!-- <input type="text" class="form-control" ng-model="registro.kilos" ng-keyup="calcularKilos(registro)" required> -->
+                        <input type="number" class="form-control" ng-model="registro.kilos" required>
                     </div>
                     <div class="col-sm-4">
                         <label>Quesos</label>
-                        <input type="text" class="form-control" ng-model="registro.quesos" required>
+                        <input type="number" class="form-control" ng-model="registro.quesos" required>
                     </div>
                     <div class="col-sm-4">
                         <label>Hora de ingreso</label>
@@ -326,7 +353,9 @@
                                         <label ng-if="!data.detalle_tenido"> {{ data.cantidad }} </label>
                                     </td>
                                     <td>
-                                        <input type="text" name="" ng-model="data.para_tenir">
+
+                                        <input type="number" name="" ng-min="0" ng-max="data.cantidad" ng-value="0" ng-model="data.para_tenir" ng-keyup="calcularTotal()">
+
                                     </td>
                                         <td>
                                              <button type="button" class="btn btn-danger ion ion-trash-a" ng-click="EliminarTenido(data)" md-ink-ripple></button>

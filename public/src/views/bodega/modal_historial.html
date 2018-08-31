@@ -1,0 +1,47 @@
+<div class="modal-style">
+    <div class="modal-header clearfix">
+        <h4 class="modal-title">Historial</h4>
+        <span class="close ion ion-android-close" ng-click="modalClose()"></span>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal" name="form" action="javascript:;" novalidate>
+
+            <div style="overflow-x:scroll;">
+                <table class="table table-bordered table-striped" >
+                    <thead>
+                        <tr>
+                            <th>Orden</th>
+                            <th>PO</th>
+                            <th>Empresa</th>
+                            <th>Estilo</th>
+                            <th>Color</th>
+                            <th>Receta</th>
+                            <th>Cantidad</th>
+                            <th>Fecha</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in tableHistorial">
+                            <td>{{item.orden.id_orden}}</td>
+                            <td>{{item.orden.po}}</td>
+                            <td>{{item.orden.orden.cliente.nombre}}</td>
+                            <td>{{item.orden.estilo}}</td>
+                            <td>{{item.orden.color}}</td>
+                            <td>{{item.tenido.receta}}</td>
+                            <td>{{item.cantidad_tenida}}</td>
+                            <td>{{item.tenido.fecha}}</td>
+                            <td>{{item.estado == 0 ? 'Rechazado' : 'Teñido'}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-sm-12 text-right">
+                    <button class="btn btn-danger" ng-click="modalClose()">Cerrar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
