@@ -20,23 +20,24 @@
             var modal;
 
             $scope.cambioDespacho = function(registro) {
-                ReportesService.filtrarMuestras(registro).then(function(response) {
-                    $scope.datas = response.data.records;
-                    $scope.search();
-                    $scope.select($scope.currentPage);
-                });
+                // ReportesService.filtrarMuestras(registro).then(function(response) {
+                //     $scope.datas = response.data.records;
+                //     $scope.search();
+                //     $scope.select($scope.currentPage);
+                // });
             };
 
             // Function for load table
-            function MostarDatos() {
+            function MostrarDatos() {
                 ReportesService.muestras().then(function(response) {
+                    console.log(response.data.records);
                     $scope.datas = response.data.records;
                     $scope.search();
                     $scope.select($scope.currentPage);
-
                     cargarClientes();
                     cargarOrdenes();
                 });
+                console.log($scope.currentPageStores);
             }
 
             function cargarClientes(){
@@ -69,9 +70,10 @@
 
             // Functions of table
             $scope.select = function(page) {
+                // console.log(page);
                 var start = (page - 1)*$scope.numPerPage,
                     end = start + $scope.numPerPage;
-
+                console.log($scope.currentPageStores);
                 $scope.currentPageStores = $scope.filteredData.slice(start, end);
             };
 
@@ -92,6 +94,7 @@
             };
 
             $scope.search = function() {
+                // console.log($scope.datas);
                 $scope.filteredData = $filter('filter')($scope.datas, $scope.searchKeywords);
                 $scope.onFilterChange();
             };
@@ -104,7 +107,7 @@
                 $scope.onOrderChange();
             };
 
-            MostarDatos();
+            MostrarDatos();
             cargarModal();
 
             // Function for toast
