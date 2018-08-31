@@ -21,6 +21,8 @@
             $scope.currentPageStores3 = [];
             $scope.numero = 0;
             $scope.tenidas = [];
+            $scope.recetas = [];
+            $scope.tableHistorial = [];
             var modal;
 
             // Function for load table
@@ -34,6 +36,10 @@
                 
                 
             } 
+
+            TenidoService.recetasProceso().then(function(response) {
+                $scope.recetas = response.data.records;     
+            });
 
             $scope.redirect = function(){ 
                
@@ -115,11 +121,49 @@
                 }
             }
 
+            $scope.calcularTotal = function() {
+                var suma = 0;
+                angular.forEach($scope.currentPageStores3, function(value, key){
+                    if(value.para_tenir) {
+                        suma += value.para_tenir;
+                    }
+                });
+                $scope.registro.cantidad = suma;
+            }
+
+            $scope.cargarDetalle = function(receta) {
+                TenidoService.recetas(receta).then(function(response) {
+                    console.log(response.data.records);
+                    $scope.tableData = response.data.records;     
+                });
+            }
+
+            $scope.rechazarProceso = function(receta) {
+                var item = {
+                    id_tenido: receta.id_tenido,
+                    detalle: JSON.stringify($scope.tableData)
+                }
+                
+                TenidoService.rechazarProceso(item).then(function(response) {
+                    if(response.data.result) {
+                        MostarDatos();
+                        modal.close();
+                        createToast('success', '<strong>Éxito: </strong>'+response.data.message);
+                        $timeout( function(){ closeAlert(0); }, 3000);
+                    }
+                    else {
+                        createToast('danger', '<strong>Error: </strong>'+response.data.message);
+                        $timeout( function(){ closeAlert(0); }, 3000);
+                    }
+                });
+            }
+
             function closeAlert (index) {
                 $scope.toasts.splice(index, 1);
             }
 
             // Function for sending data
+
             $scope.saveData = function (customer) {
                 customer.colores_tenido = JSON.stringify($scope.currentPageStores3);
                 if ($scope.action == 'new') {
@@ -195,9 +239,10 @@
             // Functions for modals
             $scope.modalCreateOpen = function(data) {
                 $scope.currentPageStores3 = [];
-                $scope.registro = {};
+                $scope.registro = {
+                    cantidad: 0
+                };
                 $scope.action = 'new';
-                console.log(data); 
                 // $scope.registro.id_orden = data.id_orden;
                 // console.log($scope.registro.id_orden);
                 modal = $modal.open({
@@ -206,6 +251,38 @@
                     size: 'lg', 
                     resolve: function() {},
                     windowClass: 'default'
+                });
+            };
+
+            $scope.modalRechazar = function() {
+                $scope.tableData = [];
+                
+                modal = $modal.open({
+                    templateUrl: 'views/bodega/modal_rechazar.html',
+                    scope: $scope,
+                    size: 'lg', 
+                    resolve: function() {},
+                    windowClass: 'default'
+                });
+            };
+
+            $scope.detalleRechazos = function(item) {
+                $scope.tableHistorial = [];
+                TenidoService.rechazos(item.estilo).then(function(response) {
+                    if(response.data.result) {
+                        $scope.tableHistorial = response.data.records;
+                        modal = $modal.open({
+                            templateUrl: 'views/bodega/modal_historial.html',
+                            scope: $scope,
+                            size: 'lg', 
+                            resolve: function() {},
+                            windowClass: 'default'
+                        });
+                    }
+                    else {
+                        createToast('danger', '<strong>Error: </strong>'+response.data.message);
+                        $timeout( function(){ closeAlert(0); }, 3000);
+                    }
                 });
             };
 

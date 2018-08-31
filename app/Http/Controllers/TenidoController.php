@@ -34,7 +34,107 @@ class TenidoController extends Controller
 
 			return response()->json($response, $this->status_code);
 		}
+	}
+
+	public function recetas_proceso(Request $request) {
+		try {
+			$records           = Tenido::all();
+			$this->status_code = 200;
+			$this->result      = true;
+			$this->message     = 'Registros consultados correctamente';
+			$this->records     = $records;
+		} catch (\Exception $e) {
+			$this->status_code = 400;
+			$this->result      = false;
+			$this->message     = env('APP_DEBUG')?$e->getMessage():$this->message;
+		}finally{
+			$response = [
+				'result'  => $this->result,
+				'message' => $this->message,
+				'records' => $this->records,
+			];
+
+			return response()->json($response, $this->status_code);
+		}
+	}
+	
+	public function rechazar_proceso(Request $request) {
+		try {
+			$detalle = json_decode($request->input('detalle'));
+			$id_tenido = $request->input('id_tenido');
+
+			detalle_tenido::where('id_tenido', $id_tenido)->update(['estado' => 0]);
+			foreach($detalle as $item) {
+				$registro = ColoresOrden::find($item->orden->id);
+				$registro->estado_prod = 0;
+				$registro->save();
+			}
+
+			$this->status_code = 200;
+			$this->result      = true;
+			$this->message     = 'Proceso rechazado exitosamente';
+			$this->records     = null;
+		} catch (\Exception $e) {
+			$this->status_code = 400;
+			$this->result      = false;
+			$this->message     = env('APP_DEBUG')?$e->getMessage():$this->message;
+		}finally{
+			$response = [
+				'result'  => $this->result,
+				'message' => $this->message,
+				'records' => $this->records,
+			];
+
+			return response()->json($response, $this->status_code);
+		}
     }
+	
+	public function recetas(Request $request) {
+		try {
+			$records           = detalle_tenido::where('id_tenido', $request->input('id_tenido'))->with('tenido','orden')->get();
+			$this->status_code = 200;
+			$this->result      = true;
+			$this->message     = 'Registros consultados correctamente';
+			$this->records     = $records;
+		} catch (\Exception $e) {
+			$this->status_code = 400;
+			$this->result      = false;
+			$this->message     = env('APP_DEBUG')?$e->getMessage():$this->message;
+		}finally{
+			$response = [
+				'result'  => $this->result,
+				'message' => $this->message,
+				'records' => $this->records,
+			];
+
+			return response()->json($response, $this->status_code);
+		}
+	}
+	
+	public function rechazos(Request $request) {
+		try {
+			$records = detalle_tenido::where('color', $request->input('color'))->with('tenido', 'orden')->get();
+
+			$this->status_code = 200;
+			$this->result      = true;
+			$this->message     = 'Registros consultados correctamente';
+			$this->records     = $records;
+		}
+		catch(\Exception $e) {
+			$this->status_code = 200;
+			$this->result      = false;
+			$this->message     = env('APP_DEBUG')?$e->getMessage():$this->message;
+		}
+		finally {
+			$response = [
+				'result'  => $this->result,
+				'message' => $this->message,
+				'records' => $this->records,
+			];
+
+			return response()->json($response, $this->status_code);
+		}
+	}
     
     public function store(Request $request) {
 		try {
@@ -54,13 +154,13 @@ class TenidoController extends Controller
 						'quesos'			=> $request->input('quesos'),
 						'hora_ingreso'		=> $request->input('hora_ingreso'),
 						'hora_salida'		=> $request->input('hora_salida'),
-
+						'tipo'				=> $request->input('tipo')
 					]);
 					$array  = json_decode($request->input('colores_tenido'));
-					$numero = count($array); 
-					$total  = $record->quesos / $numero;
-					$total  = number_format($total,2);
+
 					foreach ($array as $item) {
+						$kilos = ($item->para_tenir * $record->kilos) / $record->cantidad;
+						$quesos = ($item->para_tenir * $record->quesos) / $record->cantidad;
 						$record2 = ColoresOrden::where('estilo',$item->estilo)->first();
 						if ($record2) {
 							$record2->estado_id 	= 1;
@@ -68,23 +168,25 @@ class TenidoController extends Controller
 							$record2->id_estado 	= 1;
 							$record2->save();
 						}
-						$validar = detalle_tenido::where('color',$item->estilo)->first();
+						$validar = detalle_tenido::where('color',$item->estilo)->where('estado', 1)->first();
 						if ($validar) {
 							$nuevo = detalle_tenido::create([
 								'id_tenido'          => $record->id,
 								'estado'          	 => 1,
-								'cantidad_tenida'    => $validar->cantidad_tenida + $item->cantidad,
+								'cantidad_tenida'    => $validar->cantidad_tenida + $item->para_tenir,
 								'etapa'              => $validar->etapa + 1,
-								'quesos'          	 => $total,
+								'kilos'				 => $kilos,
+								'quesos'          	 => $quesos,
 								'color'				 => $item->estilo,
 							]);
 						} else {
 							$nuevo = detalle_tenido::create([
 								'id_tenido'          => $record->id,
 								'estado'          	 => 1,
-								'cantidad_tenida'    => $item->cantidad,
+								'cantidad_tenida'    => $item->para_tenir,
 								'etapa'              => 1,
-								'quesos'          	 => $total,
+								'kilos'				 => $kilos,
+								'quesos'          	 => $quesos,
 								'color'				 => $item->estilo,
 							]);
 						}

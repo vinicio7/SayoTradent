@@ -23,6 +23,20 @@ contactos_service.service('TenidoService', ['$http', 'WS_URL', function($http, W
         return $http.post(WS_URL+'ordenes/tenido');
     };
     
+    this.recetasProceso = function() {
+        return $http.get(WS_URL+'recetasproceso');
+    }
 
+    this.recetas = function(params) {
+        return $http.get(WS_URL+'recetas?id_tenido='+params.id_tenido);
+    }
+
+    this.rechazarProceso = function(params) {
+        return $http.post(WS_URL+'rechazarproceso', params);
+    }
+
+    this.rechazos = function(color) {
+        return $http.get(WS_URL+'tenido/rechazos?color='+color);
+    }
    
 }]);

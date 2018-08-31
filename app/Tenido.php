@@ -20,7 +20,8 @@ class Tenido extends Model
                            'kilos',
                            'quesos',
                            'hora_ingreso',
-                           'hora_salida'
+                           'hora_salida',
+                           'tipo'
                            ];
     
     public function orden()

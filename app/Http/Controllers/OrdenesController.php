@@ -16,6 +16,7 @@ use App\Muestra;
 use App\Estados;
 use App\Despachos;
 use App\TipoOrden;
+use App\Tenido;
 use App\Http\Controllers\Controller;
 use Validator;
 
@@ -85,8 +86,8 @@ class OrdenesController extends Controller
     public function tenido()
     {
         try {
-            // dd("lego");
             $records           = ColoresOrden::with('calibre','metraje','tipoOrden','orden','orden.cliente','detalle_tenido','detalle_tenido.tenido')->get();
+            
             $this->status_code = 200;
             $this->result      = true;
             $this->message     = 'Registros consultados correctamente';
@@ -471,8 +472,10 @@ class OrdenesController extends Controller
                         'lugar'         =>  $item->lugar,
                         'id_estado'     =>  $item->id_estado,
                         'sub_total'     =>  $item->sub_total,
-                        'precio'        => $item->precio,
-                        'estado_prod'       =>  0,
+                        'precio'        =>  $item->precio,
+                        'estado_prod'   =>  0,
+                        'balance'       =>  $item->cantidad,
+                        'total_salida'  =>  0
                     ]);
                     $b = $b + $record2->cantidad;
                     $c = $c + $record2->sub_total;
@@ -654,11 +657,11 @@ class OrdenesController extends Controller
     {
         // dd($request);
         try {
-            $record2                 = Orden::find($request->input('id_orden'));
+            $record2                 = ColoresOrden::find($request->input('id_orden'));
             if ($record2) {
-                // if ($request->input('cantidad') > $record2->balance ) {
-                //     throw new \Exception('La cantidad no puede ser mayor al balance');
-                // }  
+                if ($request->input('cantidad') > $record2->balance ) {
+                    throw new \Exception('La cantidad no puede ser mayor al balance');
+                }  
             }
             $record = Despachos::create([
                 
@@ -671,7 +674,7 @@ class OrdenesController extends Controller
             if ($record) {
                 $record2->total_salida   = $record2->total_salida + $request->input('cantidad');
                 $record2->balance        = $record2->cantidad - $record2->total_salida;
-                $record2->amount         = $record2->precio * $record2->total_salida;
+                //$record2->amount         = $record2->precio * $record2->total_salida;
                 
                 $record2->save();
                 $this->status_code      = 200;

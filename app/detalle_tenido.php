@@ -11,12 +11,17 @@ class detalle_tenido extends Model
                            'estado', 
                            'cantidad_tenida', 
                            'color',
-                           'etapa', 
+                           'etapa',
+                           'kilos',
                            'quesos',
                            ];
 
   public function tenido()
   {
       return $this->belongsTo('App\Tenido', 'id_tenido', 'id');
+  }
+
+  public function orden() {
+    return $this->hasOne('App\ColoresOrden', 'estilo', 'color')->with('orden');
   }
 }
