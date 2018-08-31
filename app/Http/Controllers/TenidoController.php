@@ -111,7 +111,7 @@ class TenidoController extends Controller
 
 			return response()->json($response, $this->status_code);
 		}
-
+	}
 	
 	public function rechazos(Request $request) {
 		try {
@@ -196,7 +196,7 @@ class TenidoController extends Controller
 						if ($validar) {
 							$total = count($array);
 							$nuevo = detalle_tenido::create([
-								'id_color'           => $record2->id,
+								'id_tenido'           => $record->id,
 								'estado'          	 => 1,
 
 								'cantidad_tenida'    => $validar->cantidad_tenida + $item->para_tenir,
@@ -205,19 +205,16 @@ class TenidoController extends Controller
 								'kilos'				 => $kilos,
 								'quesos'          	 => $quesos,
 								'color'				 => $item->estilo,
-								'total_tenido'		 => $item->cantidad_tenida + $item->para_tenir,
-								'receta_cantidad'	 => $record->cantidad / $total,
 							]);
 						} else {
 							$nuevo = detalle_tenido::create([
-								'id_color'           => $record2->id,
+								'id_tenido'           => $record->id,
 								'estado'          	 => 1,
 								'cantidad_tenida'    => $item->para_tenir,
 								'etapa'              => 1,
 								'kilos'				 => $kilos,
 								'quesos'          	 => $quesos,
 								'color'				 => $item->estilo,
-								'receta_cantidad'	 => $record->cantidad / $total
 							]);
 						}
 					}
