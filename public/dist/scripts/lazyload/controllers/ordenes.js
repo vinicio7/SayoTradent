@@ -54,7 +54,7 @@
 
                 OrdenesService.colores().then(function(response){
                     $scope.colores = response.data.records;
-                    console.log($scope.colores);
+                    // console.log($scope.colores);
                 });
 
                 OrdenesService.referencias().then(function(response){
@@ -516,20 +516,19 @@
                 });
             };
 
-            $scope.modalInfo = function(customer) { 
-                // console.log(customer);
+            $scope.modalInfo = function(customer) {
                 OrdenesService.consultarOrden(customer.id_orden).then(
                     function successCallback(response) {
                         if (response.data.result) {
-                            console.log(response.data.records);
+                            // console.log(response.data.records.hora);
                             $scope.action = "update";
+                            response.data.records.hora = new Date(response.data.records.fecha_hora+' '+response.data.records.hora);
+                            response.data.records.fecha_hora = new Date(response.data.records.fecha_hora);
+                            response.data.records.id_empresa = response.data.records.id_empresa + ' - ' +response.data.records.cliente.nombre;
                             $scope.registro = response.data.records;
                             $scope.colores_orden = response.data.records.colores_orden;
-
-                            var date = response.data.records.fecha_hora;
-                            var newdate = date.split("-").reverse().join("/"); 
-                            $scope.registro.fecha_hora = newdate;
-                            console.log(newdate);
+                            $scope.total = response.data.records.precio_total;
+                            $scope.total_conos = response.data.records.amount;
                             modal = $modal.open({
                                 templateUrl: 'views/registro/modal_registro.html',
                                 scope: $scope,
@@ -592,12 +591,13 @@
             };
 
             $scope.modalMuestra = function(data) {
-                $scope.id_muestra = data.id;
+                $scope.id_muestra = data.id_orden;
                 $scope.action = 'muestra';
                 $scope.datos = {};
-
-                OrdenesService.show(data.id).then(function successCallback(response){
+                console.log(data.id_orden);
+                OrdenesService.show(data.id_orden).then(function successCallback(response){
                     $scope.prueba = response.data.records;
+                    console.log(response.data.records);
                 });
                 
                 modal = $modal.open({
