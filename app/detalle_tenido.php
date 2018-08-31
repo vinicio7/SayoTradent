@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class detalle_tenido extends Model
 {
     protected $table    = 'detalle_tenido';
-    protected $fillable = ['id_tenido',
+    protected $fillable = ['id_color',
                            'estado', 
                            'cantidad_tenida', 
                            'color',

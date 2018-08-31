@@ -121,6 +121,7 @@
 
             // Function for sending data
             $scope.saveData = function (customer) {
+                console.log($scope.currentPageStores3);
                 customer.colores_tenido = JSON.stringify($scope.currentPageStores3);
                 if ($scope.action == 'new') {
                     console.log(customer);

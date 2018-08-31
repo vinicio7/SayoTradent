@@ -71,18 +71,18 @@ class TenidoController extends Controller
 						$validar = detalle_tenido::where('color',$item->estilo)->first();
 						if ($validar) {
 							$nuevo = detalle_tenido::create([
-								'id_tenido'          => $record->id,
+								'id_color'           => $record2->id,
 								'estado'          	 => 1,
-								'cantidad_tenida'    => $validar->cantidad_tenida + $item->cantidad,
+								'cantidad_tenida'    => $validar->cantidad_tenida + $item->para_tenir,
 								'etapa'              => $validar->etapa + 1,
 								'quesos'          	 => $total,
 								'color'				 => $item->estilo,
 							]);
 						} else {
 							$nuevo = detalle_tenido::create([
-								'id_tenido'          => $record->id,
+								'id_color'           => $record2->id,
 								'estado'          	 => 1,
-								'cantidad_tenida'    => $item->cantidad,
+								'cantidad_tenida'    => $item->para_tenir,
 								'etapa'              => 1,
 								'quesos'          	 => $total,
 								'color'				 => $item->estilo,

@@ -425,6 +425,7 @@ class OrdenesController extends Controller
                 'facturado'         =>  false,
                 'estado_prod'       =>  0,
                 'id_estado'         =>  0,
+                'total_salida'      =>  0,
                 'hora'              =>  date('h:i:s', strtotime($request->input('fecha_hora')))
             ]);
 
@@ -654,11 +655,12 @@ class OrdenesController extends Controller
     {
         // dd($request);
         try {
-            $record2                 = Orden::find($request->input('id_orden'));
+            $record2                 = ColoresOrden::find($request->input('id_orden'));
             if ($record2) {
-                // if ($request->input('cantidad') > $record2->balance ) {
-                //     throw new \Exception('La cantidad no puede ser mayor al balance');
-                // }  
+                $balance = $record2->cantidad - $record2->total_salida;
+                if ($request->input('cantidad') > $balance ) {
+                    throw new \Exception('La cantidad no puede ser mayor al balance');
+                }  
             }
             $record = Despachos::create([
                 
@@ -670,8 +672,8 @@ class OrdenesController extends Controller
                 ]);
             if ($record) {
                 $record2->total_salida   = $record2->total_salida + $request->input('cantidad');
-                $record2->balance        = $record2->cantidad - $record2->total_salida;
-                $record2->amount         = $record2->precio * $record2->total_salida;
+                // $record2->balance        = $record2->cantidad - $record2->total_salida;
+                // $record2->amount         = $record2->precio * $record2->total_salida;
                 
                 $record2->save();
                 $this->status_code      = 200;
