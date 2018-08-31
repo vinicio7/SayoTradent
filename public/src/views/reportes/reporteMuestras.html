@@ -154,10 +154,10 @@
                                 </tr>
                                 </thead>
                                 <tbody ng-repeat="muestras in currentPageStores track by $index">
-                                    <tr ng-repeat="data in muestras.orden.colores_orden">
+                                    <tr ng-repeat="data in muestras.orden.orden.colores_orden">
                                         <td>{{ muestras.fecha_hora }}</td>
-                                        <td>{{ muestras.orden.cliente.nombre}}</td>
-                                        <td>{{ muestras.orden.orden }}</td>
+                                        <td>{{ muestras.orden.orden.cliente.nombre}}</td>
+                                        <td>{{ muestras.orden.orden.orden }}</td>
                                         <td>{{ data.po }}</td>
                                         <td>{{ data.color }}</td>
                                         <td>{{ data.estilo }}</td>

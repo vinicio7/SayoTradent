@@ -163,6 +163,8 @@ class TenidoController extends Controller
     public function store(Request $request) {
 		try {
 			// $validacion = Tenido::where("id_orden", $request->input('id_orden'))->first();
+			// $tenido = 
+			// $detalle = detalle_tenido::where('id_color',$request->input('id_color'))->get(); 
 			if (true) {
 				$record = Tenido::create([
 						'id_orden'          => 0,
@@ -214,7 +216,7 @@ class TenidoController extends Controller
 								'etapa'              => 1,
 								'kilos'				 => $kilos,
 								'quesos'          	 => $quesos,
-								'color'				 => $item->estilo,
+								'color'				 => $item->estilo
 							]);
 						}
 					}

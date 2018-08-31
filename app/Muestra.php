@@ -17,6 +17,7 @@ class Muestra extends Model
                            
     public function orden()
     {
-        return $this->hasOne('App\Orden', 'id', 'id_orden');
+        return $this->hasOne('App\ColoresOrden', 'id', 'id_orden');
     }
+    
 }
