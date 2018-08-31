@@ -111,7 +111,7 @@ class TenidoController extends Controller
 								'etapa'              => 1,
 								'quesos'          	 => $total,
 								'color'				 => $item->estilo,
-								'receta_cantidad'	 => $record->cantidad / $total;
+								'receta_cantidad'	 => $record->cantidad / $total
 							]);
 						}
 					}
