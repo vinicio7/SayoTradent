@@ -54,7 +54,7 @@ class OrdenesController extends Controller
         try {
             $records           = Orden::where('orden',$id)->with('cliente')->first();
             if ($records) {
-                $records2 = ColoresOrden::where([['id_orden',$records->orden],['estado_prod', 0],])->with('calibre','metraje','tipoOrden')->get();
+                $records2 = ColoresOrden::where('id_orden',$records->orden)->with('calibre','metraje','tipoOrden')->get();
                     // dd($records2);
 
                 // $records2 = ColoresOrden::where('id_orden',$records->orden)->with('calibre','metraje','tipoOrden')->get();
@@ -632,7 +632,7 @@ class OrdenesController extends Controller
             $this->status_code  = 200;
             $this->result       = true;
             $this->message      = 'Registro consultado correctamente.';
-            $this->records      = Muestra::where('id_orden', $id)->with('estados')->get();
+            $this->records      = Muestra::where('id_orden', $id)->get();
 
         } catch (Exception $e) {
             $this->status_code  = 200;

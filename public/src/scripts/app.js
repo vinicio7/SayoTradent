@@ -231,7 +231,7 @@
 		});
 
 		$routeProvider
-			.when("/", {redirectTo: "/dashboard"})
+			.when("/", {redirectTo: "/registro"})
 			.when("/404", {templateUrl: "views/pages/404.html"})
 			.otherwise({redirectTo: "/404"});
 

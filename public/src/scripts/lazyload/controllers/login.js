@@ -54,7 +54,7 @@
                         localStorageService.set('usuario',response.data.records);
                         console.log(localStorageService);
                         createToast('success', '<strong>Éxito: </strong>'+response.data.message);
-                        $window.location.href = './#/dashboard';//
+                        $window.location.href = './#/registro';//
 
                     } else {
                         createToast('danger', '<strong>Error: </strong>'+response.data.message);
